@@ -118,7 +118,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &248733005
+--- !u!1 &123278042
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,22 +126,36 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 248733006}
-  - component: {fileID: 248733007}
+  - component: {fileID: 123278044}
+  - component: {fileID: 123278043}
+  - component: {fileID: 123278045}
   m_Layer: 0
-  m_Name: PoolManager
+  m_Name: GameObjectLoader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &248733006
+--- !u!114 &123278043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123278042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa6547fc0328fdb4dbac98c7d4e80d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _data: {fileID: 11400000, guid: b1e9ba46c0b166442825c8e0e01302e9, type: 2}
+--- !u!4 &123278044
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 248733005}
+  m_GameObject: {fileID: 123278042}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -150,18 +164,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &248733007
+--- !u!114 &123278045
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 248733005}
+  m_GameObject: {fileID: 123278042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 648f177dae35e354ca1ab295475238b8, type: 3}
+  m_Script: {fileID: 11500000, guid: cd70c4b44c65c2a45a833eb1c95003e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefix: '@'
+  backColor: {r: 1, g: 1, b: 1, a: 1}
+  fontColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &351672213
 GameObject:
   m_ObjectHideFlags: 0
@@ -541,4 +558,4 @@ SceneRoots:
   - {fileID: 587983992}
   - {fileID: 377640185}
   - {fileID: 351672215}
-  - {fileID: 248733006}
+  - {fileID: 123278044}
