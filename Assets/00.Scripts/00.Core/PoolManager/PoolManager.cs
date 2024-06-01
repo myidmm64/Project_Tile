@@ -18,15 +18,17 @@ public class PoolManager : MonoSingleTon<PoolManager>
     {
         GameObject gameObj = Instantiate(obj);
         IPoolable poolable = gameObj.GetComponent<IPoolable>();
+        poolable.POOLABLE_GAMEOBJECT = gameObj;
+
         if (_pool.ContainsKey(poolable.PoolType) == false)
         {
             _pool.Add(poolable.PoolType, new Queue<IPoolable>());
         }
         poolable.Initailize();
-        _pool[poolable.PoolType].Enqueue(poolable);
-
         gameObj.SetActive(false);
         gameObj.transform.SetParent(gameObject.transform);
+
+        _pool[poolable.PoolType].Enqueue(poolable);
     }
 
     private void InitPool()
@@ -62,13 +64,22 @@ public class PoolManager : MonoSingleTon<PoolManager>
         }
 
         IPoolable result = _pool[poolType].Dequeue();
+        result.POOLABLE_GAMEOBJECT.SetActive(true);
+        result.POOLABLE_GAMEOBJECT.transform.SetParent(null);
         result.PopObject();
         return (T)result;
+    }
+
+    public IPoolable Pop(EPoolType poolType)
+    {
+        return Pop<IPoolable>(poolType);
     }
 
     public void Push(IPoolable poolable)
     {
         poolable.PushObject();
+        poolable.POOLABLE_GAMEOBJECT.SetActive(false);
+        poolable.POOLABLE_GAMEOBJECT.transform.SetParent(gameObject.transform);
         _pool[poolable.PoolType].Enqueue(poolable);
     }
 }
