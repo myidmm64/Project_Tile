@@ -1,10 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class TestPlayer : MonoBehaviour, ITileEntity
 {
+    [SerializeField]
+    private float _moveDuration = 0.2f;
+    private Sequence _moveSeq = null;
+    private bool _moveable = true;
+
     public Vector2Int PositionKey { get; set; }
+    private Animator _animator = null;
 
     public void BindedObject(Tile tile)
     {
@@ -12,6 +19,11 @@ public class TestPlayer : MonoBehaviour, ITileEntity
 
     public void UnbindedObject(Tile tile)
     {
+    }
+
+    private void Start()
+    {
+        _animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -38,14 +50,39 @@ public class TestPlayer : MonoBehaviour, ITileEntity
 
     public void Move(Vector2Int targetPositionKey)
     {
-        if(TileManager.Inst.TryGetTile(targetPositionKey, out var tile))
+        if (targetPositionKey == PositionKey) return;
+        if (_moveable == false) return;
+        if (TileManager.Inst.TryGetTile(targetPositionKey, out var tile))
         {
-            if(tile.HasStatus(ETileStatus.Moveable))
+            if (tile.HasStatus(ETileStatus.Moveable))
             {
+                MoveAnimation(tile, targetPositionKey - PositionKey);
                 PositionKey = targetPositionKey;
-                transform.position = tile.transform.position;
                 tile.bindedEntity = this;
             }
         }
+    }
+
+    private void MoveAnimation(Tile tile, Vector2Int dir)
+    {
+        if (dir.sqrMagnitude != 0)
+        {
+            if (dir.x < 0)
+            {
+                _animator.Play("MoveLeft");
+            }
+            else if (dir.x > 0)
+            {
+                _animator.Play("MoveRight");
+            }
+        }
+        _moveable = false;
+        _moveSeq = DOTween.Sequence();
+        _moveSeq.Append(transform.DOMove(tile.transform.position, _moveDuration));
+        _moveSeq.AppendCallback(() =>
+        {
+            _animator.Play("Idle");
+            _moveable = true;
+        });
     }
 }
