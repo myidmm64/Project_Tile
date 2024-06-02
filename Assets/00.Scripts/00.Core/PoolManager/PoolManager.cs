@@ -75,6 +75,11 @@ public class PoolManager : MonoSingleTon<PoolManager>
         return Pop<IPoolable>(poolType);
     }
 
+    public T PopWithComponent<T>(EPoolType poolType)
+    {
+        return Pop<IPoolable>(poolType).POOLABLE_GAMEOBJECT.GetComponent<T>();
+    }
+
     public void Push(IPoolable poolable)
     {
         poolable.PushObject();
