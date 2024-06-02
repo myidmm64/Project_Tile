@@ -6,6 +6,7 @@ public class Tile : MonoBehaviour, IPoolable
 
     public EPoolType PoolType { get => EPoolType.Tile; set { } }
     public GameObject POOLABLE_GAMEOBJECT { get; set; }
+    public Vector2Int positionKey;
 
     public void Initailize()
     {

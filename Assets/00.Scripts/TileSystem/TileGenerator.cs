@@ -46,6 +46,7 @@ public class TileGenerator
                 if (tile != null)
                 {
                     tile.name = positionKey.ToString();
+                    tile.positionKey = positionKey;
                     tile.transform.position = _data.centerPos + (positionKey * _data.tilePadding);
                     tile.transform.SetParent(_data.generateParent);
                 }
