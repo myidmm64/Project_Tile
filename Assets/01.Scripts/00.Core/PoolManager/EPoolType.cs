@@ -1,5 +1,5 @@
 public enum EPoolType
 {
     None,
-    Tile
+    Dice_Normal
 }
