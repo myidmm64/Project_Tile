@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class Dice : MonoBehaviour, IPoolable
 {
-    public EPoolType PoolType { get; set; }
+    public EPoolType PoolType { get { return EPoolType.Dice; } set { } }
     public GameObject POOLABLE_GAMEOBJECT { get; set; }
 
     [SerializeField]
@@ -37,8 +37,8 @@ public class Dice : MonoBehaviour, IPoolable
     public void ChangeDiceType(EDiceType eDiceType)
     {
         _eDiceType = eDiceType;
-        _animator.runtimeAnimatorController = _diceAnimationDataSO.diceAnimationDatas.Find(x => x.eDiceType == _eDiceType).animator.runtimeAnimatorController;
-        SetDiceAction(_eDiceType);
+        // _animator.runtimeAnimatorController = _diceAnimationDataSO.diceAnimationDatas.Find(x => x.eDiceType == _eDiceType).animator.runtimeAnimatorController;
+        // SetDiceAction(_eDiceType);
     }
 
     private void SetDiceAction(EDiceType eDiceType)
@@ -47,7 +47,7 @@ public class Dice : MonoBehaviour, IPoolable
         Type type = Type.GetType(diceActionClassName);
         if (type == null)
         {
-            Console.WriteLine("클래스를 찾을 수 없습니다.");
+            Debug.LogWarning("클래스를 찾을 수 없습니다.");
             return;
         }
         _diceAction = Activator.CreateInstance(type) as DiceAction;
