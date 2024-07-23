@@ -6,9 +6,6 @@ public class PoolManager : MonoSingleTon<PoolManager>
     private Dictionary<EPoolType, Queue<IPoolable>> _pool = new();
     private Dictionary<EPoolType, GameObject> _poolableResorcesTable = new();
 
-    [SerializeField]
-    private int GENERATE_COUNT = 10;
-
     private void Awake()
     {
         InitPool();
@@ -19,6 +16,7 @@ public class PoolManager : MonoSingleTon<PoolManager>
         GameObject gameObj = Instantiate(obj);
         IPoolable poolable = gameObj.GetComponent<IPoolable>();
         poolable.POOLABLE_GAMEOBJECT = gameObj;
+        poolable.PoolType = pooltype;
 
         if (_pool.ContainsKey(poolable.PoolType) == false)
         {
@@ -33,20 +31,21 @@ public class PoolManager : MonoSingleTon<PoolManager>
 
     private void InitPool()
     {
-        var objs = Resources.LoadAll<GameObject>("Poolable");
-        foreach (var obj in objs)
+        var poolDataSOResources = Resources.LoadAll<PoolDataSO>("Poolable");
+        if (poolDataSOResources.Length == 0)
         {
-            IPoolable tempPoolable = obj.GetComponent<IPoolable>();
-            if (tempPoolable == null)
-            {
-                Debug.LogError($"Poolable 스크립트가 존재하지 않음.");
-                continue;
-            }
-            _poolableResorcesTable.Add(tempPoolable.PoolType, obj);
+            Debug.LogError("poolDataSO가 Resources/Poolable 에 존재하지 않습니다.");
+            return;
+        }
+        var poolDataSO = poolDataSOResources[0];
 
-            for (int i = 0; i < GENERATE_COUNT; i++)
+        foreach (var poolData in poolDataSO.poolDatas)
+        {
+            _poolableResorcesTable.Add(poolData.ePoolType, poolData.obj);
+
+            for (int i = 0; i < poolData.generateCount; i++)
             {
-                GeneratePoolObj(obj, tempPoolable.PoolType);
+                GeneratePoolObj(poolData.obj, poolData.ePoolType);
             }
         }
     }

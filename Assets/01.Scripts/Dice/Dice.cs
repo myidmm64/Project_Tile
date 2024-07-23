@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class Dice : MonoBehaviour, IPoolable
 {
-    public EPoolType PoolType { get { return EPoolType.Dice; } set { } }
+    public EPoolType PoolType { get; set; }
     public GameObject POOLABLE_GAMEOBJECT { get; set; }
 
     [SerializeField]
