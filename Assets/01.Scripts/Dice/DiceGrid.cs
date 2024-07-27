@@ -23,11 +23,12 @@ public class DiceGrid : MonoBehaviour
     {
         if(_grid.ContainsKey(positionKey) == false)
         {
-            Debug.LogError($"PositionKey가 존재하지 않습니다. {positionKey}");
+            Debug.LogWarning($"PositionKey가 존재하지 않습니다. {positionKey}");
             return null;
         }
         return _grid[positionKey];
     }
+    public bool TryGetDice(Vector2Int positionKey, out Dice dice) => _grid.TryGetValue(positionKey, out dice);
 
     private void CreateGrid(int column, int row, Vector2 padding, Vector2 startPosition)
     {
