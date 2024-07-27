@@ -9,6 +9,8 @@ public class Dice : MonoBehaviour, IPoolable
     public EPoolType PoolType { get; set; }
     public GameObject POOLABLE_GAMEOBJECT { get; set; }
 
+    public Vector2Int positionKey = Vector2Int.zero;
+
     [SerializeField]
     private DiceAnimationDataSO _diceAnimationDataSO = null;
     private SpriteRenderer _spriteRenderer = null;

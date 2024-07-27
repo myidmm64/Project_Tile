@@ -14,9 +14,19 @@ public class DiceGrid : MonoBehaviour
     [SerializeField]
     private Vector2 _startPosition = Vector2.zero;
 
-    private void Start()
+    private void Awake()
     {
         CreateGrid(_column, _row, _padding, _startPosition);
+    }
+
+    public Dice GetDice(Vector2Int positionKey)
+    {
+        if(_grid.ContainsKey(positionKey) == false)
+        {
+            Debug.LogError($"PositionKey가 존재하지 않습니다. {positionKey}");
+            return null;
+        }
+        return _grid[positionKey];
     }
 
     private void CreateGrid(int column, int row, Vector2 padding, Vector2 startPosition)
@@ -29,6 +39,7 @@ public class DiceGrid : MonoBehaviour
                 Vector2 dicePosition = startPosition + (positionKey * padding);
 
                 Dice dice = PoolManager.Inst.Pop(EPoolType.Dice) as Dice;
+                dice.positionKey = positionKey;
                 dice.transform.position = dicePosition;
                 dice.ChangeDiceType(EDiceType.Normal); // Custom
                 dice.Roll();
