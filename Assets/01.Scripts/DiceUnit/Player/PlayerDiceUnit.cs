@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerDiceUnit : DiceUnit
 {
+    // 추후 모듈 붙여서 모듈마다 이벤트 발급해주는 방식으로 ㄱㄱ
     [SerializeField]
     private int _maxInputQueueCount = 5;
     [SerializeField]
@@ -15,6 +16,10 @@ public class PlayerDiceUnit : DiceUnit
     private Sequence _moveSeq = null;
     private bool _moveable => _moveSeq == null || (_moveSeq != null && !_moveSeq.active);
 
+    [SerializeField]
+    private float _attackDelay = 1f;
+    private float _attackTimer = 0f;
+
     private void Start()
     {
         TestInit();
@@ -22,7 +27,27 @@ public class PlayerDiceUnit : DiceUnit
 
     void Update()
     {
+        Attack();
         Move();
+    }
+
+    private void Attack()
+    {
+        // 사정거리 내 적이 있다면 자동공격
+        _attackTimer += Time.deltaTime;
+        if(_attackTimer >= _attackDelay)
+        {
+            if (_diceGrid.TryGetDice(positionKey + Vector2Int.left, out Dice leftDice))
+            {
+
+                _attackTimer = 0f;
+            }
+            else if (_diceGrid.TryGetDice(positionKey + Vector2Int.right, out Dice rightDice))
+            {
+
+                _attackTimer = 0f;
+            }
+        }
     }
 
     private void TestInit()
