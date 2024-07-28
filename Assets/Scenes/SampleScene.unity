@@ -735,6 +735,7 @@ MonoBehaviour:
   dice: {fileID: 0}
   _maxInputQueueCount: 3
   _moveDuration: 0.1
+  _attackDelay: 1
 --- !u!1 &1833481662
 GameObject:
   m_ObjectHideFlags: 0
@@ -835,6 +836,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3efde46680a38564181e8dc0e3e78be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _diceGrid: {fileID: 901142393}
+  dice: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

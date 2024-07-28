@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class DiceGrid : MonoBehaviour
 {
-    private Dictionary<Vector2Int, Dice> _grid = new Dictionary<Vector2Int, Dice>();
+    public Dictionary<Vector2Int, Dice> grid { get; private set; }
+    public Dictionary<Vector2Int, DiceUnit> diceUnitGrid { get; private set; }
 
     [SerializeField]
     private int _column = 5;
@@ -16,19 +17,11 @@ public class DiceGrid : MonoBehaviour
 
     private void Awake()
     {
+        grid = new Dictionary<Vector2Int, Dice>();
+        diceUnitGrid = new Dictionary<Vector2Int, DiceUnit>();
+
         CreateGrid(_column, _row, _padding, _startPosition);
     }
-
-    public Dice GetDice(Vector2Int positionKey)
-    {
-        if(_grid.ContainsKey(positionKey) == false)
-        {
-            Debug.LogWarning($"PositionKey가 존재하지 않습니다. {positionKey}");
-            return null;
-        }
-        return _grid[positionKey];
-    }
-    public bool TryGetDice(Vector2Int positionKey, out Dice dice) => _grid.TryGetValue(positionKey, out dice);
 
     private void CreateGrid(int column, int row, Vector2 padding, Vector2 startPosition)
     {
@@ -46,7 +39,7 @@ public class DiceGrid : MonoBehaviour
                 dice.Roll();
                 dice.gameObject.name = positionKey.ToString();
 
-                _grid.Add(positionKey, dice);
+                grid.Add(positionKey, dice);
             }
         }
     }

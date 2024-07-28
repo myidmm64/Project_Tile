@@ -31,29 +31,29 @@ public class PlayerDiceUnit : DiceUnit
         Move();
     }
 
+    private void TestInit()
+    {
+        ChangeMyDice(new Vector2Int(0, 0));
+        transform.position = dice.transform.position;
+    }
+
     private void Attack()
     {
         // 사정거리 내 적이 있다면 자동공격
         _attackTimer += Time.deltaTime;
-        if(_attackTimer >= _attackDelay)
+        if (_attackTimer >= _attackDelay)
         {
-            if (_diceGrid.TryGetDice(positionKey + Vector2Int.left, out Dice leftDice))
+            if(_diceGrid.diceUnitGrid.ContainsKey(positionKey + Vector2Int.left))
             {
-
+                Debug.Log("Left Attack");
                 _attackTimer = 0f;
             }
-            else if (_diceGrid.TryGetDice(positionKey + Vector2Int.right, out Dice rightDice))
+            else if (_diceGrid.diceUnitGrid.ContainsKey(positionKey + Vector2Int.right))
             {
-
+                Debug.Log("Right Attack");
                 _attackTimer = 0f;
             }
         }
-    }
-
-    private void TestInit()
-    {
-        dice = _diceGrid.GetDice(Vector2Int.zero);
-        transform.position = dice.transform.position;
     }
 
     public void Move()
@@ -62,9 +62,8 @@ public class PlayerDiceUnit : DiceUnit
         {
             Vector2Int inputDir = _inputQueue.Dequeue();
             Vector2Int targetPositionKey = positionKey + inputDir;
-            if(_diceGrid.TryGetDice(targetPositionKey, out Dice targetDice))
+            if(ChangeMyDice(targetPositionKey))
             {
-                dice = targetDice;
                 MoveAnimation(); // Seq, Animator 등을 이용한 시각적 이동
             }
         }

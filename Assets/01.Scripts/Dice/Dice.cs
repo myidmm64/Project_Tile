@@ -35,6 +35,15 @@ public class Dice : MonoBehaviour, IPoolable
     {
     }
 
+    /// <summary>
+    /// 자식 클래스에서 뭔가 기믹으로 인해 바인드 불가능하다면 이 함수를 바꿔주기
+    /// </summary>
+    /// <returns></returns>
+    public virtual bool UnitBindable()
+    {
+        return true;
+    }
+
     // Dice 교체
     public void ChangeDiceType(EDiceType eDiceType)
     {
