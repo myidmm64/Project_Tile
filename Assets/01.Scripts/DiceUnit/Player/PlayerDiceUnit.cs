@@ -14,11 +14,18 @@ public class PlayerDiceUnit : DiceUnit
     private float _moveDuration = 0.3f;
     private Queue<Vector2Int> _inputQueue = new Queue<Vector2Int>();
     private Sequence _moveSeq = null;
+    private Animator _animator = null;
     private bool _moveable => _moveSeq == null || (_moveSeq != null && !_moveSeq.active);
+    private bool _isMoving => _moveSeq != null && _moveSeq.active;
 
     [SerializeField]
     private float _attackDelay = 1f;
     private float _attackTimer = 0f;
+
+    private void Awake()
+    {
+        _animator = transform.Find("Sprite").GetComponent<Animator>();
+    }
 
     private void Start()
     {
@@ -34,24 +41,29 @@ public class PlayerDiceUnit : DiceUnit
     private void TestInit()
     {
         ChangeMyDice(new Vector2Int(0, 0));
-        transform.position = dice.transform.position;
+        transform.position = dice.groundPos;
     }
 
     private void Attack()
     {
         // 사정거리 내 적이 있다면 자동공격
         _attackTimer += Time.deltaTime;
+
+        if (_isMoving) return;
         if (_attackTimer >= _attackDelay)
         {
             if(_diceGrid.diceUnitGrid.ContainsKey(positionKey + Vector2Int.left))
             {
                 Debug.Log("Left Attack");
                 _attackTimer = 0f;
+                _animator.Play("NormalAttack");
             }
             else if (_diceGrid.diceUnitGrid.ContainsKey(positionKey + Vector2Int.right))
             {
                 Debug.Log("Right Attack");
                 _attackTimer = 0f;
+                _animator.Play("Move");
+                _animator.Play("NormalAttack");
             }
         }
     }
@@ -64,6 +76,9 @@ public class PlayerDiceUnit : DiceUnit
             Vector2Int targetPositionKey = positionKey + inputDir;
             if(ChangeMyDice(targetPositionKey))
             {
+                _animator.SetFloat("Horizontal", inputDir.x);
+                _animator.SetFloat("Vertical", inputDir.y);
+                _animator.Play("Move");
                 _diceGrid.grid[targetPositionKey].Roll();
                 MoveAnimation(); // Seq, Animator 등을 이용한 시각적 이동
             }
@@ -74,6 +89,10 @@ public class PlayerDiceUnit : DiceUnit
     {
         _moveSeq = DOTween.Sequence();
         _moveSeq.Append(transform.DOMove(dice.groundPos, _moveDuration)).SetEase(Ease.Linear);
+        _moveSeq.AppendCallback(() =>
+        {
+            _animator.Play("Idle");
+        });
     }
 
     public void AddQueue(Vector2Int dir)
