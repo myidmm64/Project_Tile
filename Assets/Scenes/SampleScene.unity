@@ -641,8 +641,8 @@ MonoBehaviour:
     m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1650557167}
-        m_TargetAssemblyTypeName: PlayerDiceUnit, Assembly-CSharp
+      - m_Target: {fileID: 1650557168}
+        m_TargetAssemblyTypeName: PlayerMoveModule, Assembly-CSharp
         m_MethodName: UpMove
         m_Mode: 0
         m_Arguments:
@@ -657,8 +657,8 @@ MonoBehaviour:
     m_ActionName: 'Player/Move[/Keyboard/w,/Keyboard/a,/Keyboard/s,/Keyboard/d]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1650557167}
-        m_TargetAssemblyTypeName: PlayerDiceUnit, Assembly-CSharp
+      - m_Target: {fileID: 1650557168}
+        m_TargetAssemblyTypeName: PlayerMoveModule, Assembly-CSharp
         m_MethodName: DownMove
         m_Mode: 0
         m_Arguments:
@@ -673,8 +673,8 @@ MonoBehaviour:
     m_ActionName: 'Player/Down[/Keyboard/s,/Keyboard/downArrow]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1650557167}
-        m_TargetAssemblyTypeName: PlayerDiceUnit, Assembly-CSharp
+      - m_Target: {fileID: 1650557168}
+        m_TargetAssemblyTypeName: PlayerMoveModule, Assembly-CSharp
         m_MethodName: LeftMove
         m_Mode: 0
         m_Arguments:
@@ -689,8 +689,8 @@ MonoBehaviour:
     m_ActionName: 'Player/Left[/Keyboard/a,/Keyboard/leftArrow]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1650557167}
-        m_TargetAssemblyTypeName: PlayerDiceUnit, Assembly-CSharp
+      - m_Target: {fileID: 1650557168}
+        m_TargetAssemblyTypeName: PlayerMoveModule, Assembly-CSharp
         m_MethodName: RightMove
         m_Mode: 0
         m_Arguments:
@@ -720,6 +720,7 @@ GameObject:
   - component: {fileID: 1650557167}
   - component: {fileID: 1650557169}
   - component: {fileID: 1650557168}
+  - component: {fileID: 1650557170}
   m_Layer: 0
   m_Name: player_test
   m_TagString: Untagged
@@ -758,7 +759,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   diceGrid: {fileID: 901142393}
   dice: {fileID: 0}
-  _attackDelay: 0.5
 --- !u!114 &1650557168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -785,6 +785,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 585f73c9d366a3146abb1e58a9b9b5d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1650557170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650557164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e1bcdeb4671f304e98ba88e285b6e4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackDelay: 0.5
 --- !u!1 &1833481662
 GameObject:
   m_ObjectHideFlags: 0
@@ -885,7 +898,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3efde46680a38564181e8dc0e3e78be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diceGrid: {fileID: 0}
+  diceGrid: {fileID: 901142393}
   dice: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
