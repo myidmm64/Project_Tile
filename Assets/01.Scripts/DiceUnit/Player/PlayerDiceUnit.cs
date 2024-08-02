@@ -64,6 +64,7 @@ public class PlayerDiceUnit : DiceUnit
             Vector2Int targetPositionKey = positionKey + inputDir;
             if(ChangeMyDice(targetPositionKey))
             {
+                _diceGrid.grid[targetPositionKey].Roll();
                 MoveAnimation(); // Seq, Animator 등을 이용한 시각적 이동
             }
         }
@@ -72,7 +73,7 @@ public class PlayerDiceUnit : DiceUnit
     private void MoveAnimation()
     {
         _moveSeq = DOTween.Sequence();
-        _moveSeq.Append(transform.DOMove(dice.transform.position, _moveDuration)).SetEase(Ease.Linear);
+        _moveSeq.Append(transform.DOMove(dice.groundPos, _moveDuration)).SetEase(Ease.Linear);
     }
 
     public void AddQueue(Vector2Int dir)

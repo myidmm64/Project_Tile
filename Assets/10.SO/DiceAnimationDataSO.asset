@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   diceAnimationDatas:
   - eDiceType: 1
-    animator: {fileID: 0}
+    animator: {fileID: 9100000, guid: f2fc4923385c70041af0e0527b725f33, type: 2}

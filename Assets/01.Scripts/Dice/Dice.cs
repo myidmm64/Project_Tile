@@ -6,6 +6,11 @@ using Random = UnityEngine.Random;
 
 public class Dice : MonoBehaviour, IPoolable
 {
+    [SerializeField]
+    private Transform _groundPosTrm = null;
+    public Vector3 groundPos => _groundPosTrm.position;
+
+    public List<Sprite> _sprites = new List<Sprite>();
     public EPoolType PoolType { get; set; }
     public GameObject POOLABLE_GAMEOBJECT { get; set; }
 
@@ -44,6 +49,12 @@ public class Dice : MonoBehaviour, IPoolable
         return true;
     }
 
+    public void SetSpriteOrder()
+    {
+        if (_spriteRenderer == null) return;
+        _spriteRenderer.sortingOrder = positionKey.y;
+    }
+
     // Dice 교체
     public void ChangeDiceType(EDiceType eDiceType)
     {
@@ -68,6 +79,8 @@ public class Dice : MonoBehaviour, IPoolable
     {
         int changePip = specificPip == 0 ? changePip = Random.Range(1, 7) : specificPip;
         _dicePip = changePip;
+        // 임시 코드
+        _spriteRenderer.sprite = _sprites[changePip];
         // roll Animation
         // _animator.SetInteger("dicePip", _dicePip); -> 해당 pip를 기준으로 애니 끝난 후 스프라이트를 결정
         // _animator.Play("Roll");

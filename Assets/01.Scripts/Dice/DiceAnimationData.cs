@@ -4,5 +4,5 @@ using UnityEngine;
 public class DiceAnimationData
 {
     public EDiceType eDiceType;
-    public Animator animator;
+    public RuntimeAnimatorController animator;
 }

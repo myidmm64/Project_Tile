@@ -37,6 +37,7 @@ public class DiceGrid : MonoBehaviour
                 dice.transform.position = dicePosition;
                 dice.ChangeDiceType(EDiceType.Normal); // Custom
                 dice.Roll();
+                dice.SetSpriteOrder();
                 dice.gameObject.name = positionKey.ToString();
 
                 grid.Add(positionKey, dice);
