@@ -718,6 +718,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1650557166}
   - component: {fileID: 1650557167}
+  - component: {fileID: 1650557169}
+  - component: {fileID: 1650557168}
   m_Layer: 0
   m_Name: player_test
   m_TagString: Untagged
@@ -754,11 +756,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dd25d6c184ce48489ee0be8335fb8fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _diceGrid: {fileID: 901142393}
+  diceGrid: {fileID: 901142393}
   dice: {fileID: 0}
+  _attackDelay: 0.5
+--- !u!114 &1650557168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650557164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d99ce89c0b438f6488b25819383f0607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _maxInputQueueCount: 3
   _moveDuration: 0.1
-  _attackDelay: 0.5
+--- !u!114 &1650557169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650557164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 585f73c9d366a3146abb1e58a9b9b5d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1833481662
 GameObject:
   m_ObjectHideFlags: 0
@@ -859,7 +885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3efde46680a38564181e8dc0e3e78be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _diceGrid: {fileID: 901142393}
+  diceGrid: {fileID: 0}
   dice: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
