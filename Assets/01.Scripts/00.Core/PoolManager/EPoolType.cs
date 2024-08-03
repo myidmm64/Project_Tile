@@ -1,5 +1,6 @@
 public enum EPoolType
 {
     None,
-    Dice
+    Dice,
+    PopupText
 }

@@ -1,9 +1,13 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 public class DiceUnit : MonoBehaviour
 {
     public DiceGrid diceGrid = null; // 어디 DiceGrid에 있을 것인지
+
+    public SpriteRenderer spriteRenderer = null;
+    public TextMeshPro hpText = null;
 
     public Dice dice = null;
     public Vector2Int positionKey => dice != null ? dice.positionKey : Vector2Int.zero;
@@ -49,7 +53,7 @@ public class DiceUnit : MonoBehaviour
         return true;
     }
 
-    public void SetSpriteSortingOrder(SpriteRenderer spriteRenderer)
+    public void SetSpriteSortingOrder()
     {
         spriteRenderer.sortingOrder = positionKey.y;
     }

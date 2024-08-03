@@ -23,12 +23,18 @@ public class PlayerAttackModule : MonoBehaviour
         {
             if (_player.diceGrid.diceUnitGrid.ContainsKey(_player.positionKey + Vector2Int.left))
             {
+                PopupText popup = PoolManager.Inst.Pop(EPoolType.PopupText) as PopupText;
+                popup.Popup(_player.diceGrid.grid[_player.positionKey].dicePip.ToString()
+                    , _player.diceGrid.grid[_player.positionKey + Vector2Int.left].transform.position + Vector3.up * 0.3f);
                 Debug.Log("Left Attack");
                 _attackTimer = 0f;
                 _player.animator.Play("NormalAttack");
             }
             else if (_player.diceGrid.diceUnitGrid.ContainsKey(_player.positionKey + Vector2Int.right))
             {
+                PopupText popup = PoolManager.Inst.Pop(EPoolType.PopupText) as PopupText;
+                popup.Popup(_player.diceGrid.grid[_player.positionKey].dicePip.ToString()
+                    , _player.diceGrid.grid[_player.positionKey + Vector2Int.right].transform.position + Vector3.up * 0.3f);
                 Debug.Log("Right Attack");
                 _attackTimer = 0f;
                 _player.animator.Play("Move");

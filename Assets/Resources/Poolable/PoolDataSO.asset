@@ -19,3 +19,8 @@ MonoBehaviour:
     ePoolType: 1
     obj: {fileID: 3824963776723223282, guid: b5cbc5fb865522e419635cda2fd89db9, type: 3}
     generateCount: 10
+  - name: PopupText
+    hashCode: 48220
+    ePoolType: 2
+    obj: {fileID: 668412336809047233, guid: 7e5c3949daa20a843ad10f351cfa2bdb, type: 3}
+    generateCount: 10

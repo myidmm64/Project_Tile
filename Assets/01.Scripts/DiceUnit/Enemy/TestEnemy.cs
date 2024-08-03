@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class TestEnemy : DiceUnit
 {
-    [SerializeField]
-    private SpriteRenderer spriteRenderer;
-
     private void Start()
     {
         TestInit();
@@ -14,7 +11,7 @@ public class TestEnemy : DiceUnit
     {
         ChangeMyDice(new Vector2Int(2, 2));
         transform.position = dice.transform.position;
-        SetSpriteSortingOrder(spriteRenderer);
+        SetSpriteSortingOrder();
     }
 
 

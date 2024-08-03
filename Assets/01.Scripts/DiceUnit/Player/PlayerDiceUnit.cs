@@ -8,7 +8,6 @@ using UnityEngine.InputSystem;
 public class PlayerDiceUnit : DiceUnit
 {
     // 추후 모듈 붙여서 모듈마다 이벤트 발급해주는 방식으로 ㄱㄱ
-    public SpriteRenderer spriteRenderer {  get; private set; }
     public Animator animator { get; private set; }
 
     public PlayerMoveModule moveModule { get; private set; }
@@ -33,7 +32,7 @@ public class PlayerDiceUnit : DiceUnit
     {
         CheckTarget();
         moveModule.Move();
-        SetSpriteSortingOrder(spriteRenderer);
+        SetSpriteSortingOrder();
         attackModule.Attack();
     }
 

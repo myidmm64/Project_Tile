@@ -32,7 +32,6 @@ public class PlayerMoveModule : MonoBehaviour
                 _player.animator.SetFloat("Horizontal", inputDir.x);
                 _player.animator.SetFloat("Vertical", inputDir.y);
                 _player.animator.Play("Move");
-                _player.diceGrid.grid[targetPositionKey].Roll();
                 MoveAnimation(); // Seq, Animator 등을 이용한 시각적 이동
             }
         }

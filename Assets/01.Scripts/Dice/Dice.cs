@@ -23,7 +23,7 @@ public class Dice : MonoBehaviour, IPoolable
     private DiceAction _diceAction = null;
 
     private EDiceType _eDiceType = EDiceType.None;
-    private int _dicePip = 0; // 1 ~ 6
+    public int dicePip { get; private set; } // 1 ~ 6
 
     public void Initailize()
     {
@@ -78,7 +78,7 @@ public class Dice : MonoBehaviour, IPoolable
     public void Roll(int specificPip = 0)
     {
         int changePip = specificPip == 0 ? changePip = Random.Range(1, 7) : specificPip;
-        _dicePip = changePip;
+        dicePip = changePip;
         // 임시 코드
         _spriteRenderer.sprite = _sprites[changePip];
         // roll Animation
