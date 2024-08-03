@@ -48,4 +48,9 @@ public class DiceUnit : MonoBehaviour
         OnDiceBinded?.Invoke(targetDice);
         return true;
     }
+
+    public void SetSpriteSortingOrder(SpriteRenderer spriteRenderer)
+    {
+        spriteRenderer.sortingOrder = positionKey.y;
+    }
 }
