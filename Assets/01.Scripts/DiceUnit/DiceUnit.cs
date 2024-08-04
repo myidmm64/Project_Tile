@@ -5,11 +5,9 @@ using UnityEngine;
 
 public abstract class DiceUnit : MonoBehaviour
 {
-    public int maxHP = 100;
-    private int curHP = 0;
-    public TextMeshPro hpText = null;
-    public float hpTextAnimatingDuration = 0.2f;
-    private Sequence hpTextAnimationSeq = null;
+    [SerializeField]
+    protected int _maxHP = 100;
+    protected int _curHP = 0;
 
     public DiceGrid diceGrid = null; // 어디 DiceGrid에 있을 것인지
 
@@ -23,11 +21,12 @@ public abstract class DiceUnit : MonoBehaviour
 
     protected virtual void Start()
     {
-        curHP = maxHP;
-        if(hpText != null)
-        {
-            hpText.SetText(curHP.ToString());
-        }
+        SetMaxHP();
+    }
+
+    protected virtual void SetMaxHP()
+    {
+        _curHP = _maxHP;
     }
 
     public void SetDiceGrid(DiceGrid diceGrid, Dice _dice = null)
@@ -75,18 +74,5 @@ public abstract class DiceUnit : MonoBehaviour
 
     public virtual void Damage(int damage)
     {
-        int startHP = curHP;
-        int destHP = startHP - damage;
-        destHP = Mathf.Clamp(destHP, 0, maxHP);
-        if(hpText != null)
-        {
-            hpTextAnimationSeq.Kill();
-            hpTextAnimationSeq = DOTween.Sequence();
-            hpTextAnimationSeq.Append(DOTween.To(() => startHP, x => { hpText.SetText(x.ToString()); }, destHP, hpTextAnimatingDuration))
-                .SetEase(Ease.Linear);
-        }
-        PopupText popup = PoolManager.Inst.Pop(EPoolType.PopupText) as PopupText;
-        popup.Popup(damage.ToString(), transform.position + Vector3.up * 0.3f);
-        curHP = destHP;
     }
 }
