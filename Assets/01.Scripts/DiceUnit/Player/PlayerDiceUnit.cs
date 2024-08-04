@@ -15,6 +15,9 @@ public class PlayerDiceUnit : DiceUnit
 
     public DiceUnit targetDiceUnit { get; private set; } // 매 프레임마다 계산 플레이어가 바라볼 타겟
 
+    // 추후 PC라는 녀석에서 데이터 가져오도록 설계 
+
+
     private void Awake()
     {
         spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
@@ -23,8 +26,9 @@ public class PlayerDiceUnit : DiceUnit
         attackModule = GetComponent<PlayerAttackModule>();
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         TestInit();
     }
 
@@ -41,10 +45,15 @@ public class PlayerDiceUnit : DiceUnit
         // 여러 로직을 통해 타겟을 설정
         // 1. 공격 범위 내 적
         // 2. 우선 순서 수치
-        // 3. 거리가 가까운 적
-        // 4. 최대 체력이 높은 적
+        // 3. 카운터 패턴을 하려는 적
+        // 4. 거리가 가까운 적
+        // 5. 최대 체력이 높은 적
+        DiceUnit target = null;
 
+        foreach(var unitPair in diceGrid.diceUnitGrid)
+        {
 
+        }
     }
 
     private void TestInit()

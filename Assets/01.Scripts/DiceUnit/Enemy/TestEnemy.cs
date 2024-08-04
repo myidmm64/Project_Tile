@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class TestEnemy : DiceUnit
 {
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         TestInit();
     }
 

@@ -844,9 +844,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dd25d6c184ce48489ee0be8335fb8fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHP: 100
+  hpText: {fileID: 0}
+  hpTextAnimatingDuration: 0.2
   diceGrid: {fileID: 901142393}
   spriteRenderer: {fileID: 835570000}
-  hpText: {fileID: 0}
   dice: {fileID: 0}
 --- !u!114 &1650557168
 MonoBehaviour:
@@ -904,7 +906,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1721311706
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1109,9 +1111,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3efde46680a38564181e8dc0e3e78be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHP: 100
+  hpText: {fileID: 1721311707}
+  hpTextAnimatingDuration: 0.2
   diceGrid: {fileID: 901142393}
   spriteRenderer: {fileID: 1435958338}
-  hpText: {fileID: 1721311707}
   dice: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
