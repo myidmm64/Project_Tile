@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
@@ -12,6 +14,12 @@ public class PlayerAttackModule : MonoBehaviour
     private void Awake()
     {
         _player = GetComponent<PlayerDiceUnit>();
+    }
+
+    public List<DiceUnit> GetAttackTarget() // 공격 반경 내 들어온 녀석들 걸러내기
+    {
+
+        return null;
     }
 
     public void Attack()

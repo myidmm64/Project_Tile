@@ -49,6 +49,11 @@ public class PlayerDiceUnit : DiceUnit
         // 4. 거리가 가까운 적
         // 5. 최대 체력이 높은 적
         DiceUnit target = null;
+        List<Vector2Int> attackRange = new List<Vector2Int>()
+        {
+            new Vector2Int(1 , 0),
+            new Vector2Int(-1 , 0),
+        };
 
         foreach(var unitPair in diceGrid.diceUnitGrid)
         {

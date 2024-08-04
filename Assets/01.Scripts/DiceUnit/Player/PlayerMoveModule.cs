@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMoveModule : MonoBehaviour
+public class PlayerMoveModule : PlayerModule
 {
-    private PlayerDiceUnit _player = null;
     [SerializeField]
     private int _maxInputQueueCount = 3;
     [SerializeField]
@@ -15,11 +14,6 @@ public class PlayerMoveModule : MonoBehaviour
 
     public bool moveable => _moveSeq == null || (_moveSeq != null && !_moveSeq.active);
     public bool isMoving => _moveSeq != null && _moveSeq.active;
-
-    private void Awake()
-    {
-        _player = GetComponent<PlayerDiceUnit>();
-    }
 
     public void Move()
     {
