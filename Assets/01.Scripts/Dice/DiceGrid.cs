@@ -23,6 +23,17 @@ public class DiceGrid : MonoBehaviour
         CreateGrid(_column, _row, _padding, _startPosition);
     }
 
+    [ContextMenu("그리드 재제작")]
+    public void RestartGrid()
+    {
+        foreach(var dice in grid)
+        {
+            PoolManager.Inst.Push(dice.Value);
+        }
+        grid.Clear();
+        CreateGrid(_column, _row, _padding, _startPosition);
+    }
+
     private void CreateGrid(int column, int row, Vector2 padding, Vector2 startPosition)
     {
         for (int i = 0; i < column; i++)
