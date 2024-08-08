@@ -63,7 +63,7 @@ public class PlayerDiceUnit : DiceUnit
 
     private void TestInit()
     {
-        ChangeMyDice(new Vector2Int(0, 0));
+        ChangeMyDice(new Vector2Int(1, 1));
         transform.position = dice.groundPos;
     }
 }

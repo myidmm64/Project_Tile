@@ -39,53 +39,30 @@ public class DiceGrid : MonoBehaviour
         string[] rows = _diceGenerateData.diceMapStr.Split('\n');
         maxColumn = rows.Length;
         maxRow = rows[0].Length;
-        Vector2 startPos = _diceGenerateData.diceCenterPosition + GetPaddingPos(new Vector2(-(maxRow / 2), maxColumn / 2), _diceGenerateData.dicePositionDistance);
+        Vector2 startPos = _diceGenerateData.diceCenterPosition + GetPaddingPos(new Vector2(-(maxRow / 2), -(maxColumn / 2)), _diceGenerateData.dicePositionDistance);
 
-        for (int y = -2; y <= 2; y++)
+        for (int y = 0; y < maxColumn; y++)
         {
-            for (int x = -2; x <= 2; x++)
+            for (int x = 0; x < maxRow; x++)
             {
+                int number = rows[y][x] - '0';
+                if (number == 0) continue;
                 Dice dice = PoolManager.Inst.Pop(EPoolType.Dice) as Dice; // PopDice((EDiceType)number);
                 if (dice == null) continue;
 
-                //Vector2 dicePosition = startPos + GetPaddingPos(new Vector2(x - 1, -(y - 1)), _diceGenerateData.dicePositionDistance);
-                //Vector2Int diceKey = new Vector2Int(x, maxColumn - y + 1);
                 Vector2 dicePosition = startPos + GetPaddingPos(new Vector2(x, y), _diceGenerateData.dicePositionDistance);
-                Vector2Int diceKey = new Vector2Int(x, y);
-                dice.positionKey = diceKey;
+                Vector2Int positionKey = new Vector2Int(x, maxColumn - y - 1);
+                dice.positionKey = positionKey;
                 dice.transform.position = dicePosition;
                 dice.ChangeDiceType(EDiceType.Normal); // Custom
                 dice.Roll();
                 dice.SetSpriteOrder();
-                dice.gameObject.name = diceKey.ToString();
+                dice.gameObject.name = positionKey.ToString();
                 dice.transform.SetParent(transform, false);
 
-                grid.Add(diceKey, dice);
+                grid.Add(positionKey, dice);
             }
         }
-        /*
-        for (int y = 1; y <= maxColumn; y++)
-        {
-            for (int x = 1; x <= maxRow; x++)
-            {
-                int number = rows[y - 1][x - 1] - '0';
-                Dice dice = PoolManager.Inst.Pop(EPoolType.Dice) as Dice; // PopDice((EDiceType)number);
-                if (dice == null) continue;
-
-                Vector2 dicePosition = startPos + GetPaddingPos(new Vector2(x - 1, -(y - 1)), _diceGenerateData.dicePositionDistance);
-                Vector2Int diceKey = new Vector2Int(x, maxColumn - y + 1);
-                dice.positionKey = diceKey;
-                dice.transform.position = dicePosition;
-                dice.ChangeDiceType(EDiceType.Normal); // Custom
-                dice.Roll();
-                dice.SetSpriteOrder();
-                dice.gameObject.name = diceKey.ToString();
-                dice.transform.SetParent(transform, false);
-
-                grid.Add(diceKey, dice);
-            }
-        }
-        */
     }
 
     private Vector2 GetPaddingPos(Vector2 pos, Vector2 padding)
@@ -133,15 +110,15 @@ public class DiceGrid : MonoBehaviour
         Vector2Int reflectDir = Utility.GetDirection(Utility.GetReflectDirection(direction));
         for (int i = 0; i <= count; i++)
         {
-            Vector2Int diceKey = startPos + dir * i;
-            if (TryGetDice(GetRotatedDiceKey(diceKey, startPos, rotateDirection), out Dice dice))
+            Vector2Int positionKey = startPos + dir * i;
+            if (TryGetDice(GetRotatedPositionKey(positionKey, startPos, rotateDirection), out Dice dice))
             {
                 result.Add(dice);
             }
             if (plusReflect)
             {
-                Vector2Int reflectDiceKey = startPos + reflectDir * i;
-                if (TryGetDice(GetRotatedDiceKey(reflectDiceKey, startPos, rotateDirection), out Dice reflectDice))
+                Vector2Int reflectedPositionKey = startPos + reflectDir * i;
+                if (TryGetDice(GetRotatedPositionKey(reflectedPositionKey, startPos, rotateDirection), out Dice reflectDice))
                 {
                     result.Add(reflectDice);
                 }
@@ -231,7 +208,7 @@ public class DiceGrid : MonoBehaviour
             {
                 position.x = x;
                 position.y = y;
-                if (TryGetDice(GetRotatedDiceKey(centerPos + position, centerPos, rotateDirection), out Dice dice))
+                if (TryGetDice(GetRotatedPositionKey(centerPos + position, centerPos, rotateDirection), out Dice dice))
                 {
                     result.Add(dice);
                 }
@@ -248,10 +225,10 @@ public class DiceGrid : MonoBehaviour
     public IEnumerable<Dice> GetDicesWithPattern(Vector2Int centerPos, string pattern, EDirection rotateDirection = EDirection.Up)
     {
         List<Dice> result = new List<Dice>();
-        List<Vector2Int> diceKeys = GetStringToDiceKeys(centerPos, pattern);
-        foreach (var diceKey in diceKeys)
+        List<Vector2Int> positionKeys = GetStringToPositionKey(centerPos, pattern);
+        foreach (var positionKey in positionKeys)
         {
-            if (TryGetDice(GetRotatedDiceKey(diceKey, centerPos, rotateDirection), out Dice dice))
+            if (TryGetDice(GetRotatedPositionKey(positionKey, centerPos, rotateDirection), out Dice dice))
             {
                 result.Add(dice);
             }
@@ -259,7 +236,7 @@ public class DiceGrid : MonoBehaviour
         return result;
     }
 
-    private Vector2Int GetRotatedDiceKey(Vector2Int targetKey, Vector2Int startkey, EDirection rotateDirection)
+    private Vector2Int GetRotatedPositionKey(Vector2Int targetKey, Vector2Int startkey, EDirection rotateDirection)
     {
         if (rotateDirection == EDirection.Up) return targetKey;
         Vector2 result = Quaternion.AngleAxis(Utility.GetZRotate(rotateDirection), Vector3.forward) * ((Vector2)(targetKey - startkey));
@@ -267,11 +244,11 @@ public class DiceGrid : MonoBehaviour
     }
 
     /// <summary>
-    /// string을 diceKey 집합으로 변환합니다
+    /// string을 positionKey 집합으로 변환합니다
     /// </summary>
     /// <param name="targetString"></param>
     /// <returns></returns>
-    public List<Vector2Int> GetStringToDiceKeys(Vector2Int centerPos, string targetString)
+    public List<Vector2Int> GetStringToPositionKey(Vector2Int centerPos, string targetString)
     {
         List<Vector2Int> result = new List<Vector2Int>();
         string[] rows = targetString.Split('\n');
@@ -286,8 +263,8 @@ public class DiceGrid : MonoBehaviour
                 int number = rows[y - 1][x - 1] - '0';
                 if (number == 0) continue;
 
-                Vector2Int diceKey = startPos + new Vector2Int(x - 1, maxColumn - y);
-                result.Add(diceKey);
+                Vector2Int positionKey = startPos + new Vector2Int(x - 1, maxColumn - y);
+                result.Add(positionKey);
             }
         }
 

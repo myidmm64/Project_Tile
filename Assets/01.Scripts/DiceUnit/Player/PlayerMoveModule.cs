@@ -54,13 +54,13 @@ public class PlayerMoveModule : PlayerModule
     public void UpMove(InputAction.CallbackContext context)
     {
         if (context.performed)
-            AddQueue(Vector2Int.down); // positionKey는 상하 반대임
+            AddQueue(Vector2Int.up);
     }
 
     public void DownMove(InputAction.CallbackContext context)
     {
         if (context.performed)
-            AddQueue(Vector2Int.up); // positionKey는 상하 반대임
+            AddQueue(Vector2Int.down);
     }
 
     public void LeftMove(InputAction.CallbackContext context)
