@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerAttackModule : MonoBehaviour
@@ -38,8 +39,9 @@ public class PlayerAttackModule : MonoBehaviour
         }
     }
 
-    public void AttackInput()
+    public void AttackInput(InputAction.CallbackContext context)
     {
-        Attack();
+        if (context.performed)
+            Attack();
     }
 }

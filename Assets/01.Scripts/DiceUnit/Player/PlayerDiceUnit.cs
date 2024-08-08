@@ -12,6 +12,7 @@ public class PlayerDiceUnit : DiceUnit
 
     public PlayerMoveModule moveModule { get; private set; }
     public PlayerAttackModule attackModule { get; private set; }
+    public PlayerSkillModule skillModule { get; private set; }
 
     public DiceUnit targetDiceUnit { get; private set; } // 매 프레임마다 계산 플레이어가 바라볼 타겟
 
@@ -24,6 +25,7 @@ public class PlayerDiceUnit : DiceUnit
         animator = spriteRenderer.GetComponent<Animator>();
         moveModule = GetComponent<PlayerMoveModule>();
         attackModule = GetComponent<PlayerAttackModule>();
+        skillModule = GetComponent<PlayerSkillModule>();
     }
 
     protected override void Start()
