@@ -52,7 +52,7 @@ public class Dice : MonoBehaviour, IPoolable
     public void SetSpriteOrder()
     {
         if (_spriteRenderer == null) return;
-        _spriteRenderer.sortingOrder = positionKey.y;
+        _spriteRenderer.sortingOrder = 0 - positionKey.y;
     }
 
     // Dice ±³Ã¼

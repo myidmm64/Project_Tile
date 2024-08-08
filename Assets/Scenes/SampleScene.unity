@@ -1173,6 +1173,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 5c5af681-4c75-43a9-983d-6c081d116e05
     m_ActionName: 'Player/Right[/Keyboard/d,/Keyboard/rightArrow]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1650557170}
+        m_TargetAssemblyTypeName: PlayerAttackModule, Assembly-CSharp
+        m_MethodName: AttackInput
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5cbb1f1b-64f7-4571-979f-7954878c5b8b
+    m_ActionName: 'Player/Attack[/Keyboard/z]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

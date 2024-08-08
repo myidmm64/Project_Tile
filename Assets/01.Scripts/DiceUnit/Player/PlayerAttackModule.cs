@@ -16,17 +16,13 @@ public class PlayerAttackModule : MonoBehaviour
         _player = GetComponent<PlayerDiceUnit>();
     }
 
-    public List<DiceUnit> GetAttackTarget() // 공격 반경 내 들어온 녀석들 걸러내기
+    private void Update()
     {
-
-        return null;
+        _attackTimer += Time.deltaTime;
     }
 
     public void Attack()
     {
-        // 사정거리 내 적이 있다면 자동공격
-        _attackTimer += Time.deltaTime;
-
         if (_player.moveModule.isMoving) return;
         if (_attackTimer >= _attackDelay)
         {
@@ -44,6 +40,6 @@ public class PlayerAttackModule : MonoBehaviour
 
     public void AttackInput()
     {
-
+        Attack();
     }
 }
