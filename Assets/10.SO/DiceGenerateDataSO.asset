@@ -22,4 +22,4 @@ MonoBehaviour:
 
     11111'
   diceCenterPosition: {x: 0, y: -0.5}
-  dicePositionDistance: {x: 1.3, y: -1}
+  dicePositionDistance: {x: 1.3, y: -1.1}
