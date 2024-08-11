@@ -5,10 +5,6 @@ using UnityEngine;
 
 public abstract class DiceUnit : MonoBehaviour
 {
-    [SerializeField]
-    protected int _maxHP = 100;
-    protected int _curHP = 0;
-
     public DiceGrid diceGrid = null; // 어디 DiceGrid에 있을 것인지
 
     public SpriteRenderer spriteRenderer = null;
@@ -18,16 +14,6 @@ public abstract class DiceUnit : MonoBehaviour
 
     public Action<Dice> OnDiceBinded = null;
     public Action<Dice> OnDiceUnbinded = null;
-
-    protected virtual void Start()
-    {
-        SetMaxHP();
-    }
-
-    protected virtual void SetMaxHP()
-    {
-        _curHP = _maxHP;
-    }
 
     public void SetDiceGrid(DiceGrid diceGrid, Dice _dice = null)
     {

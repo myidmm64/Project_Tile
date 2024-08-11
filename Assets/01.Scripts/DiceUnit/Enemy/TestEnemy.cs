@@ -2,16 +2,29 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-public class TestEnemy : DiceUnit
+public class TestEnemy : DiceUnit, IDamagable
 {
     public TextMeshPro hpText = null;
     public float hpTextAnimatingDuration = 0.2f;
     private Sequence hpTextAnimationSeq = null;
 
-    protected override void Start()
+    private int _curHP = 0;
+    [SerializeField]
+    private int _maxHP = 0;
+
+    public int CurHP { get => _curHP; set => _curHP = value; }
+    public int MaxHP { get => _maxHP; set => _maxHP = value; }
+
+    private void Start()
     {
-        base.Start();
+        InitailizeHP();
         TestInit();
+    }
+
+    protected virtual void InitailizeHP()
+    {
+        MaxHP = _maxHP;
+        CurHP = MaxHP;
         if (hpText != null)
         {
             hpText.SetText(_curHP.ToString());
@@ -25,11 +38,11 @@ public class TestEnemy : DiceUnit
         SetSpriteSortingOrder();
     }
 
-    public override void Damage(int damage)
+    void IDamagable.Damage(int damage)
     {
-        int startHP = _curHP;
+        int startHP = CurHP;
         int destHP = startHP - damage;
-        destHP = Mathf.Clamp(destHP, 0, _maxHP);
+        destHP = Mathf.Clamp(destHP, 0, MaxHP);
         if (hpText != null)
         {
             hpTextAnimationSeq.Kill();
@@ -39,6 +52,6 @@ public class TestEnemy : DiceUnit
         }
         PopupText popup = PoolManager.Inst.Pop(EPoolType.PopupText) as PopupText;
         popup.Popup(damage.ToString(), transform.position + Vector3.up * 0.3f);
-        _curHP = destHP;
+        CurHP = destHP;
     }
 }

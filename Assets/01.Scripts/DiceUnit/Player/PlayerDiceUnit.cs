@@ -28,9 +28,8 @@ public class PlayerDiceUnit : DiceUnit
         skillModule = GetComponent<PlayerSkillModule>();
     }
 
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
         TestInit();
     }
 
