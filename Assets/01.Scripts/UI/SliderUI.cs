@@ -62,15 +62,19 @@ public class SliderUI : MonoBehaviour
 
         _slider.maxValue = sliderMaxValue;
         _slider.minValue = 0;
-        SetValue(sliderMaxValue);
+        SetValueImmediate(sliderMaxValue);
     }
 
-    public void SetValue(int value)
+    public void SetValueImmediate(float value)
     {
         _animationSeq?.Kill();
+        SetUI(value);
+    }
 
+    public void SetUI(float value)
+    {
         _slider.value = value;
-        _amountText.SetText($"{value}/{_slider.maxValue}");
+        _amountText.SetText($"{(int)value}/{_slider.maxValue}");
     }
 
     public void SetValueWithAnimation(int value, float duration)
@@ -78,12 +82,13 @@ public class SliderUI : MonoBehaviour
         _animationSeq?.Kill();
         _animationSeq = DOTween.Sequence();
 
-        value = Mathf.Clamp(value, 0, (int)_slider.maxValue);
-        _animationSeq.Append(DOTween.To(() => (int)_slider.value, 
+        float floatValue = Mathf.Clamp((float)value, 0, _slider.maxValue);
+
+        _animationSeq.Append(DOTween.To(() => _slider.value, 
             x => 
             {
-                SetValue(x);
+                SetUI(x);
             },
-            value, duration)).SetEase(Ease.Linear);
+            floatValue, duration)).SetEase(Ease.Linear);
     }
 }

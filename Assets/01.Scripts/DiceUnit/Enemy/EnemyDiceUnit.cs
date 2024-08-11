@@ -2,7 +2,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-public class TestEnemy : DiceUnit, IDamagable
+public class EnemyDiceUnit : DiceUnit, IDamagable
 {
     public TextMeshPro hpText = null;
     public float hpTextAnimatingDuration = 0.2f;
@@ -29,6 +29,9 @@ public class TestEnemy : DiceUnit, IDamagable
         {
             hpText.SetText(_curHP.ToString());
         }
+
+        MainUI.Inst.GetUIElement<EnemyUI>().nameText.SetText("보스 - 허수아비");
+        MainUI.Inst.GetUIElement<EnemyUI>().hpSlider.Initialize(MaxHP);
     }
 
     private void TestInit()
@@ -53,5 +56,7 @@ public class TestEnemy : DiceUnit, IDamagable
         PopupText popup = PoolManager.Inst.Pop(EPoolType.PopupText) as PopupText;
         popup.Popup(damage.ToString(), transform.position + Vector3.up * 0.3f);
         CurHP = destHP;
+
+        MainUI.Inst.GetUIElement<EnemyUI>().hpSlider.SetValueWithAnimation(CurHP, hpTextAnimatingDuration);
     }
 }

@@ -27,16 +27,41 @@ public class PlayerAttackModule : MonoBehaviour
         if (_player.moveModule.isMoving) return;
         if (_attackTimer >= _attackDelay)
         {
-            if (_player.diceGrid.diceUnitGrid.ContainsKey(_player.positionKey + Vector2Int.right))
+            foreach(var attackTarget in GetAttackTargets())
             {
-                _player.diceGrid.diceUnitGrid[_player.positionKey + Vector2Int.right].Damage(_player.diceGrid.grid[_player.positionKey].dicePip);
-
-                Debug.Log("Right Attack");
-                _attackTimer = 0f;
-                _player.animator.Play("Move");
+                IDamagable damagable = attackTarget.GetComponent<IDamagable>();
+                damagable.Damage(_player.dice.dicePip);
                 _player.animator.Play("NormalAttack");
+                _attackTimer = 0f;
+
+                return; // 현재 리스트 0번째만 때리고 중단함, 나중에 타겟 설정 함수 나오면 교체 
             }
         }
+    }
+
+    public List<DiceUnit> GetAttackTargets()
+    {
+        List<Vector2Int> attackRanges = new List<Vector2Int>()
+            {
+                Vector2Int.left,
+                Vector2Int.right
+            };
+
+        List<DiceUnit> result = new List<DiceUnit>();
+        foreach (var attackRange in attackRanges)
+        {
+            Vector2Int attackPositionKey = _player.positionKey + attackRange;
+            if (_player.diceGrid.diceUnitGrid.ContainsKey(attackPositionKey))
+            {
+                IDamagable damagable = _player.diceGrid.diceUnitGrid[attackPositionKey].GetComponent<IDamagable>();
+                if (damagable != null)
+                {
+                    result.Add(_player.diceGrid.diceUnitGrid[attackPositionKey]);
+                }
+            }
+        }
+
+        return result;
     }
 
     public void AttackInput(InputAction.CallbackContext context)

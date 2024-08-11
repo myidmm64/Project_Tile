@@ -645,7 +645,7 @@ Transform:
   m_GameObject: {fileID: 835569998}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.3, y: 0.7, z: 0}
+  m_LocalPosition: {x: 0, y: 0.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -695,12 +695,12 @@ SpriteRenderer:
   m_SortingLayerID: 1135833543
   m_SortingLayer: 2
   m_SortingOrder: 5
-  m_Sprite: {fileID: -4531196692211296701, guid: 9ad154f0df432364c91cd1ddb632554c, type: 3}
+  m_Sprite: {fileID: 1459458051413904079, guid: 9ad154f0df432364c91cd1ddb632554c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.84375, y: 1.40625}
+  m_Size: {x: 2.875, y: 1.8333334}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -738,6 +738,7 @@ GameObject:
   m_Component:
   - component: {fileID: 901142392}
   - component: {fileID: 901142393}
+  - component: {fileID: 901142394}
   m_Layer: 0
   m_Name: DiceGrid
   m_TagString: Untagged
@@ -773,6 +774,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _diceGenerateData: {fileID: 11400000, guid: fc02f4482129f9247b1f272cd6bfbe19, type: 2}
+--- !u!114 &901142394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 901142391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd70c4b44c65c2a45a833eb1c95003e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefix: '@'
+  backColor: {r: 1, g: 1, b: 1, a: 1}
+  fontColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &941289079
 GameObject:
   m_ObjectHideFlags: 0
@@ -951,8 +967,8 @@ Transform:
   m_GameObject: {fileID: 1435958336}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.9, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.8, z: 0}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1833481664}
@@ -1227,6 +1243,7 @@ GameObject:
   - component: {fileID: 1650557168}
   - component: {fileID: 1650557170}
   - component: {fileID: 1650557171}
+  - component: {fileID: 1650557172}
   m_Layer: 0
   m_Name: player_test
   m_TagString: Untagged
@@ -1307,6 +1324,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mpSlider: {fileID: 0}
   _ultimateSlider: {fileID: 0}
+--- !u!114 &1650557172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650557164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd70c4b44c65c2a45a833eb1c95003e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefix: '@'
+  backColor: {r: 1, g: 1, b: 1, a: 1}
+  fontColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &1707061638
 GameObject:
   m_ObjectHideFlags: 0
@@ -1647,6 +1679,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1833481664}
   - component: {fileID: 1833481665}
+  - component: {fileID: 1833481666}
   m_Layer: 0
   m_Name: enemy_test
   m_TagString: Untagged
@@ -1689,6 +1722,21 @@ MonoBehaviour:
   hpText: {fileID: 1721311707}
   hpTextAnimatingDuration: 0.2
   _maxHP: 100
+--- !u!114 &1833481666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833481662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd70c4b44c65c2a45a833eb1c95003e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefix: '@'
+  backColor: {r: 1, g: 1, b: 1, a: 1}
+  fontColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &2146625641
 GameObject:
   m_ObjectHideFlags: 0
@@ -1886,6 +1934,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2094278713300741715, guid: cedbaa5d9502e7b46871845bdebc11d5, type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7117188127496049540, guid: cedbaa5d9502e7b46871845bdebc11d5, type: 3}
       propertyPath: m_Name
       value: MainUICanvas
@@ -1918,10 +1970,10 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 901142392}
-  - {fileID: 459924830}
   - {fileID: 1650557166}
   - {fileID: 1833481664}
   - {fileID: 1707061639}
-  - {fileID: 7010602097094653055}
   - {fileID: 1787517933}
   - {fileID: 1728678038}
+  - {fileID: 459924830}
+  - {fileID: 7010602097094653055}

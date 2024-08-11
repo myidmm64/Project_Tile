@@ -57,8 +57,4 @@ public abstract class DiceUnit : MonoBehaviour
     {
         spriteRenderer.sortingOrder = 0 - positionKey.y;
     }
-
-    public virtual void Damage(int damage)
-    {
-    }
 }

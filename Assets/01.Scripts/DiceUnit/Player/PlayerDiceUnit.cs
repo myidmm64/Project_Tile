@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.GraphicsBuffer;
 
 public class PlayerDiceUnit : DiceUnit
 {
@@ -48,6 +49,40 @@ public class PlayerDiceUnit : DiceUnit
         // 3. 카운터 패턴을 하려는 적
         // 4. 거리가 가까운 적
         // 5. 최대 체력이 높은 적
+        DiceUnit nearestTarget = null;
+        Vector2 min = Vector2.negativeInfinity;
+        foreach(var diceUnitPair in diceGrid.diceUnitGrid)
+        {
+            if (diceUnitPair.Value.Equals(this)) continue; // 내가 제일 가까울 거니까 이건 스킵
+
+            Vector2 length = diceUnitPair.Key - positionKey;
+            if(length.sqrMagnitude < min.sqrMagnitude)
+            {
+                min = length;
+                nearestTarget = diceUnitPair.Value;
+            }
+        }
+
+        if( nearestTarget != null )
+        {
+            Vector2 referenceDirection = Vector2.right;
+            Vector2 toTarget = nearestTarget.positionKey - positionKey;
+            toTarget.Normalize();
+
+            float dotProduct = Vector2.Dot(referenceDirection, toTarget);
+
+            // 좌우 판별
+            if (dotProduct > 0)
+            {
+                spriteRenderer.flipX = false;
+            }
+            else if (dotProduct < 0)
+            {
+                spriteRenderer.flipX = true;
+            }
+
+        }
+
     }
 
     private void TestInit()
