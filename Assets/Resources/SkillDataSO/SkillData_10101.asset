@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: SkillData_10101
   m_EditorClassIdentifier: 
   _maxMP: 100
+  _skillImage: {fileID: -7673647226812168316, guid: 19c2bc56d36c9c149a633020f2694e5d, type: 3}
+  _skillName: "\uD53C \uAC00\uB974\uAE30"
   _skillPrefab: {fileID: 2135497281614048242, guid: ace0486bed91965418ab451689f85b74, type: 3}

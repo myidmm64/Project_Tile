@@ -61,9 +61,9 @@ public static class Utility
         _ => 0f,
     };
 
-    public static SkillDataSO GetSkillDataSO(string skillID)
+    public static SkillDataSO GetSkillDataSO(int skillID)
     {
-        string resourcePath = $"SkillDataSO/SkillData_{skillID}";
+        string resourcePath = $"SkillDataSO/SkillData_{skillID.ToString()}";
         SkillDataSO data = Resources.Load<SkillDataSO>(resourcePath);
         if(data == null)
         {
