@@ -46,17 +46,30 @@ public static class Utility
         _ => EDirection.None,
     };
 
+    // 우측 기준
     public static float GetZRotate(EDirection direction) => direction switch
     {
         EDirection.None => 0f,
-        EDirection.Left => 90f,
-        EDirection.Right => -90f,
-        EDirection.Up => 0f,
-        EDirection.Down => 180f,
-        EDirection.LeftUp => 45f,
-        EDirection.RightUp => -45f,
-        EDirection.LeftDown => 135f,
-        EDirection.RightDown => -135f,
+        EDirection.Left => 180f,
+        EDirection.Right => 0f,
+        EDirection.Up => 90f,
+        EDirection.Down => -90f,
+        EDirection.LeftUp => 135f,
+        EDirection.RightUp => 45f,
+        EDirection.LeftDown => -135f,
+        EDirection.RightDown => -45f,
         _ => 0f,
     };
+
+    public static SkillDataSO GetSkillDataSO(string skillID)
+    {
+        string resourcePath = $"SkillDataSO/SkillData_{skillID}";
+        SkillDataSO data = Resources.Load<SkillDataSO>(resourcePath);
+        if(data == null)
+        {
+            Debug.LogError($"리소스를 찾지 못함. resourcePath : {resourcePath}");
+            return null;
+        }
+        return data;
+    }
 }
