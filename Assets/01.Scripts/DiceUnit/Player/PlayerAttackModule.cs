@@ -33,6 +33,7 @@ public class PlayerAttackModule : MonoBehaviour
                 damagable.Damage(_player.dice.dicePip);
                 _player.animator.Play("NormalAttack");
                 _attackTimer = 0f;
+                _player.skillModule.IncreaseMP(20);
 
                 return; // 현재 리스트 0번째만 때리고 중단함, 나중에 타겟 설정 함수 나오면 교체 
             }

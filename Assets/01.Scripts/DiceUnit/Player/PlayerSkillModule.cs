@@ -5,37 +5,35 @@ using UnityEngine.UI;
 public class PlayerSkillModule : PlayerModule
 {
     [SerializeField]
-    private Slider _mpSlider = null;
-    [SerializeField]
-    private Slider _ultimateSlider = null;
+    private float _mpSliderAnimationDuration = 0.2f;
+    public int curMP = 0;
+    public int maxMP = 100;
 
-    protected override void Awake()
+    private void Start()
     {
-        base.Awake();
-        if(_mpSlider != null)
-        {
-            _mpSlider.minValue = 0;
-            _mpSlider.maxValue = 100;
-        }
-        if (_ultimateSlider != null)
-        {
-            _ultimateSlider.minValue = 0;
-            _ultimateSlider.maxValue = 100;
-        }
+        MainUI.Inst.GetUIElement<CharacterUI>().mpSlider.Initialize(maxMP);
+        MainUI.Inst.GetUIElement<CharacterUI>().mpSlider.SetValueImmediate(0);
     }
 
     public void IncreaseMP(int amount)
     {
-        _mpSlider.value += _mpSlider.value + amount;
+        curMP += amount;
+        curMP = Mathf.Clamp(curMP, 0, maxMP);
+        MainUI.Inst.GetUIElement<CharacterUI>().mpSlider.SetValueWithAnimation(curMP, _mpSliderAnimationDuration);
     }
 
-    public void IncreaseUP(int amount)
+    public void UseSkill()
     {
-        _ultimateSlider.value += amount;
+        if (curMP < maxMP) return;
+
+        curMP = 0;
+        MainUI.Inst.GetUIElement<CharacterUI>().mpSlider.SetValueWithAnimation(0, _mpSliderAnimationDuration);
+        Debug.Log("SKILL");
     }
 
     public void SkillInput(InputAction.CallbackContext context)
     {
-
+        if (context.performed)
+            UseSkill();
     }
 }
