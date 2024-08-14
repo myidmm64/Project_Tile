@@ -90,4 +90,9 @@ public class PlayerDiceUnit : DiceUnit
         ChangeMyDice(new Vector2Int(1, 1));
         transform.position = dice.groundPos;
     }
+
+    public EDirection GetDirection()
+    {
+        return spriteRenderer.flipX ? EDirection.Left : EDirection.Right;
+    }
 }

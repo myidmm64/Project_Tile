@@ -4,17 +4,20 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class PlayerAttackModule : MonoBehaviour
+public class PlayerAttackModule : PlayerModule
 {
-    // 플레이어 기본 공격
-    private PlayerDiceUnit _player = null;
+    [SerializeField]
+    private int _attackSkillID = 0;
+    private SkillDataSO _attackSkillData = null;
 
     [SerializeField]
     private float _attackDelay = 0.5f;
     private float _attackTimer = 0f;
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _player = GetComponent<PlayerDiceUnit>();
+        _attackSkillData = Utility.GetSkillDataSO(_attackSkillID);
     }
 
     private void Update()
@@ -27,17 +30,30 @@ public class PlayerAttackModule : MonoBehaviour
         if (_player.moveModule.isMoving) return;
         if (_attackTimer >= _attackDelay)
         {
+            SUseSkillData useSkillData = new SUseSkillData();
+            useSkillData.owner = _player;
+            useSkillData.direction = _player.GetDirection();
+            useSkillData.specialActions = new Dictionary<string, System.Action>();
+            useSkillData.specialActions.Add("SuccessAttack", SuccessAttack);
+            _attackSkillData.GetSkill().UseSkill(useSkillData);
+            _attackTimer = 0f;
+
+            /*
             foreach(var attackTarget in GetAttackTargets())
             {
                 IDamagable damagable = attackTarget.GetComponent<IDamagable>();
                 damagable.Damage(_player.dice.dicePip);
                 _player.animator.Play("NormalAttack");
-                _attackTimer = 0f;
-                _player.skillModule.IncreaseMP(20);
 
                 return; // 현재 리스트 0번째만 때리고 중단함, 나중에 타겟 설정 함수 나오면 교체 
             }
+            */
         }
+    }
+
+    private void SuccessAttack()
+    {
+        _player.skillModule.IncreaseMP(20);
     }
 
     public List<DiceUnit> GetAttackTargets()

@@ -3,16 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "SO/SkillData")]
 public class SkillDataSO : ScriptableObject
 {
-    [SerializeField]
-    private int _maxMP;
-    public int MaxMP => _maxMP;
-    [SerializeField]
-    private Sprite _skillImage;
-    public Sprite SkillImage => _skillImage;
-    [SerializeField]
-    private string _skillName;
-    public string SkillName => _skillName;
-
+    public SSkillData data;
     [SerializeField]
     private GameObject _skillPrefab;
 

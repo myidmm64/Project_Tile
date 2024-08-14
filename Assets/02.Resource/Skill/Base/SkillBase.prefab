@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9014537683433564555}
-  - component: {fileID: 6772281383839391002}
   m_Layer: 0
   m_Name: SkillBase
   m_TagString: Untagged
@@ -33,18 +32,6 @@ Transform:
   - {fileID: 6300687670005254644}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6772281383839391002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 813078289074928784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c35bd2255e5640543b51eede74902a56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3970288130146765085
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,27 +22,29 @@ public class PlayerSkillModule : PlayerModule
     {
         _skillData = Utility.GetSkillDataSO(skillID);
 
-        MainUI.Inst.GetUIElement<CharacterUI>().mpSlider.Initialize(_skillData.MaxMP);
+        MainUI.Inst.GetUIElement<CharacterUI>().mpSlider.Initialize(_skillData.data.maxMP);
         MainUI.Inst.GetUIElement<CharacterUI>().mpSlider.SetValueImmediate(curMP);
-        MainUI.Inst.GetUIElement<CharacterUI>().normalSkillImage.sprite = _skillData.SkillImage;
-        Debug.Log($"Set Normal Skill / Skill Name : {_skillData.SkillName}, Skill ID : {skillID}");
+        MainUI.Inst.GetUIElement<CharacterUI>().normalSkillImage.sprite = _skillData.data.SkillImage;
+        Debug.Log($"Set Normal Skill / Skill Name : {_skillData.data.skillName}, Skill ID : {skillID}");
     }
 
     public void IncreaseMP(int amount)
     {
         curMP += amount;
-        curMP = Mathf.Clamp(curMP, 0, _skillData.MaxMP);
+        curMP = Mathf.Clamp(curMP, 0, _skillData.data.maxMP);
         MainUI.Inst.GetUIElement<CharacterUI>().mpSlider.SetValueWithAnimation(curMP, _mpSliderAnimationDuration);
     }
 
     public void UseSkill()
     {
-        if (curMP < _skillData.MaxMP) return;
+        if (curMP < _skillData.data.maxMP) return;
 
         curMP = 0;
         MainUI.Inst.GetUIElement<CharacterUI>().mpSlider.SetValueWithAnimation(0, _mpSliderAnimationDuration);
-        EDirection direction = _player.spriteRenderer.flipX ? EDirection.Left : EDirection.Right; // 나중에 타겟을 바라보도록 수정
-        _skillData.GetSkill().UseSkill(_player, _player.diceGrid, direction);
+        SUseSkillData useSkillData = new SUseSkillData();
+        useSkillData.owner = _player;
+        useSkillData.direction = _player.GetDirection();
+        _skillData.GetSkill().UseSkill(useSkillData);
     }
 
     public void SkillInput(InputAction.CallbackContext context)

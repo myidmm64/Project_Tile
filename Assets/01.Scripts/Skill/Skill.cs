@@ -21,5 +21,5 @@ public abstract class Skill : MonoBehaviour
         return false;
     }
 
-    public abstract void UseSkill(DiceUnit owner, DiceGrid grid, EDirection direction);
+    public abstract void UseSkill(SUseSkillData data);
 }

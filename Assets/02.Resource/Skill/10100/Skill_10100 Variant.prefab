@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &1651252145976924002
+--- !u!1001 &5945436857029364721
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,19 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 813078289074928784, guid: ff851866584fd504293d3abf539653b6, type: 3}
       propertyPath: m_Name
-      value: Skill_10101
+      value: Skill_10100 Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 1739506860447864284, guid: ff851866584fd504293d3abf539653b6, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6223070851224314816, guid: ff851866584fd504293d3abf539653b6, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6223070851224314816, guid: ff851866584fd504293d3abf539653b6, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6223070851224314816, guid: ff851866584fd504293d3abf539653b6, type: 3}
-      propertyPath: m_Color.r
-      value: 1
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9014537683433564555, guid: ff851866584fd504293d3abf539653b6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -64,28 +60,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6772281383839391002, guid: ff851866584fd504293d3abf539653b6, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 813078289074928784, guid: ff851866584fd504293d3abf539653b6, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7742892211286561267}
+      addedObject: {fileID: 8566231698481581434}
   m_SourcePrefab: {fileID: 100100000, guid: ff851866584fd504293d3abf539653b6, type: 3}
---- !u!1 &2135497281614048242 stripped
+--- !u!1 &6470209452307167073 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 813078289074928784, guid: ff851866584fd504293d3abf539653b6, type: 3}
-  m_PrefabInstance: {fileID: 1651252145976924002}
+  m_PrefabInstance: {fileID: 5945436857029364721}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7742892211286561267
+--- !u!114 &8566231698481581434
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2135497281614048242}
+  m_GameObject: {fileID: 6470209452307167073}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c35bd2255e5640543b51eede74902a56, type: 3}
+  m_Script: {fileID: 11500000, guid: 63d575e3fcd717d41b311b1764942d9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
