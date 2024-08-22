@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0afe4845a911b04a9770167eadab574, type: 3}
-  m_Name: SkillData_10100
+  m_Name: SkillData_10102
   m_EditorClassIdentifier: 
   data:
-    skillType: 0
+    skillType: 3
     maxMP: 0
     rangePattern: 
     _skillImage: {fileID: 0}
-    _skillName: "\uD50C\uB808\uC774\uC5B4 1 \uAE30\uBCF8 \uACF5\uACA9"
-  _skillPrefab: {fileID: 6470209452307167073, guid: a42897114aa37f2439d67799e1497e88, type: 3}
+    _skillName: 
+  _skillPrefab: {fileID: 2135497281614048242, guid: ace0486bed91965418ab451689f85b74, type: 3}

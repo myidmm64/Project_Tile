@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public struct SSkillData
 {
+    public ESkillType skillType;
     public int maxMP;
     [TextArea]
     public string rangePattern;
