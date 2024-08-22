@@ -1752,7 +1752,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3741096432892132471, guid: 64b086bf9f189c7468d3cc387242b710, type: 3}
       propertyPath: m_Name
-      value: MPSlider
+      value: DPSlider
       objectReference: {fileID: 0}
     - target: {fileID: 4129048558836738133, guid: 64b086bf9f189c7468d3cc387242b710, type: 3}
       propertyPath: m_Pivot.x

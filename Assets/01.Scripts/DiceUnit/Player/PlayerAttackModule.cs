@@ -53,7 +53,7 @@ public class PlayerAttackModule : PlayerModule
 
     private void SuccessAttack()
     {
-        _player.skillModule.IncreaseMP(20);
+        _player.skillModule.IncreaseDP(20);
     }
 
     public List<DiceUnit> GetAttackTargets()

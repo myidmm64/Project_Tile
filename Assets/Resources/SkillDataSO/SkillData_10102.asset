@@ -14,8 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
     skillType: 3
+    cooltime: 5
     maxMP: 0
-    rangePattern: 
+    rangePattern: '111
+
+      111
+
+      111'
     _skillImage: {fileID: 0}
     _skillName: 
-  _skillPrefab: {fileID: 2135497281614048242, guid: ace0486bed91965418ab451689f85b74, type: 3}
+  _skillPrefab: {fileID: 2616406365457436393, guid: 77603481ef3c1b645bf8d056f82b4a7a, type: 3}

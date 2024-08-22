@@ -6,7 +6,8 @@ using UnityEngine;
 public struct SSkillData
 {
     public ESkillType skillType;
-    public int maxMP;
+    public float cooltime;
+    public int maxDP;
     [TextArea]
     public string rangePattern;
 

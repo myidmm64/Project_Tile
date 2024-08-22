@@ -1323,9 +1323,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c049d44df9a5e5c479dcbc369f141904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mpSliderAnimationDuration: 0.2
+  _dpSliderAnimationDuration: 0.2
   _skillID: 10101
-  curMP: 0
+  curDP: 0
 --- !u!114 &1650557172
 MonoBehaviour:
   m_ObjectHideFlags: 0

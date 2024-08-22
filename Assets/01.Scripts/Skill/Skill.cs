@@ -4,6 +4,7 @@ public abstract class Skill : MonoBehaviour
 {
     protected Animator _animator = null;
     protected SpriteRenderer _spriteRenderer = null;
+    protected SSkillData _skillData;
 
     protected virtual void Awake()
     {
@@ -21,5 +22,9 @@ public abstract class Skill : MonoBehaviour
         return false;
     }
 
+    public void SetSkillData(SSkillData skillData)
+    {
+        _skillData = skillData;
+    }
     public abstract void UseSkill(SUseSkillData data);
 }
