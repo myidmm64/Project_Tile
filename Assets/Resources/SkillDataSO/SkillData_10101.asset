@@ -15,7 +15,7 @@ MonoBehaviour:
   data:
     skillType: 2
     cooltime: 0
-    maxMP: 100
+    maxDP: 100
     rangePattern: 001
     _skillImage: {fileID: 0}
     _skillName: 

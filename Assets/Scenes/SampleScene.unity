@@ -1324,7 +1324,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dpSliderAnimationDuration: 0.2
-  _skillID: 10101
+  skillIDs: 752700007627000077270000
   curDP: 0
 --- !u!114 &1650557172
 MonoBehaviour:
