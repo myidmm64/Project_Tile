@@ -21,19 +21,19 @@ public abstract class DiceUnit : MonoBehaviour
         if(_dice != null) dice = _dice;
     }
 
-    public bool ChangeMyDice(Vector2Int targetPositionKey)
+    public bool ChangeMyDice(Vector2Int targetPositionKey, bool setSortingOrder = true)
     {
         if (diceGrid == null) return false;
 
         if(diceGrid.grid.TryGetValue(targetPositionKey, out Dice targetDice))
         {
-            return ChangeMyDice(targetDice);
+            return ChangeMyDice(targetDice, setSortingOrder);
         }
 
         return false;
     }
 
-    public bool ChangeMyDice(Dice targetDice)
+    public bool ChangeMyDice(Dice targetDice, bool setSortingOrder = true)
     {
         if (diceGrid == null) return false;
         bool changable = diceGrid.diceUnitGrid.ContainsKey(targetDice.positionKey) == false 
@@ -50,6 +50,7 @@ public abstract class DiceUnit : MonoBehaviour
         dice = targetDice;
         diceGrid.diceUnitGrid[positionKey] = this;
         OnDiceBinded?.Invoke(targetDice);
+        if (setSortingOrder) SetSpriteSortingOrder();
         return true;
     }
 

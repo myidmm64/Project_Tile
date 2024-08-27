@@ -1,62 +1,99 @@
 using DG.Tweening;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class EnemyDiceUnit : DiceUnit, IDamagable
+public abstract class EnemyDiceUnit : DiceUnit, IDamagable
 {
-    public TextMeshPro hpText = null;
-    public float hpTextAnimatingDuration = 0.2f;
-    private Sequence hpTextAnimationSeq = null;
+    protected List<EnemyPattern> _patterns = new List<EnemyPattern>();
+    private HashSet<EnemyPattern> _cooldownPatterns = new HashSet<EnemyPattern>();
+    protected EnemyPattern _currentPattern = null;
 
-    private int _curHP = 0;
-    [SerializeField]
-    private int _maxHP = 0;
+    public abstract int CurHP { get; set; }
+    public abstract int MaxHP { get; set; }
 
-    public int CurHP { get => _curHP; set => _curHP = value; }
-    public int MaxHP { get => _maxHP; set => _maxHP = value; }
+    protected abstract void Initialize();
+    protected abstract void BindPattern();
+    public abstract void Damage(int damage);
 
-    private void Start()
+    protected virtual void Awake()
     {
-        InitailizeHP();
-        TestInit();
+        BindPattern();
+        Initialize();
     }
 
-    protected virtual void InitailizeHP()
+    protected virtual void Start()
     {
-        MaxHP = _maxHP;
-        CurHP = MaxHP;
-        if (hpText != null)
+
+    }
+
+    protected virtual void Update()
+    {
+        PatternCycle();
+    }
+
+    private void PatternCycle()
+    {
+        if(_currentPattern == null)
         {
-            hpText.SetText(_curHP.ToString());
+            _currentPattern = GetNextPattern();
+            if(_currentPattern != null)
+            {
+                Debug.Log($"Pattern Enter : {_currentPattern.GetType()}");
+                _currentPattern.Enter();
+            }
+        }
+        if (_currentPattern == null)
+        {
+            // Debug.Log($"GetNextPattern으로 패턴을 찾지 못했음.");
+            return;
         }
 
-        MainUI.Inst.GetUIElement<EnemyUI>().nameText.SetText("보스 - 허수아비");
-        MainUI.Inst.GetUIElement<EnemyUI>().hpSlider.Initialize(MaxHP);
-    }
-
-    private void TestInit()
-    {
-        ChangeMyDice(new Vector2Int(2, 2));
-        transform.position = dice.transform.position;
-        SetSpriteSortingOrder();
-    }
-
-    void IDamagable.Damage(int damage)
-    {
-        int startHP = CurHP;
-        int destHP = startHP - damage;
-        destHP = Mathf.Clamp(destHP, 0, MaxHP);
-        if (hpText != null)
+        _currentPattern.Update();
+        if(_currentPattern.isEnded)
         {
-            hpTextAnimationSeq.Kill();
-            hpTextAnimationSeq = DOTween.Sequence();
-            hpTextAnimationSeq.Append(DOTween.To(() => startHP, x => { hpText.SetText(x.ToString()); }, destHP, hpTextAnimatingDuration))
-                .SetEase(Ease.Linear);
+            Debug.Log($"Pattern Exit : {_currentPattern.GetType()}");
+            _currentPattern.Exit();
+            StartCoroutine(PatternCooldownCoroutine(_currentPattern));
+            _currentPattern = null;
         }
-        PopupText popup = PoolManager.Inst.Pop(EPoolType.PopupText) as PopupText;
-        popup.Popup(damage.ToString(), transform.position + Vector3.up * 0.3f);
-        CurHP = destHP;
+    }
 
-        MainUI.Inst.GetUIElement<EnemyUI>().hpSlider.SetValueWithAnimation(CurHP, hpTextAnimatingDuration);
+    private IEnumerator PatternCooldownCoroutine(EnemyPattern pattern)
+    {
+        _cooldownPatterns.Add(pattern);
+        yield return new WaitForSeconds(pattern.GetCooltime());
+        _cooldownPatterns.Remove(pattern);
+    }
+
+    private EnemyPattern GetNextPattern()
+    {
+        List<EnemyPattern> canStartPatterns = null;
+        foreach(var pattern in _patterns)
+        {
+            // 쿨다운중이지 않고, 스타트할 수 있다면
+            if(_cooldownPatterns.Contains(pattern) == false && pattern.CanStartPattern())
+            {
+                if(canStartPatterns == null) canStartPatterns = new List<EnemyPattern>();
+                canStartPatterns.Add(pattern);
+            }
+        }
+
+        // 가장 우선순위가 높은 것
+        if(canStartPatterns != null && canStartPatterns.Count > 0)
+        {
+            int highestPriority = canStartPatterns.Max(p => p.GetPatternPriority());
+
+            var highestPriorityPatterns = canStartPatterns
+            .Where(p => p.GetPatternPriority() == highestPriority)
+            .ToList();
+
+            int randomIndex = Random.Range(0, highestPriorityPatterns.Count);
+            return highestPriorityPatterns[randomIndex];
+        }
+
+        return null;
     }
 }
