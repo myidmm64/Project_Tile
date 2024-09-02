@@ -2,5 +2,6 @@ public enum EPoolType
 {
     None,
     Dice,
-    PopupText
+    PopupText,
+    DiceTelegraph
 }

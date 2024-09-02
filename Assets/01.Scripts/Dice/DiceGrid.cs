@@ -65,6 +65,48 @@ public class DiceGrid : MonoBehaviour
         }
     }
 
+    // 가장 가까운 DiceUnit의 PositionKey 추출
+    public Vector2Int FindClosestUnitTile(Vector2Int start)
+    {
+        Queue<Vector2Int> queue = new Queue<Vector2Int>();
+        HashSet<Vector2Int> visited = new HashSet<Vector2Int>();
+
+        queue.Enqueue(start);
+        visited.Add(start);
+
+        Vector2Int[] directions = new Vector2Int[]
+        {
+            new Vector2Int(0, 1),  // 위
+            new Vector2Int(0, -1), // 아래
+            new Vector2Int(1, 0),  // 오른쪽
+            new Vector2Int(-1, 0)  // 왼쪽
+        };
+
+        while (queue.Count > 0)
+        {
+            Vector2Int current = queue.Dequeue();
+
+            // 적이 있는 타일을 찾으면 반환
+            if (current != start && diceUnitGrid.ContainsKey(current))
+            {
+                return current;
+            }
+
+            foreach (Vector2Int dir in directions)
+            {
+                Vector2Int next = current + dir;
+
+                if (!visited.Contains(next))
+                {
+                    queue.Enqueue(next);
+                    visited.Add(next);
+                }
+            }
+        }
+
+        return new Vector2Int(-1, -1);
+    }
+
     private Vector2 GetPaddingPos(Vector2 pos, Vector2 padding)
     {
         return pos * padding;

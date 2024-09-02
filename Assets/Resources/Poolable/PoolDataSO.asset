@@ -24,3 +24,8 @@ MonoBehaviour:
     ePoolType: 2
     obj: {fileID: 668412336809047233, guid: 7e5c3949daa20a843ad10f351cfa2bdb, type: 3}
     generateCount: 10
+  - name: Telegraph
+    hashCode: 56334
+    ePoolType: 3
+    obj: {fileID: 1024866172339358138, guid: dcf58fa9f969ceb46a4f4cda94cf073b, type: 3}
+    generateCount: 10

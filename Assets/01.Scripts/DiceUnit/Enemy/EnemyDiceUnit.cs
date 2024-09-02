@@ -18,8 +18,9 @@ public abstract class EnemyDiceUnit : DiceUnit, IDamagable
     protected abstract void BindPattern();
     public abstract void Damage(int damage);
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         BindPattern();
         Initialize();
     }
@@ -29,8 +30,9 @@ public abstract class EnemyDiceUnit : DiceUnit, IDamagable
 
     }
 
-    protected virtual void Update()
+    protected override void Update()
     {
+        base.Update();
         PatternCycle();
     }
 
