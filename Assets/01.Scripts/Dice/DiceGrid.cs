@@ -65,8 +65,13 @@ public class DiceGrid : MonoBehaviour
         }
     }
 
-    // 가장 가까운 DiceUnit의 PositionKey 추출
     public Vector2Int FindClosestUnitTile(Vector2Int start)
+    {
+        return FindClosestUnitTile<DiceUnit>(start);
+    }
+
+    // 가장 가까운 DiceUnit의 PositionKey 추출
+    public Vector2Int FindClosestUnitTile<T>(Vector2Int start) where T : DiceUnit
     {
         Queue<Vector2Int> queue = new Queue<Vector2Int>();
         HashSet<Vector2Int> visited = new HashSet<Vector2Int>();
@@ -89,7 +94,10 @@ public class DiceGrid : MonoBehaviour
             // 적이 있는 타일을 찾으면 반환
             if (current != start && diceUnitGrid.ContainsKey(current))
             {
-                return current;
+                if (diceUnitGrid[current] is T)
+                {
+                    return current;
+                }
             }
 
             foreach (Vector2Int dir in directions)
