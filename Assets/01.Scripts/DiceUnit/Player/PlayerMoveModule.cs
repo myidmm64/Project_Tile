@@ -23,7 +23,7 @@ public class PlayerMoveModule : PlayerModule
             Vector2Int targetPositionKey = _player.positionKey + inputDir;
             if (_player.ChangeMyDice(targetPositionKey))
             {
-                _player.animator.SetFloat("Horizontal", inputDir.x);
+                _player.animator.SetFloat("Horizontal", _player.GetDirection() == EDirection.Left ? inputDir.x * -1f : inputDir.x);
                 _player.animator.SetFloat("Vertical", inputDir.y);
                 _player.animator.Play("Move");
                 MoveAnimation(); // Seq, Animator 등을 이용한 시각적 이동
