@@ -11,7 +11,8 @@ public static class IEnumerableVector2IntExtensions
     /// <returns></returns>
     public static IEnumerable<Vector2Int> ExcludeReduplication(this IEnumerable<Vector2Int> positionKeys)
     {
-        return positionKeys.Distinct();
+        positionKeys = positionKeys.Distinct();
+        return positionKeys;
     }
 
     /// <summary>
@@ -22,19 +23,23 @@ public static class IEnumerableVector2IntExtensions
     /// <returns></returns>
     public static IEnumerable<Vector2Int> ExceptKeys(this IEnumerable<Vector2Int> positionkeys, IEnumerable<Vector2Int> exceptPositionkeys)
     {
-        return positionkeys.Except(exceptPositionkeys);
+        positionkeys = positionkeys.Except(exceptPositionkeys);
+        return positionkeys;
     }
 
     public static IEnumerable<Vector2Int> AddKeys(this IEnumerable<Vector2Int> positionKeys, params Vector2Int[] addPositions)
     {
         List<Vector2Int> result = positionKeys.ToList();
         result.AddRange(addPositions);
+
+        positionKeys = result;
         return result;
     }
 
     public static IEnumerable<Vector2Int> SubKeys(this IEnumerable<Vector2Int> positionKeys, params Vector2Int[] subPositions)
     {
         List<Vector2Int> result = positionKeys.ToList();
-        return (result.ExceptKeys(subPositions)).ExcludeReduplication();
+        positionKeys = (result.ExceptKeys(subPositions)).ExcludeReduplication();
+        return positionKeys;
     }
 }

@@ -36,6 +36,15 @@ public abstract class EnemyDiceUnit : DiceUnit, IDamagable
         PatternCycle();
     }
 
+    public PlayerDiceUnit GetPlayer()
+    {
+        foreach(var diceUnit in diceGrid.diceUnitGrid.Values)
+        {
+            if (diceUnit is PlayerDiceUnit) return diceUnit as PlayerDiceUnit;
+        }
+        return null;
+    }
+
     private void PatternCycle()
     {
         if(_currentPattern == null)
@@ -43,7 +52,7 @@ public abstract class EnemyDiceUnit : DiceUnit, IDamagable
             _currentPattern = GetNextPattern();
             if(_currentPattern != null)
             {
-                Debug.Log($"Pattern Enter : {_currentPattern.GetType()}");
+                // Debug.Log($"Pattern Enter : {_currentPattern.GetType()}");
                 _currentPattern.Enter();
             }
         }
@@ -56,7 +65,7 @@ public abstract class EnemyDiceUnit : DiceUnit, IDamagable
         _currentPattern.Update();
         if(_currentPattern.isEnded)
         {
-            Debug.Log($"Pattern Exit : {_currentPattern.GetType()}");
+            // Debug.Log($"Pattern Exit : {_currentPattern.GetType()}");
             _currentPattern.Exit();
             StartCoroutine(PatternCooldownCoroutine(_currentPattern));
             _currentPattern = null;

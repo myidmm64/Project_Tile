@@ -3,7 +3,7 @@ using UnityEngine;
 
 public static class PosKeyUtil
 {
-    public static IEnumerable<Vector2Int> Line(Vector2Int startPos, EDirection direction, int count, bool plusReflect = false, EDirection rotateDirection = EDirection.Up)
+    public static IEnumerable<Vector2Int> Line(Vector2Int startPos, EDirection direction, int count, bool plusReflect = false, EDirection rotateDirection = EDirection.Right)
     {
         List<Vector2Int> result = new List<Vector2Int>();
 
@@ -70,7 +70,7 @@ public static class PosKeyUtil
         return result.ExcludeReduplication();
     }
 
-    public static IEnumerable<Vector2Int> Rectangle(Vector2Int centerPos, int width, int height, bool isBorder = false, EDirection rotateDirection = EDirection.Up)
+    public static IEnumerable<Vector2Int> Rectangle(Vector2Int centerPos, int width, int height, bool isBorder = false, EDirection rotateDirection = EDirection.Right)
     {
         if (width % 2 == 0)
         {
@@ -103,7 +103,7 @@ public static class PosKeyUtil
         return result;
     }
 
-    public static IEnumerable<Vector2Int> StrPattern(Vector2Int centerPos, string pattern, EDirection rotateDirection = EDirection.Up)
+    public static IEnumerable<Vector2Int> StrPattern(Vector2Int centerPos, string pattern, EDirection rotateDirection = EDirection.Right)
     {
         List<Vector2Int> result = new List<Vector2Int>();
         List<Vector2Int> positionKeys = StringToPositionKey(centerPos, pattern);
@@ -116,7 +116,7 @@ public static class PosKeyUtil
 
     private static Vector2Int RotatedPositionKey(Vector2Int targetKey, Vector2Int startkey, EDirection rotateDirection)
     {
-        if (rotateDirection == EDirection.Up) return targetKey;
+        if (rotateDirection == EDirection.Right) return targetKey;
         Vector2 result = Quaternion.AngleAxis(Utility.GetZRotate(rotateDirection), Vector3.forward) * ((Vector2)(targetKey - startkey));
         return startkey + Vector2Int.RoundToInt(result);
     }
@@ -147,5 +147,38 @@ public static class PosKeyUtil
         }
 
         return result;
+    }
+
+    public static EDirection GetDirectionToTarget(Vector2Int start, Vector2Int target)
+    {
+        // 적과 플레이어 사이의 벡터를 계산
+        Vector2 direction = target - start;
+
+        // 각도를 구하기 위해 arctangent 함수를 사용하여 방향 벡터의 각도 계산 (라디안에서 각도로 변환)
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        // 각도를 0 ~ 360도 사이로 정규화
+        if (angle < 0) angle += 360;
+
+        // 8방향 중 하나를 결정
+        if (angle >= 337.5f || angle < 22.5f)
+            return EDirection.Right;       // 0도
+        else if (angle >= 22.5f && angle < 67.5f)
+            return EDirection.RightUp;     // 45도
+        else if (angle >= 67.5f && angle < 112.5f)
+            return EDirection.Up;          // 90도
+        else if (angle >= 112.5f && angle < 157.5f)
+            return EDirection.LeftUp;      // 135도
+        else if (angle >= 157.5f && angle < 202.5f)
+            return EDirection.Left;        // 180도
+        else if (angle >= 202.5f && angle < 247.5f)
+            return EDirection.LeftDown;    // 225도
+        else if (angle >= 247.5f && angle < 292.5f)
+            return EDirection.Down;        // 270도
+        else if (angle >= 292.5f && angle < 337.5f)
+            return EDirection.RightDown;   // 315도
+
+        // 기본값으로 Down을 반환 (여기에 도달할 경우가 없어야 함)
+        return EDirection.Down;
     }
 }

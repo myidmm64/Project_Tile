@@ -1,7 +1,10 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public abstract class EnemyPattern
 {
@@ -24,8 +27,25 @@ public abstract class EnemyPattern
     public abstract void Enter();
     public abstract void Update();
     public abstract void Exit();
+
+    // 기본 움직임
+    protected virtual bool Move(Vector2Int dest, Action Callback)
+    {
+        bool moved = _diceUnit.ChangeMyDice(dest);
+        if (moved)
+        {
+            Sequence _moveSeq = DOTween.Sequence();
+            _moveSeq.Append(_diceUnit.transform.DOMove(_diceUnit.dice.groundPos, 0.15f)).SetEase(Ease.Linear);
+            _moveSeq.AppendCallback(() =>
+            {
+                Callback?.Invoke();
+            });
+        }
+
+        return moved;
+    }
     
-    protected void NormalAttack(float telegraphTime, float preWaitTime, string animationName, List<Vector2Int> attackRange, int damage, Action Callback)
+    protected virtual void NormalAttack(float telegraphTime, float preWaitTime, string animationName, List<Vector2Int> attackRange, int damage, Action Callback)
     {
         _diceUnit.StartCoroutine(NormalAttackCoroutine(telegraphTime, preWaitTime, animationName, attackRange, damage, Callback));
     }
@@ -38,30 +58,25 @@ public abstract class EnemyPattern
             if(_diceUnit.diceGrid.grid.ContainsKey(attackPositionKey))
             {
                 var telegraph = PoolManager.Inst.Pop(EPoolType.DiceTelegraph) as DiceTelegraph;
-                telegraph.StartTelepgraph(_diceUnit.diceGrid, attackPositionKey, telegraphTime, null);
+                telegraph.StartTelepgraph(_diceUnit.diceGrid, attackPositionKey, telegraphTime, ()=>
+                {
+                    List<Vector2Int> telegraphPosKey = new List<Vector2Int>();
+                    telegraphPosKey.Add(attackPositionKey);
+                    var units = _diceUnit.diceGrid.GetDiceUnits(telegraphPosKey);
+                    foreach (var unit in units)
+                    {
+                        if (unit is PlayerDiceUnit) // 플레이어
+                        {
+                            PlayerDiceUnit player = unit as PlayerDiceUnit;
+                            player.Damage(damage);
+                        }
+                    }
+                    Callback?.Invoke();
+                });
             }
         }
 
         yield return new WaitForSeconds(preWaitTime);
-
         _diceUnit.animator.Play(animationName);
-        yield return new WaitForSeconds(_diceUnit.animator.GetCurrentAnimatorStateInfo(0).length);
-
-        foreach (var attackPositionKey in attackRange)
-        {
-            if(_diceUnit.diceGrid.diceUnitGrid.TryGetValue(attackPositionKey, out var diceUnit))
-            {
-                if(diceUnit is PlayerDiceUnit) // 플레이어
-                {
-                    IDamagable damageable = diceUnit.GetComponent<IDamagable>();
-                    if(damageable != null)
-                    {
-                        damageable.Damage(damage);
-                    }
-                }
-            }
-        }
-
-        Callback?.Invoke();
     }
 }
