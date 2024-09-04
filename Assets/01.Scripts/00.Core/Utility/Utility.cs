@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class Utility
 {
-    public static Vector2Int GetDirection(EDirection direction) => direction switch
+    public static Vector2Int EDirectionToVector(EDirection direction) => direction switch
     {
         EDirection.None => Vector2Int.zero,
         EDirection.Left => Vector2Int.left,
@@ -32,7 +32,7 @@ public static class Utility
         _ => 0,
     };
 
-    public static EDirection GetReflectDirection(EDirection direction) => direction switch
+    public static EDirection GetReflectedDirection(EDirection direction) => direction switch
     {
         EDirection.None => EDirection.None,
         EDirection.Left => EDirection.Right,

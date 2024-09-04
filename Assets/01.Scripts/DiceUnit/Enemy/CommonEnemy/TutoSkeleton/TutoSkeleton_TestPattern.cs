@@ -1,9 +1,10 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class TutoSister_TestPattern : EnemyPattern
+public class TutoSkeleton_TestPattern : EnemyPattern
 {
-    public TutoSister_TestPattern(EnemyDiceUnit diceUnit) : base(diceUnit)
+    public TutoSkeleton_TestPattern(EnemyDiceUnit diceUnit) : base(diceUnit)
     {
     }
 
@@ -15,6 +16,7 @@ public class TutoSister_TestPattern : EnemyPattern
     public override void Enter()
     {
         _diceUnit.autoFlip = false;
+        List<Vector2Int> attackRange = new List<Vector2Int>();
         NormalAttack(1f, 0.4f, "Attack", new System.Collections.Generic.List<Vector2Int>() { new Vector2Int(1, 1) }, 1, ()=>
         {
             isEnded = true;

@@ -5,7 +5,7 @@ public class Skill_10101 : Skill
 {
     public override void UseSkill(SUseSkillData data)
     {
-        Vector2Int positionKey = data.owner.positionKey + Utility.GetDirection(data.direction);
+        Vector2Int positionKey = data.owner.positionKey + Utility.EDirectionToVector(data.direction);
         SetPosition(data.grid, positionKey, Vector2.up * 0.43f);
         _spriteRenderer.flipX = data.direction == EDirection.Left;
 

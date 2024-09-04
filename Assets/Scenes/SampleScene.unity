@@ -1862,7 +1862,7 @@ GameObject:
   - component: {fileID: 1833481666}
   - component: {fileID: 1833481667}
   m_Layer: 0
-  m_Name: TutoSister
+  m_Name: TutoSkeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

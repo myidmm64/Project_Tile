@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TutoSisterEnemy : BossEnemyDiceUnit
+public class TutoSkeletonEnemy : BossEnemyDiceUnit
 {
     protected override void Update()
     {
@@ -9,6 +9,6 @@ public class TutoSisterEnemy : BossEnemyDiceUnit
 
     protected override void BindPattern()
     {
-        _patterns.Add(new TutoSister_TestPattern(this));
+        _patterns.Add(new TutoSkeleton_TestPattern(this));
     }
 }
