@@ -32,6 +32,8 @@ public class PlayerAttackModule : PlayerModule
         }
     }
 
+    private int _idx = 0;
+
     public void Attack()
     {
         if (_player.moveModule.isMoving) return;
@@ -55,6 +57,10 @@ public class PlayerAttackModule : PlayerModule
 
             _weapon.transform.SetPositionAndRotation(newPosition, rot);
             _weapon.PlayAni();
+
+            _player.animator.Play($"Attack{_idx}");
+            
+            _idx = (_idx + 1) % 3;
             /*
             foreach(var attackTarget in GetAttackTargets())
             {
