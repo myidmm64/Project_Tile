@@ -6,6 +6,9 @@ using UnityEngine;
 
 public abstract class DiceUnit : MonoBehaviour
 {
+    [SerializeField]
+    private TextMeshPro _dicePipText = null;
+
     public DiceGrid diceGrid = null; // 어디 DiceGrid에 있을 것인지
 
     public SpriteRenderer spriteRenderer { get; private set; }
@@ -63,6 +66,7 @@ public abstract class DiceUnit : MonoBehaviour
 
         OnDiceUnbinded?.Invoke(dice);
         dice = targetDice;
+        _dicePipText?.SetText(dice.dicePip.ToString());
         diceGrid.diceUnitGrid[positionKey] = this;
         OnDiceBinded?.Invoke(targetDice);
         if (setSortingOrder) SetSpriteSortingOrder();

@@ -2,10 +2,12 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerAttackModule : PlayerModule
 {
+    [SerializeField]
+    private PlayerWeapon _weapon = null;
+
     [SerializeField]
     private int _attackSkillID = 0;
     private SkillDataSO _attackSkillData = null;
@@ -23,6 +25,11 @@ public class PlayerAttackModule : PlayerModule
     private void Update()
     {
         _attackTimer += Time.deltaTime;
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            Attack();
+        }
     }
 
     public void Attack()
@@ -38,6 +45,16 @@ public class PlayerAttackModule : PlayerModule
             _attackSkillData.GetSkill().UseSkill(useSkillData);
             _attackTimer = 0f;
 
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 dir = mousePos - ((Vector2)_player.transform.position + Vector2.up * 0.5f);
+
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            Quaternion rot = Quaternion.Euler(0, 0, angle + 90);
+
+            Vector2 newPosition = ((Vector2)_player.transform.position + Vector2.up * 0.5f) + (dir.normalized * 1f);
+
+            _weapon.transform.SetPositionAndRotation(newPosition, rot);
+            _weapon.PlayAni();
             /*
             foreach(var attackTarget in GetAttackTargets())
             {

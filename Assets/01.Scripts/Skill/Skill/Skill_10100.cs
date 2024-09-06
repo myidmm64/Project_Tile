@@ -31,7 +31,7 @@ public class Skill_10100 : Skill
 
     void FaceTarget(Vector3 start, Vector3 target)
     {
-        transform.position = start + Vector3.up * 0.8f + (target - start).normalized * 1.5f;
+        transform.position = start + Vector3.up * 0f + (target - start).normalized * 3f;
 
         Vector3 direction = target - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;

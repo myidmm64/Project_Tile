@@ -9,6 +9,6 @@ public class PlayerWeapon : MonoBehaviour
     public void PlayAni()
     {
         _animator.Play($"Attack{_attack}");
-        _attack = (_attack + 1) % 3;
+        _attack = (_attack + 1) % 2;
     }
 }
