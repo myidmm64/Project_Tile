@@ -545,6 +545,7 @@ GameObject:
   - component: {fileID: 541313933}
   - component: {fileID: 541313934}
   - component: {fileID: 541313935}
+  - component: {fileID: 541313936}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -560,13 +561,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 541313932}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: 0, z: -0.9961947, w: -0.08715578}
+  m_LocalPosition: {x: 0.62, y: 0.41, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1321826388}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -190}
 --- !u!212 &541313934
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -610,7 +611,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1135833543
   m_SortingLayer: 2
-  m_SortingOrder: -10
+  m_SortingOrder: 100
   m_Sprite: {fileID: -1608837884, guid: 62e7cfd314840154fa65bf4038ed6985, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -644,6 +645,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &541313936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541313932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca8a186cc63fa904fb4e6401ce206cc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -805,7 +818,7 @@ SpriteRenderer:
   m_SortingLayerID: 1135833543
   m_SortingLayer: 2
   m_SortingOrder: 5
-  m_Sprite: {fileID: -3210587986213689231, guid: ed47731fe9ce6974abaa46d338b3283c, type: 3}
+  m_Sprite: {fileID: -6620410382686836450, guid: e82a7e4f13763d24584ad6aff8d5eeef, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1416,14 +1429,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1321826388}
   - component: {fileID: 1321826389}
-  - component: {fileID: 1321826390}
   m_Layer: 0
   m_Name: PlayerSword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1321826388
 Transform:
   m_ObjectHideFlags: 0
@@ -1438,7 +1450,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 541313933}
-  m_Father: {fileID: 1650557166}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1321826389
 MonoBehaviour:
@@ -1452,24 +1464,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f2cf82f3214994e9ff8d8d2c34f1a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 541313935}
---- !u!114 &1321826390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1321826387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abe1ac166a81f264cbf05445d2263814, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pivotTrm: {fileID: 1650557166}
-  _pivotAddPos: {x: 0, y: 0}
-  _addzRot: -75
-  _radius: 0.5
-  isLock: 0
+  _addPos: {x: -1, y: 0.2}
+  _skillAddPos:
+  - {x: -0.1, y: 0.4}
+  - {x: -0.5, y: 0.4}
+  - {x: 0.05, y: 0.2}
+  _skillAddRot: e6000000e600000000000000
+  _attackSkillID: 10100
 --- !u!1 &1337743121
 GameObject:
   m_ObjectHideFlags: 0
@@ -1884,7 +1885,6 @@ Transform:
   m_Children:
   - {fileID: 835569999}
   - {fileID: 1619785863}
-  - {fileID: 1321826388}
   - {fileID: 1920342616}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1932,7 +1932,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weapon: {fileID: 1321826389}
-  _attackSkillID: 10100
   _attackDelay: 0.25
 --- !u!114 &1650557171
 MonoBehaviour:
@@ -2555,6 +2554,7 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 901142392}
+  - {fileID: 1321826388}
   - {fileID: 1650557166}
   - {fileID: 1707061639}
   - {fileID: 1787517933}

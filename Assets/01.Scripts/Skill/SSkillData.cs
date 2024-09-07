@@ -26,5 +26,7 @@ public struct SUseSkillData
     public DiceGrid grid => owner.diceGrid;
 
     public EDirection direction;
+    public Vector2Int spawnPositionKey;
     public Dictionary<string, Action> specialActions;
+    public object otherData;
 }
