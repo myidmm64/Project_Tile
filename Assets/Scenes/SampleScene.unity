@@ -562,7 +562,7 @@ Transform:
   m_GameObject: {fileID: 541313932}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0, z: -0.9961947, w: -0.08715578}
-  m_LocalPosition: {x: 0.62, y: 0.41, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1464,7 +1464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f2cf82f3214994e9ff8d8d2c34f1a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _addPos: {x: -1, y: 0.2}
+  _addPos: {x: -0.38, y: 0.61}
   _skillAddPos:
   - {x: -0.1, y: 0.4}
   - {x: -0.5, y: 0.4}
@@ -1918,7 +1918,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxInputQueueCount: 3
-  _moveDuration: 0.125
+  _moveDuration: 0.12
 --- !u!114 &1650557170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1932,7 +1932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weapon: {fileID: 1321826389}
-  _attackDelay: 0.25
+  _attackDelay: 0.4
 --- !u!114 &1650557171
 MonoBehaviour:
   m_ObjectHideFlags: 0

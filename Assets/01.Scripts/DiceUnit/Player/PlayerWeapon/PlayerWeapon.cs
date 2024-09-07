@@ -34,8 +34,9 @@ public class PlayerWeapon : MonoBehaviour
         if (idx == -1) idx = _idx;
 
         Vector2 diceGroundPos = player.diceGrid.grid[positionKey].groundPos;
-        //transform.position = diceGroundPos + _addPos * (direction == EDirection.Right ? 1f : -1f);
-        transform.position = diceGroundPos + _addPos;
+        transform.position = diceGroundPos + new Vector2(_addPos.x * GetScaleByDirection(direction), _addPos.y);
+        //transform.position = diceGroundPos + _addPos;
+        SetScaleByDirection(transform, direction);
 
         _animator.Play($"Attack{idx}");
 
@@ -51,6 +52,18 @@ public class PlayerWeapon : MonoBehaviour
         return true;
     }
 
+    private void SetScaleByDirection(Transform trm, EDirection direction)
+    {
+        Vector3 localScale = trm.localScale;
+        localScale.x = GetScaleByDirection(direction);
+        trm.localScale = localScale;
+    }
+
+    private float GetScaleByDirection(EDirection direction)
+    {
+        return direction == EDirection.Right ? 1f : -1f;
+    }
+
     public void SpawnAttackObj()
     {
         if (_player.diceGrid.grid.ContainsKey(_curSkillData.spawnPositionKey))
@@ -58,8 +71,13 @@ public class PlayerWeapon : MonoBehaviour
             Skill skill = _attackSkillData.GetSkill();
             skill.UseSkill(_curSkillData);
 
-            skill.transform.position = _player.diceGrid.grid[_curSkillData.spawnPositionKey].groundPos + (Vector3)_skillAddPos[(int)_curSkillData.otherData];
-            skill.transform.rotation = Quaternion.Euler(0, 0, _skillAddRot[(int)_curSkillData.otherData]);
+            Vector2 addPos = _skillAddPos[(int)_curSkillData.otherData];
+            skill.transform.position = _player.diceGrid.grid[_curSkillData.spawnPositionKey].groundPos + 
+                new Vector3(addPos.x * GetScaleByDirection(_curSkillData.direction), addPos.y);
+
+            skill.transform.rotation = Quaternion.Euler(0, 0, _skillAddRot[(int)_curSkillData.otherData] * GetScaleByDirection(_curSkillData.direction));
+
+            SetScaleByDirection(skill.transform, _curSkillData.direction);
         }
     }
 }

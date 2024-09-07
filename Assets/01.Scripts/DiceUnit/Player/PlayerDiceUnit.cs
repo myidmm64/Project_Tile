@@ -13,16 +13,11 @@ public class PlayerDiceUnit : DiceUnit, IDamagable
     public PlayerAttackModule attackModule { get; private set; }
     public PlayerSkillModule skillModule { get; private set; }
 
-    public DiceUnit targetDiceUnit { get; private set; } // 매 프레임마다 계산 플레이어가 바라볼 타겟
-
     private int _curHP = 0;
     [SerializeField]
     private int _maxHP = 0;
     public int CurHP { get => _curHP; set => _curHP = value; }
     public int MaxHP { get => _maxHP; set => _maxHP = value; }
-
-    // 추후 PC라는 녀석에서 데이터 가져오도록 설계 
-
 
     protected override void Awake()
     {
