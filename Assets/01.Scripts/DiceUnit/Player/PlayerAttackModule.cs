@@ -33,10 +33,12 @@ public class PlayerAttackModule : PlayerModule
         // if (_player.moveModule.isMoving) return;
         if (_attackTimer >= _attackDelay)
         {
-            _weapon.Attack(_player, _player.positionKey + Utility.EDirectionToVector(_player.GetDirection()), _player.GetDirection());
-            _player.animator.Play($"Attack{_idx}");
-            _idx = (_idx + 1) % 3;
-            _attackTimer = 0f;
+            if(_weapon.Attack(_player, _player.positionKey + Utility.EDirectionToVector(_player.GetDirection()), _player.GetDirection()))
+            {
+                _player.animator.Play($"Attack{_idx}");
+                _idx = (_idx + 1) % 3;
+                _attackTimer = 0f;
+            }
         }
     }
 

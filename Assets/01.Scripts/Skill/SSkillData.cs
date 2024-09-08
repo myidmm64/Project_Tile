@@ -27,6 +27,5 @@ public struct SUseSkillData
 
     public EDirection direction;
     public Vector2Int spawnPositionKey;
-    public Dictionary<string, Action> specialActions;
-    public object otherData;
+    public Dictionary<string, object> otherDatas;
 }

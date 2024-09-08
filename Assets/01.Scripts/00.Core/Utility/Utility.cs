@@ -72,4 +72,17 @@ public static class Utility
         }
         return data;
     }
+
+    public static void SetLocalScaleByDirection(Transform trm, EDirection direction)
+    {
+        Vector3 localScale = trm.transform.localScale;
+        localScale.x = Mathf.Abs(localScale.x);
+        localScale.x *= DirectionToXMiltiflier(direction);
+        trm.transform.localScale = localScale;
+    }
+
+    public static float DirectionToXMiltiflier(EDirection direction)
+    {
+        return direction == EDirection.Right ? 1f : -1f;
+    }
 }
