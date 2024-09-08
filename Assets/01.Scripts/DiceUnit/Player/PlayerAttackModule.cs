@@ -11,6 +11,9 @@ public class PlayerAttackModule : PlayerModule
     [SerializeField]
     private float _attackDelay = 0.5f;
     private float _attackTimer = 0f;
+
+    private bool _attackKeyPress = false;
+
     protected override void Awake()
     {
         base.Awake();
@@ -20,6 +23,7 @@ public class PlayerAttackModule : PlayerModule
     private void Update()
     {
         _attackTimer += Time.deltaTime;
+        if (_attackKeyPress) Attack();
     }
 
     private int _idx = 0;
@@ -63,7 +67,13 @@ public class PlayerAttackModule : PlayerModule
 
     public void AttackInput(InputAction.CallbackContext context)
     {
-        if (context.performed)
-            Attack();
+        if (context.started)
+        {
+            _attackKeyPress = true;
+        }
+        else if (context.canceled)
+        {
+            _attackKeyPress= false;
+        }
     }
 }
