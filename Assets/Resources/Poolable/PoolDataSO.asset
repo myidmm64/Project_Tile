@@ -17,7 +17,7 @@ MonoBehaviour:
   - name: Dice
     hashCode: 44922
     ePoolType: 1
-    obj: {fileID: 3824963776723223282, guid: b5cbc5fb865522e419635cda2fd89db9, type: 3}
+    obj: {fileID: 6107297414002652603, guid: b5cbc5fb865522e419635cda2fd89db9, type: 3}
     generateCount: 10
   - name: PopupText
     hashCode: 48220

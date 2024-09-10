@@ -51,7 +51,7 @@ public class DiceGrid : MonoBehaviour
                 Dice dice = PoolManager.Inst.Pop(EPoolType.Dice) as Dice; // PopDice((EDiceType)number);
                 if (dice == null) continue;
 
-                Vector2 dicePosition = startPos + GetPaddingPos(new Vector2(x, y), _diceGenerateData.dicePositionDistance);
+                Vector3 dicePosition = (Vector3)startPos + (Vector3)GetPaddingPos(new Vector2(x, y), _diceGenerateData.dicePositionDistance) + (Vector3.forward * (maxColumn - y + 1));
                 Vector2Int positionKey = new Vector2Int(x, maxColumn - y - 1);
                 dice.positionKey = positionKey;
                 dice.transform.position = dicePosition;
