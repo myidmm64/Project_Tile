@@ -18,8 +18,8 @@ public class Dice : MonoBehaviour, IPoolable
 
     [SerializeField]
     private DiceAnimationDataSO _diceAnimationDataSO = null;
-    //private SpriteRenderer _spriteRenderer = null;
-    //private Animator _animator = null;
+    private SpriteRenderer _spriteRenderer = null;
+    private Animator _animator = null;
     private DiceAction _diceAction = null;
 
     private EDiceType _eDiceType = EDiceType.None;
@@ -28,8 +28,8 @@ public class Dice : MonoBehaviour, IPoolable
     public void Initailize()
     {
         Transform spriteTrm = transform.Find("Sprite");
-        //_spriteRenderer = spriteTrm.GetComponent<SpriteRenderer>();
-        //_animator = spriteTrm.GetComponent<Animator>();
+        _spriteRenderer = spriteTrm.GetComponent<SpriteRenderer>();
+        _animator = spriteTrm.GetComponent<Animator>();
     }
 
     public void PopObject()
@@ -51,8 +51,8 @@ public class Dice : MonoBehaviour, IPoolable
 
     public void SetSpriteOrder()
     {
-        //if (_spriteRenderer == null) return;
-        //_spriteRenderer.sortingOrder = 0 - positionKey.y;
+        if (_spriteRenderer == null) return;
+        _spriteRenderer.sortingOrder = 0 - positionKey.y;
     }
 
     // Dice 교체
@@ -80,7 +80,7 @@ public class Dice : MonoBehaviour, IPoolable
         int changePip = specificPip == 0 ? changePip = Random.Range(1, 7) : specificPip;
         dicePip = changePip;
         // 임시 코드
-        //_spriteRenderer.sprite = _sprites[changePip];
+        _spriteRenderer.sprite = _sprites[changePip];
         // roll Animation
         // _animator.SetInteger("dicePip", _dicePip); -> 해당 pip를 기준으로 애니 끝난 후 스프라이트를 결정
         // _animator.Play("Roll");
