@@ -6,9 +6,9 @@ using UnityEngine.InputSystem;
 public class PlayerMoveModule : PlayerModule
 {
     [SerializeField]
-    private int _maxInputQueueCount = 3;
+    private int _maxInputQueueCount = 3; // Input Queue에 들어갈 수 있는 Input의 개수
     [SerializeField]
-    private float _moveDuration = 0.1f;
+    private float _moveDuration = 0.1f; // 이동 시간
     private Queue<Vector2Int> _inputQueue = new Queue<Vector2Int>();
     private Sequence _moveSeq = null;
 
@@ -21,7 +21,7 @@ public class PlayerMoveModule : PlayerModule
         {
             Vector2Int inputDir = _inputQueue.Dequeue();
             Vector2Int targetPositionKey = _player.positionKey + inputDir;
-            if (_player.ChangeMyDice(targetPositionKey))
+            if (_player.ChangeDice(targetPositionKey))
             {
                 _player.animator.SetFloat("Horizontal", _player.GetDirection() == EDirection.Left ? inputDir.x * -1f : inputDir.x);
                 _player.animator.SetFloat("Vertical", inputDir.y);

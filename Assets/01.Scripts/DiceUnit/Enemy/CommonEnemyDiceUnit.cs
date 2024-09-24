@@ -45,7 +45,7 @@ public abstract class CommonEnemyDiceUnit : EnemyDiceUnit
     protected override void Start()
     {
         base.Start();
-        ChangeMyDice(new Vector2Int(2, 2));
+        ChangeDice(new Vector2Int(2, 2));
         transform.position = dice.transform.position;
     }
 }

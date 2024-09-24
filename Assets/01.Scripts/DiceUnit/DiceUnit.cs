@@ -4,90 +4,76 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public abstract class DiceUnit : MonoBehaviour
+public abstract class DiceUnit : MonoBehaviour, IDamagable, IMovable
 {
+    public DiceGrid diceGrid { get; private set; }
+
     [SerializeField]
-    private TextMeshPro _dicePipText = null;
+    private TextMeshPro _dicePipText = null; // 현재 DiceUnit의 눈금 텍스트
+    [SerializeField]
+    public DiceUnitData data { get; private set; }
 
-    public DiceGrid diceGrid = null; // 어디 DiceGrid에 있을 것인지
+    public Dice dice { get; private set; }
+    public Vector2Int positionKey => dice != null ? dice.positionKey : new Vector2Int(-1, -1);
+    public Action<Dice> OnDiceChanged = null;
 
-    public SpriteRenderer spriteRenderer { get; private set; }
-    public Animator animator { get; private set; }
-
-    public bool autoFlip = true;
-
-    public Dice dice = null;
-    public Vector2Int positionKey => dice != null ? dice.positionKey : Vector2Int.zero;
-
-    public Action<Dice> OnDiceBinded = null;
-    public Action<Dice> OnDiceUnbinded = null;
-
-    protected virtual void Awake()
-    {
-        spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
-        animator = spriteRenderer.GetComponent<Animator>();
-    }
-
-    protected virtual void Update()
-    {
-        if (autoFlip) LookClosestUnit();
-    }
+    public int CurHP { get; set; }
+    public int MaxHP { get; set; }
 
     public void SetDiceGrid(DiceGrid diceGrid, Dice _dice = null)
     {
         this.diceGrid = diceGrid;
-        if(_dice != null) dice = _dice;
+        if (_dice != null) dice = _dice;
     }
 
-    public bool ChangeMyDice(Vector2Int targetPositionKey, bool setSortingOrder = true)
+    public bool ChangeDice(Vector2Int targetPositionKey)
     {
         if (diceGrid == null) return false;
 
-        if(diceGrid.grid.TryGetValue(targetPositionKey, out Dice targetDice))
+        if (diceGrid.grid.TryGetValue(targetPositionKey, out Dice targetDice))
         {
-            return ChangeMyDice(targetDice, setSortingOrder);
+            return ChangeDice(targetDice);
         }
 
         return false;
     }
 
-    public bool ChangeMyDice(Dice targetDice, bool setSortingOrder = true)
+    public bool ChangeDice(Dice targetDice) // targetDice로 변경하기
     {
-        if (diceGrid == null) return false;
-        bool changable = diceGrid.diceUnitGrid.ContainsKey(targetDice.positionKey) == false 
+        // grid 내 dice가 있고, unit이 들어갈 수 있어야 함.
+        bool changable = diceGrid.diceUnitGrid.ContainsKey(targetDice.positionKey) == false
             && targetDice.UnitBindable();
         if (changable == false) return false;
 
-        bool alreadyBindedDice = dice != null && diceGrid.diceUnitGrid.ContainsKey(positionKey);
-        if (alreadyBindedDice)
+        // 본인 위치의 DiceUnit 지우고 이동
+        if (diceGrid.diceUnitGrid.ContainsKey(positionKey))
         {
             diceGrid.diceUnitGrid.Remove(positionKey);
         }
-
-        OnDiceUnbinded?.Invoke(dice);
         dice = targetDice;
+
         _dicePipText?.SetText(dice.dicePip.ToString());
         diceGrid.diceUnitGrid[positionKey] = this;
-        OnDiceBinded?.Invoke(targetDice);
-        if (setSortingOrder) SetSpriteSortingOrder();
+        OnDiceChanged?.Invoke(dice);
         return true;
     }
 
-    public void LookClosestUnit()
+    public void SetSpriteSortingOrder(SpriteRenderer renderer)
     {
-        Vector2Int closest = diceGrid.FindClosestUnitTile(positionKey);
-        if (closest.x < positionKey.x)
-        {
-            spriteRenderer.flipX = true;
-        }
-        else if (closest.x > positionKey.x)
-        {
-            spriteRenderer.flipX = false;
-        }
+        renderer.sortingOrder = 0 - positionKey.y;
     }
 
-    public void SetSpriteSortingOrder()
+    public virtual void Damage(int damage)
     {
-        spriteRenderer.sortingOrder = 0 - positionKey.y;
+
+    }
+
+    public virtual void Move(Vector2Int target)
+    {
+
+    }
+
+    public virtual void Knockback(EDirection dir, int amount)
+    {
     }
 }

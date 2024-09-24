@@ -38,11 +38,13 @@ public abstract class BossEnemyDiceUnit : EnemyDiceUnit
 
     protected override void Start()
     {
+        var grid = GameObject.FindAnyObjectByType<DiceGrid>();
+        SetDiceGrid(grid);
         base.Start();
         MainUI.Inst.GetUIElement<EnemyUI>().nameText.SetText(_bossPreName == string.Empty ? $"{_bossName}" : $"{_bossPreName}{_prefix}{_bossName}");
         MainUI.Inst.GetUIElement<EnemyUI>().hpSlider.Initialize(MaxHP);
 
-        ChangeMyDice(new Vector2Int(2, 2));
+        ChangeDice(new Vector2Int(2, 2));
         transform.position = dice.transform.position;
     }
 }

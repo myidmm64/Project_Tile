@@ -20,7 +20,7 @@ public class TutoSkeleton_TestPattern : EnemyPattern
     {
         Action AttackAction = () =>
         {
-            _diceUnit.autoFlip = false;
+            // _diceUnit.autoFlip = false;
             List<Vector2Int> attackRange = new List<Vector2Int>();
             int horizontalDiff = _diceUnit.GetPlayer().positionKey.x - _diceUnit.positionKey.x;
             if(horizontalDiff < 0)
@@ -41,7 +41,7 @@ public class TutoSkeleton_TestPattern : EnemyPattern
             NormalAttack(0.5f, 0.1f, "Attack", attackRange, 1, () =>
             {
                 isEnded = true;
-                _diceUnit.autoFlip = true;
+                // _diceUnit.autoFlip = true;
             });
         };
 

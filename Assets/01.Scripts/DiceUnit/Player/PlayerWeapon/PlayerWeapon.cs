@@ -46,7 +46,7 @@ public class PlayerWeapon : MonoBehaviour
         _curSkillData.direction = direction;
         _curSkillData.spawnPositionKey = positionKey;
 
-        Action attackCallback = () => { _player.skillModule.IncreaseDP(20); };
+        Action attackCallback = () => { _player.GetModule<PlayerSkillModule>().IncreaseDP(20); };
 
         Vector2 skillAddPos = _skillAddPos[_idx];
         Vector2 skillPosition = diceGroundPos + new Vector2(skillAddPos.x * Utility.DirectionToXMiltiflier(direction), skillAddPos.y);

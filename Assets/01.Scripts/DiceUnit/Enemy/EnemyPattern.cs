@@ -31,7 +31,7 @@ public abstract class EnemyPattern
     // 기본 움직임
     protected virtual bool Move(Vector2Int dest, Action Callback)
     {
-        bool moved = _diceUnit.ChangeMyDice(dest);
+        bool moved = _diceUnit.ChangeDice(dest);
         if (moved)
         {
             Sequence _moveSeq = DOTween.Sequence();
@@ -77,6 +77,6 @@ public abstract class EnemyPattern
         }
 
         yield return new WaitForSeconds(preWaitTime);
-        _diceUnit.animator.Play(animationName);
+        // _diceUnit.animator.Play(animationName);
     }
 }

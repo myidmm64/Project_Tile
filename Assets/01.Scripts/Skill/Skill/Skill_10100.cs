@@ -16,7 +16,7 @@ public class Skill_10100 : Skill
         PlayerDiceUnit player = data.owner as PlayerDiceUnit;
         if (player != null)
         {
-            foreach (var attackTarget in player.attackModule.GetAttackTargets())
+            foreach (var attackTarget in player.GetModule<PlayerAttackModule>().GetAttackTargets())
             {
                 IDamagable damagable = attackTarget.GetComponent<IDamagable>();
                 damagable.Damage(player.dice.dicePip);
