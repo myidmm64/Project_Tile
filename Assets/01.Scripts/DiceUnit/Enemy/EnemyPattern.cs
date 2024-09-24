@@ -65,9 +65,9 @@ public abstract class EnemyPattern
                     var units = _diceUnit.diceGrid.GetDiceUnits(telegraphPosKey);
                     foreach (var unit in units)
                     {
-                        if (unit is PlayerDiceUnit) // 플레이어
+                        if (unit is Player) // 플레이어
                         {
-                            PlayerDiceUnit player = unit as PlayerDiceUnit;
+                            Player player = unit as Player;
                             player.Damage(damage);
                         }
                     }

@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerDiceUnit : DiceUnit
+public class Player : DiceUnit
 {
     private HashSet<PlayerModule> _playerModules = new HashSet<PlayerModule>();
     public bool _isDungeon = true; // 현재 던전에 들어와있는지 체크

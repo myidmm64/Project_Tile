@@ -13,7 +13,7 @@ public class Skill_10100 : Skill
         _animator.Play($"Effect{(int)data.otherDatas["Index"]}");
         StartCoroutine(AnimEndDestroy());
 
-        PlayerDiceUnit player = data.owner as PlayerDiceUnit;
+        Player player = data.owner as Player;
         if (player != null)
         {
             foreach (var attackTarget in player.GetModule<PlayerAttackModule>().GetAttackTargets())

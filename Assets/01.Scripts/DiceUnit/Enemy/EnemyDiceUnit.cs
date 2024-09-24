@@ -34,11 +34,11 @@ public abstract class EnemyDiceUnit : DiceUnit, IDamagable
         PatternCycle();
     }
 
-    public PlayerDiceUnit GetPlayer()
+    public Player GetPlayer()
     {
         foreach(var diceUnit in diceGrid.diceUnitGrid.Values)
         {
-            if (diceUnit is PlayerDiceUnit) return diceUnit as PlayerDiceUnit;
+            if (diceUnit is Player) return diceUnit as Player;
         }
         return null;
     }

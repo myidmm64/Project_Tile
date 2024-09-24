@@ -17,7 +17,7 @@ public class PlayerAttackModule : PlayerModule
     protected override void Awake()
     {
         base.Awake();
-        _player = GetComponent<PlayerDiceUnit>();
+        _player = GetComponent<Player>();
     }
 
     private void Update()

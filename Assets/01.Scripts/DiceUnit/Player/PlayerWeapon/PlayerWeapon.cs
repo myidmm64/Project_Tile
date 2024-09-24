@@ -16,7 +16,7 @@ public class PlayerWeapon : MonoBehaviour
     private List<int> _skillAddRot = new List<int>();
 
     private int _idx = 0;
-    private PlayerDiceUnit _player = null;
+    private Player _player = null;
 
     [SerializeField]
     private int _attackSkillID = 0;
@@ -29,7 +29,7 @@ public class PlayerWeapon : MonoBehaviour
         _attackSkillData = Utility.GetSkillDataSO(_attackSkillID);
     }
 
-    public bool Attack(PlayerDiceUnit player, Vector2Int positionKey, EDirection direction)
+    public bool Attack(Player player, Vector2Int positionKey, EDirection direction)
     {
         _player = player;
         if (player.diceGrid.grid.ContainsKey(positionKey) == false) return false;
