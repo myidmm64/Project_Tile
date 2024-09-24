@@ -66,13 +66,13 @@ public class DiceGrid : MonoBehaviour
         }
     }
 
-    public Vector2Int FindClosestUnitTile(Vector2Int start)
+    private Vector2 GetPaddingPos(Vector2 pos, Vector2 padding)
     {
-        return FindClosestUnitTile<DiceUnit>(start);
+        return pos * padding;
     }
 
-    // 가장 가까운 DiceUnit의 PositionKey 추출
-    public Vector2Int FindClosestUnitTile<T>(Vector2Int start) where T : DiceUnit
+    // 가장 가까운 빈 Dice의 PositionKey 추출
+    public Vector2Int FindClosestDice(Vector2Int start, EDirection firstSearchDir = EDirection.Right)
     {
         Queue<Vector2Int> queue = new Queue<Vector2Int>();
         HashSet<Vector2Int> visited = new HashSet<Vector2Int>();
@@ -82,10 +82,97 @@ public class DiceGrid : MonoBehaviour
 
         Vector2Int[] directions = new Vector2Int[]
         {
-            new Vector2Int(0, 1),  // 위
-            new Vector2Int(0, -1), // 아래
-            new Vector2Int(1, 0),  // 오른쪽
-            new Vector2Int(-1, 0)  // 왼쪽
+            Utility.GetRotatedVector(new Vector2Int(1, 0), firstSearchDir),
+            Utility.GetRotatedVector(new Vector2Int(0, -1), firstSearchDir),
+            Utility.GetRotatedVector(new Vector2Int(-1, 0), firstSearchDir),
+            Utility.GetRotatedVector(new Vector2Int(0, 1), firstSearchDir),
+        };
+
+        while (queue.Count > 0)
+        {
+            Vector2Int current = queue.Dequeue();
+
+            // 적이 있는 타일을 찾으면 반환
+            if (current != start && grid.ContainsKey(current))
+            {
+                return current;
+            }
+
+            foreach (Vector2Int dir in directions)
+            {
+                Vector2Int next = current + dir;
+
+                if (!visited.Contains(next))
+                {
+                    queue.Enqueue(next);
+                    visited.Add(next);
+                }
+            }
+        }
+
+        return new Vector2Int(-1, -1);
+    }
+
+    // 가장 가까운 Team의 PositionKey 추출
+    public Vector2Int FindClosestTeam(Vector2Int start, ETeam team, EDirection firstSearchDir = EDirection.Right)
+    {
+        Queue<Vector2Int> queue = new Queue<Vector2Int>();
+        HashSet<Vector2Int> visited = new HashSet<Vector2Int>();
+
+        queue.Enqueue(start);
+        visited.Add(start);
+
+        Vector2Int[] directions = new Vector2Int[]
+        {
+            Utility.GetRotatedVector(new Vector2Int(1, 0), firstSearchDir),
+            Utility.GetRotatedVector(new Vector2Int(0, -1), firstSearchDir),
+            Utility.GetRotatedVector(new Vector2Int(-1, 0), firstSearchDir),
+            Utility.GetRotatedVector(new Vector2Int(0, 1), firstSearchDir),
+        };
+
+        while (queue.Count > 0)
+        {
+            Vector2Int current = queue.Dequeue();
+
+            // 적이 있는 타일을 찾으면 반환
+            if (current != start && diceUnitGrid.ContainsKey(current))
+            {
+                if (diceUnitGrid[current].data.eTeam == team)
+                {
+                    return current;
+                }
+            }
+
+            foreach (Vector2Int dir in directions)
+            {
+                Vector2Int next = current + dir;
+
+                if (!visited.Contains(next))
+                {
+                    queue.Enqueue(next);
+                    visited.Add(next);
+                }
+            }
+        }
+
+        return new Vector2Int(-1, -1);
+    }
+
+    // 가장 가까운 DiceUnit의 PositionKey 추출
+    public Vector2Int FindClosestUnit<T>(Vector2Int start, EDirection firstSearchDir = EDirection.Right) where T : DiceUnit
+    {
+        Queue<Vector2Int> queue = new Queue<Vector2Int>();
+        HashSet<Vector2Int> visited = new HashSet<Vector2Int>();
+
+        queue.Enqueue(start);
+        visited.Add(start);
+
+        Vector2Int[] directions = new Vector2Int[]
+        {
+            Utility.GetRotatedVector(new Vector2Int(1, 0), firstSearchDir),
+            Utility.GetRotatedVector(new Vector2Int(0, -1), firstSearchDir),
+            Utility.GetRotatedVector(new Vector2Int(-1, 0), firstSearchDir),
+            Utility.GetRotatedVector(new Vector2Int(0, 1), firstSearchDir),
         };
 
         while (queue.Count > 0)
@@ -114,11 +201,6 @@ public class DiceGrid : MonoBehaviour
         }
 
         return new Vector2Int(-1, -1);
-    }
-
-    private Vector2 GetPaddingPos(Vector2 pos, Vector2 padding)
-    {
-        return pos * padding;
     }
 
     public List<Dice> GetDices(List<Vector2Int> positionKeies)

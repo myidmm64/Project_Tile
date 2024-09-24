@@ -31,6 +31,11 @@ public class PlayerMoveModule : PlayerModule
         }
     }
 
+    public void ResetInputQueue()
+    {
+        _inputQueue.Clear();
+    }
+
     private void MoveAnimation()
     {
         _moveSeq = DOTween.Sequence();
@@ -40,6 +45,7 @@ public class PlayerMoveModule : PlayerModule
             _player.animator.Play("Idle");
         });
     }
+
     public void AddQueue(Vector2Int dir)
     {
         // max count üũ

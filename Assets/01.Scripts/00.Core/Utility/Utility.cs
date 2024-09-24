@@ -61,6 +61,25 @@ public static class Utility
         _ => 0f,
     };
 
+    public static Vector2Int GetRotatedVector(Vector2Int start, EDirection dir)
+    {
+        float rot = GetZRotate(dir);
+
+        // 각도를 라디안으로 변환
+        float radians = rot * Mathf.Deg2Rad;
+
+        // 회전 행렬을 사용해 벡터를 회전
+        float cos = Mathf.Cos(radians);
+        float sin = Mathf.Sin(radians);
+
+        // 새 x, y 값 계산
+        int newX = Mathf.RoundToInt(start.x * cos - start.y * sin);
+        int newY = Mathf.RoundToInt(start.x * sin + start.y * cos);
+
+        // 새로운 벡터 반환
+        return new Vector2Int(newX, newY);
+    }
+
     public static SkillDataSO GetSkillDataSO(int skillID)
     {
         string resourcePath = $"SkillDataSO/SkillData_{skillID.ToString()}";

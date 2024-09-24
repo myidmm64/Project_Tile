@@ -1062,9 +1062,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dicePipText: {fileID: 1053037263}
-  diceGrid: {fileID: 901142393}
-  autoFlip: 1
-  dice: {fileID: 0}
   _hpTextAnimatingDuration: 0.2
   _bossPreName: "\uD29C\uD1A0\uC6A9"
   _prefix: ' '
@@ -1745,11 +1742,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dd25d6c184ce48489ee0be8335fb8fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <diceGrid>k__BackingField: {fileID: 0}
   _dicePipText: {fileID: 1920342618}
-  diceGrid: {fileID: 901142393}
-  autoFlip: 1
-  dice: {fileID: 0}
-  _maxHP: 100
+  <data>k__BackingField: {fileID: 0}
+  <dice>k__BackingField: {fileID: 0}
+  <CurHP>k__BackingField: 0
+  <MaxHP>k__BackingField: 0
+  _isDungeon: 1
+  <spriteRenderer>k__BackingField: {fileID: 0}
+  <animator>k__BackingField: {fileID: 0}
 --- !u!114 &1650557168
 MonoBehaviour:
   m_ObjectHideFlags: 0

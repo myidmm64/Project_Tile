@@ -63,17 +63,14 @@ public abstract class DiceUnit : MonoBehaviour, IDamagable, IMovable
         renderer.sortingOrder = 0 - positionKey.y;
     }
 
-    public virtual void Damage(int damage)
+    public abstract void Damage(int damage);
+    public abstract void Move(Vector2Int target);
+    public void Knockback(EDirection dir, int amount)
     {
-
     }
-
-    public virtual void Move(Vector2Int target)
+    public Queue<IMovable> Knockback(Queue<IMovable> q, EDirection dir, int amount)
     {
-
-    }
-
-    public virtual void Knockback(EDirection dir, int amount)
-    {
+        
+        return Knockback(q, dir, amount);
     }
 }
