@@ -2,6 +2,6 @@ using UnityEngine;
 
 public interface IMovable
 {
-    public void Move(Vector2Int target);
-    public void Knockback(EDirection dir, int amount);
+    public bool Move(Vector2Int target);
+    public bool Knockback(EDirection dir, int amount);
 }

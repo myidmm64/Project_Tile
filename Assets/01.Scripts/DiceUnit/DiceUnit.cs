@@ -64,13 +64,13 @@ public abstract class DiceUnit : MonoBehaviour, IDamagable, IMovable
     }
 
     public abstract void Damage(int damage);
-    public abstract void Move(Vector2Int target);
-    public void Knockback(EDirection dir, int amount)
+    public virtual bool Move(Vector2Int target)
     {
+        return ChangeDice(target);
     }
-    public Queue<IMovable> Knockback(Queue<IMovable> q, EDirection dir, int amount)
+    public virtual bool Knockback(EDirection dir, int amount)
     {
-        
-        return Knockback(q, dir, amount);
-    }
+        Vector2Int target = positionKey + (Utility.EDirectionToVector(dir) * amount);
+        return ChangeDice(target);
+    }   
 }
