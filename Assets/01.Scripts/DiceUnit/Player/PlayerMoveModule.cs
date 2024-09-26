@@ -7,43 +7,36 @@ public class PlayerMoveModule : PlayerModule
 {
     [SerializeField]
     private int _maxInputQueueCount = 3; // Input Queue에 들어갈 수 있는 Input의 개수
-    [SerializeField]
-    private float _moveDuration = 0.1f; // 이동 시간
     private Queue<Vector2Int> _inputQueue = new Queue<Vector2Int>();
-    private Sequence _moveSeq = null;
 
-    public bool moveable => _moveSeq == null || (_moveSeq != null && !_moveSeq.active);
-    public bool isMoving => _moveSeq != null && _moveSeq.active;
+    private void Start()
+    {
+        _player.OnMoveStarted += (currentPos, targetPos) =>
+        {
+            Vector2Int inputDir = targetPos - currentPos;
+            _player.animator.SetFloat("Horizontal", _player.GetDirection() == EDirection.Left ? inputDir.x * -1f : inputDir.x);
+            _player.animator.SetFloat("Vertical", inputDir.y);
+            _player.animator.Play("Move");
+        };
+        _player.OnMoveEnded += (targetPos) =>
+        {
+            _player.animator.Play("Idle");
+        };
+    }
 
     public void Move()
     {
-        if (_inputQueue.Count > 0 && moveable) // move중이 아닐 때만 이동
+        if (_inputQueue.Count > 0 && _player.moveable) // move중이 아닐 때만 이동
         {
             Vector2Int inputDir = _inputQueue.Dequeue();
             Vector2Int targetPositionKey = _player.positionKey + inputDir;
-            if (_player.ChangeDice(targetPositionKey))
-            {
-                _player.animator.SetFloat("Horizontal", _player.GetDirection() == EDirection.Left ? inputDir.x * -1f : inputDir.x);
-                _player.animator.SetFloat("Vertical", inputDir.y);
-                _player.animator.Play("Move");
-                MoveAnimation(); // Seq, Animator 등을 이용한 시각적 이동
-            }
+            _player.Move(targetPositionKey);
         }
     }
 
     public void ResetInputQueue()
     {
         _inputQueue.Clear();
-    }
-
-    private void MoveAnimation()
-    {
-        _moveSeq = DOTween.Sequence();
-        _moveSeq.Append(transform.DOMove(_player.dice.groundPos, _moveDuration)).SetEase(Ease.Linear);
-        _moveSeq.AppendCallback(() =>
-        {
-            _player.animator.Play("Idle");
-        });
     }
 
     public void AddQueue(Vector2Int dir)

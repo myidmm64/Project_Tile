@@ -12,13 +12,6 @@ public abstract class CommonEnemyDiceUnit : EnemyDiceUnit
 
     private Sequence _hpTextAnimationSeq = null;
 
-    [SerializeField]
-    private int _maxHP = 0; // 추후 SO로 분리 필요
-    private int _curHP = 0;
-
-    public override int CurHP { get => _curHP; set => _curHP = value; }
-    public override int MaxHP { get => _maxHP; set => _maxHP = value; }
-
     public override void Damage(int damage)
     {
         int startHP = CurHP;
@@ -37,7 +30,7 @@ public abstract class CommonEnemyDiceUnit : EnemyDiceUnit
 
     protected override void Initialize()
     {
-        MaxHP = _maxHP;
+        MaxHP = data.maxHP;
         CurHP = MaxHP;
         _hpText.SetText(CurHP.ToString());
     }

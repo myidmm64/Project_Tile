@@ -5,18 +5,14 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public abstract class EnemyDiceUnit : DiceUnit, IDamagable
+public abstract class EnemyDiceUnit : DiceUnit
 {
     protected List<EnemyPattern> _patterns = new List<EnemyPattern>();
     private HashSet<EnemyPattern> _cooldownPatterns = new HashSet<EnemyPattern>();
     protected EnemyPattern _currentPattern = null;
 
-    public abstract int CurHP { get; set; }
-    public abstract int MaxHP { get; set; }
-
     protected abstract void Initialize();
     protected abstract void BindPattern();
-    public abstract void Damage(int damage);
 
     protected virtual void Awake()
     {

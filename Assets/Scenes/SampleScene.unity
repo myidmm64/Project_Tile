@@ -1061,12 +1061,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e12aba81d39898845aadc898599df2ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _moveDuration: 0.12
   _dicePipText: {fileID: 1053037263}
+  data: {fileID: 11400000, guid: 645973717e96e744eb6bb28b810e41b4, type: 2}
   _hpTextAnimatingDuration: 0.2
   _bossPreName: "\uD29C\uD1A0\uC6A9"
   _prefix: ' '
   _bossName: "\uBF09\uB2E4\uAD6C"
-  _maxHP: 100
 --- !u!95 &1053037267
 Animator:
   serializedVersion: 7
@@ -1700,7 +1701,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1650557166}
-  - component: {fileID: 1650557167}
+  - component: {fileID: 1650557173}
   - component: {fileID: 1650557168}
   - component: {fileID: 1650557170}
   - component: {fileID: 1650557171}
@@ -1730,27 +1731,6 @@ Transform:
   - {fileID: 1920342616}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1650557167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1650557164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2dd25d6c184ce48489ee0be8335fb8fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <diceGrid>k__BackingField: {fileID: 0}
-  _dicePipText: {fileID: 1920342618}
-  <data>k__BackingField: {fileID: 0}
-  <dice>k__BackingField: {fileID: 0}
-  <CurHP>k__BackingField: 0
-  <MaxHP>k__BackingField: 0
-  _isDungeon: 1
-  <spriteRenderer>k__BackingField: {fileID: 0}
-  <animator>k__BackingField: {fileID: 0}
 --- !u!114 &1650557168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1764,7 +1744,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxInputQueueCount: 3
-  _moveDuration: 0.12
 --- !u!114 &1650557170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1809,6 +1788,22 @@ MonoBehaviour:
   prefix: '@'
   backColor: {r: 1, g: 1, b: 1, a: 1}
   fontColor: {r: 0, g: 0, b: 0, a: 1}
+--- !u!114 &1650557173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650557164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 256edb68b94eb2244afe7fcb111c73c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveDuration: 0.12
+  _dicePipText: {fileID: 0}
+  data: {fileID: 11400000, guid: c487ad13ef0b24642a82f0c4fd0c7b23, type: 2}
+  _isDungeon: 1
 --- !u!1 &1707061638
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,12 +10,6 @@ public abstract class BossEnemyDiceUnit : EnemyDiceUnit
     private string _prefix = " - ";  // 추후 SO로 분리 필요
     [SerializeField]
     private string _bossName = string.Empty; // 추후 SO로 분리 필요
-    [SerializeField]
-    private int _maxHP = 0; // 추후 SO로 분리 필요
-    private int _curHP = 0;
-
-    public override int CurHP { get => _curHP; set => _curHP = value; }
-    public override int MaxHP { get => _maxHP; set => _maxHP = value; }
 
     public override void Damage(int damage)
     {
@@ -32,7 +26,7 @@ public abstract class BossEnemyDiceUnit : EnemyDiceUnit
 
     protected override void Initialize()
     {
-        MaxHP = _maxHP;
+        MaxHP = data.maxHP;
         CurHP = MaxHP;
     }
 
