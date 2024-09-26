@@ -3,17 +3,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public abstract class EnemyPattern
 {
-    protected EnemyDiceUnit _diceUnit = null;
+    protected Enemy _enemy = null;
     public bool isEnded { get; protected set; }
 
-    public EnemyPattern(EnemyDiceUnit diceUnit)
+    public EnemyPattern(Enemy diceUnit)
     {
-        _diceUnit = diceUnit;
+        _enemy = diceUnit;
         Initialize();
     }
 
@@ -31,11 +29,11 @@ public abstract class EnemyPattern
     // 기본 움직임
     protected virtual bool Move(Vector2Int dest, Action Callback)
     {
-        bool moved = _diceUnit.ChangeDice(dest);
+        bool moved = _enemy.ChangeDice(dest);
         if (moved)
         {
             Sequence _moveSeq = DOTween.Sequence();
-            _moveSeq.Append(_diceUnit.transform.DOMove(_diceUnit.dice.groundPos, 0.15f)).SetEase(Ease.Linear);
+            _moveSeq.Append(_enemy.transform.DOMove(_enemy.dice.groundPos, 0.15f)).SetEase(Ease.Linear);
             _moveSeq.AppendCallback(() =>
             {
                 Callback?.Invoke();
@@ -47,7 +45,7 @@ public abstract class EnemyPattern
     
     protected virtual void NormalAttack(float telegraphTime, float preWaitTime, string animationName, List<Vector2Int> attackRange, int damage, Action Callback)
     {
-        _diceUnit.StartCoroutine(NormalAttackCoroutine(telegraphTime, preWaitTime, animationName, attackRange, damage, Callback));
+        _enemy.StartCoroutine(NormalAttackCoroutine(telegraphTime, preWaitTime, animationName, attackRange, damage, Callback));
     }
 
     private IEnumerator NormalAttackCoroutine(float telegraphTime, float preWaitTime, string animationName, List<Vector2Int> attackRange, int damage, Action Callback)
@@ -55,14 +53,14 @@ public abstract class EnemyPattern
         // 텔레그래프 생성
         foreach(var attackPositionKey in attackRange)
         {
-            if(_diceUnit.diceGrid.grid.ContainsKey(attackPositionKey))
+            if(_enemy.diceGrid.grid.ContainsKey(attackPositionKey))
             {
                 var telegraph = PoolManager.Inst.Pop(EPoolType.DiceTelegraph) as DiceTelegraph;
-                telegraph.StartTelepgraph(_diceUnit.diceGrid, attackPositionKey, telegraphTime, ()=>
+                telegraph.StartTelepgraph(_enemy.diceGrid, attackPositionKey, telegraphTime, ()=>
                 {
                     List<Vector2Int> telegraphPosKey = new List<Vector2Int>();
                     telegraphPosKey.Add(attackPositionKey);
-                    var units = _diceUnit.diceGrid.GetDiceUnits(telegraphPosKey);
+                    var units = _enemy.diceGrid.GetDiceUnits(telegraphPosKey);
                     foreach (var unit in units)
                     {
                         if (unit is Player) // 플레이어

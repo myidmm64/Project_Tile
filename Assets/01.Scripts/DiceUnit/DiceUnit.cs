@@ -60,8 +60,8 @@ public abstract class DiceUnit : MonoBehaviour, IDamagable, IMovable
         }
         dice = targetDice;
 
-        _dicePipText?.SetText(dice.dicePip.ToString());
         diceGrid.diceUnitGrid[positionKey] = this;
+        _dicePipText?.SetText(dice.dicePip.ToString());
         OnDiceChanged?.Invoke(dice);
         return true;
     }

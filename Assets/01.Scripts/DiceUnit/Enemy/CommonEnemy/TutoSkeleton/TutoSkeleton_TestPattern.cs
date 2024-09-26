@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class TutoSkeleton_TestPattern : EnemyPattern
 {
-    public TutoSkeleton_TestPattern(EnemyDiceUnit diceUnit) : base(diceUnit)
+    public TutoSkeleton_TestPattern(Enemy diceUnit) : base(diceUnit)
     {
     }
 
@@ -22,21 +22,21 @@ public class TutoSkeleton_TestPattern : EnemyPattern
         {
             // _diceUnit.autoFlip = false;
             List<Vector2Int> attackRange = new List<Vector2Int>();
-            int horizontalDiff = _diceUnit.GetPlayer().positionKey.x - _diceUnit.positionKey.x;
+            int horizontalDiff = _enemy.GetPlayer().positionKey.x - _enemy.positionKey.x;
             if(horizontalDiff < 0)
             {
-                attackRange.AddRange(PosKeyUtil.Line(_diceUnit.positionKey, EDirection.Left, 2));
-                attackRange = attackRange.SubKeys(_diceUnit.positionKey).ToList();
+                attackRange.AddRange(PosKeyUtil.Line(_enemy.positionKey, EDirection.Left, 2));
+                attackRange = attackRange.SubKeys(_enemy.positionKey).ToList();
             }
             else if (horizontalDiff > 0)
             {
-                attackRange.AddRange(PosKeyUtil.Line(_diceUnit.positionKey, EDirection.Right, 2));
-                attackRange = attackRange.SubKeys(_diceUnit.positionKey).ToList();
+                attackRange.AddRange(PosKeyUtil.Line(_enemy.positionKey, EDirection.Right, 2));
+                attackRange = attackRange.SubKeys(_enemy.positionKey).ToList();
             }
             else
             {
-                attackRange.AddRange(PosKeyUtil.Line(_diceUnit.positionKey, EDirection.Up, 2, true));
-                attackRange = attackRange.SubKeys(_diceUnit.positionKey).ToList();
+                attackRange.AddRange(PosKeyUtil.Line(_enemy.positionKey, EDirection.Up, 2, true));
+                attackRange = attackRange.SubKeys(_enemy.positionKey).ToList();
             }
             NormalAttack(0.5f, 0.1f, "Attack", attackRange, 1, () =>
             {
@@ -45,10 +45,10 @@ public class TutoSkeleton_TestPattern : EnemyPattern
             });
         };
 
-        Vector2Int playerPosKey = _diceUnit.GetPlayer().positionKey;
-        Vector2Int trackingPosKey = Utility.EDirectionToVector(PosKeyUtil.GetDirectionToTarget(_diceUnit.positionKey, playerPosKey));
+        Vector2Int playerPosKey = _enemy.GetPlayer().positionKey;
+        Vector2Int trackingPosKey = Utility.EDirectionToVector(PosKeyUtil.GetDirectionToTarget(_enemy.positionKey, playerPosKey));
         List<Vector2Int> moveKeys = new List<Vector2Int>();
-        moveKeys.Add(_diceUnit.positionKey + trackingPosKey);
+        moveKeys.Add(_enemy.positionKey + trackingPosKey);
         moveKeys.Add(playerPosKey + Vector2Int.left);
         moveKeys.Add(playerPosKey + Vector2Int.right);
         moveKeys.Add(playerPosKey + Vector2Int.up);

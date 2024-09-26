@@ -1064,10 +1064,7 @@ MonoBehaviour:
   _moveDuration: 0.12
   _dicePipText: {fileID: 1053037263}
   data: {fileID: 11400000, guid: 645973717e96e744eb6bb28b810e41b4, type: 2}
-  _hpTextAnimatingDuration: 0.2
-  _bossPreName: "\uD29C\uD1A0\uC6A9"
-  _prefix: ' '
-  _bossName: "\uBF09\uB2E4\uAD6C"
+  _hpAniDuration: 0.2
 --- !u!95 &1053037267
 Animator:
   serializedVersion: 7
@@ -1801,7 +1798,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveDuration: 0.12
-  _dicePipText: {fileID: 0}
+  _dicePipText: {fileID: 1920342618}
   data: {fileID: 11400000, guid: c487ad13ef0b24642a82f0c4fd0c7b23, type: 2}
   _isDungeon: 1
 --- !u!1 &1707061638

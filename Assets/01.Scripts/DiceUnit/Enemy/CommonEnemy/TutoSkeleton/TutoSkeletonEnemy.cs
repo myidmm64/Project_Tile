@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TutoSkeletonEnemy : BossEnemyDiceUnit
+public class TutoSkeletonEnemy : BossEnemy
 {
     protected override void Update()
     {
