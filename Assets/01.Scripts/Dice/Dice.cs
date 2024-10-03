@@ -10,7 +10,6 @@ public class Dice : MonoBehaviour, IPoolable
     private Transform _groundPosTrm = null;
     public Vector3 groundPos => _groundPosTrm.position;
 
-    public List<Sprite> _sprites = new List<Sprite>();
     public EPoolType PoolType { get; set; }
     public GameObject POOLABLE_GAMEOBJECT { get; set; }
 
@@ -18,7 +17,11 @@ public class Dice : MonoBehaviour, IPoolable
 
     [SerializeField]
     private DiceAnimationDataSO _diceAnimationDataSO = null;
-    private SpriteRenderer _spriteRenderer = null;
+    [SerializeField]
+    private DiceSpriteDataSO _diceSpriteDataSO = null;
+    [SerializeField]
+    private SpriteRenderer _pipSpriteRenderer = null;
+    private List<SpriteRenderer> _sprites = new List<SpriteRenderer>(); // Order 세팅용
     private Animator _animator = null;
     private DiceAction _diceAction = null;
 
@@ -28,8 +31,7 @@ public class Dice : MonoBehaviour, IPoolable
     public void Initailize()
     {
         Transform spriteTrm = transform.Find("Sprite");
-        _spriteRenderer = spriteTrm.GetComponent<SpriteRenderer>();
-        _animator = spriteTrm.GetComponent<Animator>();
+        _sprites.AddRange(transform.Find("Sprites").GetComponentsInChildren<SpriteRenderer>());
     }
 
     public void PopObject()
@@ -51,8 +53,11 @@ public class Dice : MonoBehaviour, IPoolable
 
     public void SetSpriteOrder()
     {
-        if (_spriteRenderer == null) return;
-        _spriteRenderer.sortingOrder = 0 - positionKey.y;
+        if (_sprites.Count == 0) return;
+        for(int i = 0; i < _sprites.Count; i++)
+        {
+            _sprites[i].sortingOrder = 0 - (positionKey.y * 5) + i;
+        }
     }
 
     // Dice 교체
@@ -78,9 +83,11 @@ public class Dice : MonoBehaviour, IPoolable
     public void Roll(int specificPip = 0)
     {
         int changePip = specificPip == 0 ? changePip = Random.Range(1, 7) : specificPip;
+        // changePip = 0;
         dicePip = changePip;
         // 임시 코드
-        _spriteRenderer.sprite = _sprites[changePip];
+        _pipSpriteRenderer.sprite = _diceSpriteDataSO.diceSpriteDatas[changePip].sprite;
+        _pipSpriteRenderer.color = _diceSpriteDataSO.diceSpriteDatas[changePip].accentColor;
         // roll Animation
         // _animator.SetInteger("dicePip", _dicePip); -> 해당 pip를 기준으로 애니 끝난 후 스프라이트를 결정
         // _animator.Play("Roll");
