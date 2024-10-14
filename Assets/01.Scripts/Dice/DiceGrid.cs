@@ -4,71 +4,59 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class DiceGrid : MonoBehaviour
+public class DiceGrid : MonoSingleTon<DiceGrid>
 {
     public Dictionary<Vector2Int, Dice> grid { get; private set; }
     public Dictionary<Vector2Int, DiceUnit> diceUnitGrid { get; private set; }
+    // 위험지역 그리드도 만들기
 
     [SerializeField]
-    private DiceGenerateDataSO _diceGenerateData = null;
-    public Vector2Int mapSize { get; private set; } // 맵에 dice가 삭제될 때 변경되어야할 가능 성 있음.
-    public Vector2Int mapCenter => new Vector2Int(mapSize.x / 2 + 1, mapSize.y / 2 + 1); // 맵에 dice가 삭제될 때 변경되어야할 가능 성 있음.
+    private DiceGenerateDataSO _testGenerateData = null;
+    private Player _player = null;
 
     private void Awake()
     {
+        _player = FindFirstObjectByType<Player>();
         grid = new Dictionary<Vector2Int, Dice>();
         diceUnitGrid = new Dictionary<Vector2Int, DiceUnit>();
 
-        GenerateDices(out int maxRow, out int maxColumn);
-        mapSize = new Vector2Int(maxRow, maxColumn);
+        GenerateMap(_testGenerateData);
     }
 
-    [ContextMenu("그리드 재제작")]
-    public void RestartGrid()
+    public void GenerateMap(DiceGenerateDataSO data)
     {
-        foreach (var dice in grid)
-        {
-            PoolManager.Inst.Push(dice.Value);
-        }
-        grid.Clear();
-        GenerateDices(out int maxRow, out int maxColumn);
-        mapSize = new Vector2Int(maxRow, maxColumn);
-    }
+        // 초기화 함수 추가
 
-    public void GenerateDices(out int maxRow, out int maxColumn)
-    {
-        string[] rows = _diceGenerateData.diceMapStr.Split('\n');
-        maxColumn = rows.Length;
-        maxRow = rows[0].Length;
-        Vector2 startPos = _diceGenerateData.diceCenterPosition + GetPaddingPos(new Vector2(-(maxRow / 2), -(maxColumn / 2)), _diceGenerateData.dicePositionDistance);
+        float totalWidth = data.padding.x * data.mapSize.x;
+        float totalHeight = data.padding.y * data.mapSize.y;
 
-        for (int y = 0; y < maxColumn; y++)
+        Vector2 startPos = new Vector2(
+            data.centerPos.x - (totalWidth / 2),
+            data.centerPos.y - (totalHeight / 2));
+
+        for (int y = 0; y < data.mapSize.y; y++)
         {
-            for (int x = 0; x < maxRow; x++)
+            for (int x = 0; x < data.mapSize.x; x++)
             {
-                int number = rows[y][x] - '0';
-                if (number == 0) continue;
+                if (data.subPositions.Contains(new Vector2Int(x, y))) continue;
                 Dice dice = PoolManager.Inst.Pop(EPoolType.Dice) as Dice; // PopDice((EDiceType)number);
                 if (dice == null) continue;
 
-                Vector2 dicePosition = startPos + GetPaddingPos(new Vector2(x, y), _diceGenerateData.dicePositionDistance);
-                Vector2Int positionKey = new Vector2Int(x, maxColumn - y - 1);
-                dice.positionKey = positionKey;
+                Vector2 dicePosition = startPos + new Vector2(x * data.padding.x, y * data.padding.y);
+                Vector2Int positionKey = new Vector2Int(x, y);
+
                 dice.transform.position = dicePosition;
-                dice.ChangeDiceType(EDiceType.Normal); // Custom
+                dice.positionKey = positionKey;
+                dice.gameObject.name = $"dice : {positionKey.ToString()}";
                 dice.Roll();
                 dice.SetSpriteOrder();
-                dice.gameObject.name = positionKey.ToString();
                 dice.transform.SetParent(transform, false);
 
                 grid.Add(positionKey, dice);
             }
         }
-    }
 
-    private Vector2 GetPaddingPos(Vector2 pos, Vector2 padding)
-    {
-        return pos * padding;
+        _player.ChangeDice(data.playerPos);
     }
 
     // 가장 가까운 빈 Dice의 PositionKey 추출

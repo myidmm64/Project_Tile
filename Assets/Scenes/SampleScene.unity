@@ -1158,7 +1158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7343727c345d9fe4e892008566cef4eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _diceGenerateData: {fileID: 11400000, guid: fc02f4482129f9247b1f272cd6bfbe19, type: 2}
+  _testGenerateData: {fileID: 11400000, guid: fc02f4482129f9247b1f272cd6bfbe19, type: 2}
 --- !u!114 &901142394
 MonoBehaviour:
   m_ObjectHideFlags: 0
