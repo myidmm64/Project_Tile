@@ -1,50 +1,45 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class PlayerWeapon : MonoBehaviour
+public abstract class PlayerWeapon : MonoBehaviour
 {
-    private Animator _animator = null;
+    [SerializeField, TextArea]
+    protected string _atkRange = string.Empty;
 
+    public abstract EWeaponType WeaponType { get; protected set; } // 이거에 따라서 공격 방식 달라짐
+    protected Player _player = null;
     [SerializeField]
-    private Vector2 _addPos = Vector2.zero;
+    protected int _skillID = 0;
+    protected SkillDataSO _skillData = null;
 
-    [SerializeField]
-    private List<Vector2> _skillAddPos = new List<Vector2>();
-    [SerializeField]
-    private List<int> _skillAddRot = new List<int>();
-
-    private int _idx = 0;
-    private Player _player = null;
-
-    [SerializeField]
-    private int _attackSkillID = 0;
-    private SkillDataSO _attackSkillData = null;
-    private SUseSkillData _curSkillData;
+    // 무기마다 카운터 애니메이션 들어가야함.
 
     private void Awake()
     {
-        _animator = transform.Find("Sprite").GetComponent<Animator>();
-        _attackSkillData = Utility.GetSkillDataSO(_attackSkillID);
+        _skillData = Utility.GetSkillDataSO(_skillID); // 현재 무기에 연경된 스킬 가져오기
     }
 
+    public abstract bool IsAttackable();
+    public abstract void Attack();
+
+    /*
     public bool Attack(Player player, Vector2Int positionKey, EDirection direction)
     {
         _player = player;
-        if (player.diceGrid.grid.ContainsKey(positionKey) == false) return false;
+        if (player.grid.dices.ContainsKey(positionKey) == false) return false;
 
         // 방향 및 position 세팅
-        Vector2 diceGroundPos = player.diceGrid.grid[positionKey].groundPos;
+        Vector2 diceGroundPos = player.grid.dices[positionKey].groundPos;
         transform.position = diceGroundPos + new Vector2(_addPos.x * Utility.DirectionToXMiltiflier(direction), _addPos.y);
         Utility.SetLocalScaleByDirection(transform, direction);
 
         _animator.Play($"Attack{_idx}");
 
-        _curSkillData = new SUseSkillData();
-        _curSkillData.owner = _player;
-        _curSkillData.direction = direction;
-        _curSkillData.spawnPositionKey = positionKey;
+        _useSkillData = new SUseSkillData();
+        _useSkillData.owner = _player;
+        _useSkillData.direction = direction;
+        _useSkillData.spawnPositionKey = positionKey;
 
         Action attackCallback = () => { _player.GetModule<PlayerSkillModule>().IncreaseDP(20); };
 
@@ -58,17 +53,18 @@ public class PlayerWeapon : MonoBehaviour
         otherDatas.Add("Rotation", skillRotation);
         otherDatas.Add("Index", _idx);
 
-        _curSkillData.otherDatas = otherDatas;
+        _useSkillData.otherDatas = otherDatas;
         _idx = (_idx + 1) % 3;
         return true;
     }
 
     public void SpawnAttackObj()
     {
-        if (_player.diceGrid.grid.ContainsKey(_curSkillData.spawnPositionKey))
+        if (_player.grid.dices.ContainsKey(_useSkillData.spawnPositionKey))
         {
-            Skill skill = _attackSkillData.GetSkill();
-            skill.UseSkill(_curSkillData);
+            Skill skill = _skillData.GetSkill();
+            skill.UseSkill(_useSkillData);
         }
     }
+    */
 }

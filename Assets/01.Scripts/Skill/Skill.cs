@@ -14,9 +14,9 @@ public abstract class Skill : MonoBehaviour
 
     protected bool SetPosition(DiceGrid grid, Vector2Int positionKey, Vector3 addPosition)
     {
-        if(grid.grid.ContainsKey(positionKey))
+        if(grid.dices.ContainsKey(positionKey))
         {
-            transform.position = grid.grid[positionKey].groundPos + addPosition;
+            transform.position = grid.dices[positionKey].groundPos + addPosition;
             return true;
         }
         return false;

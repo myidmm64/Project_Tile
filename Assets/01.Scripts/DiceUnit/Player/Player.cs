@@ -47,7 +47,6 @@ public class Player : DiceUnit
     private void TestInit()
     {
         var grid = GameObject.FindAnyObjectByType<DiceGrid>();
-        SetDiceGrid(grid);
 
         ChangeDice(new Vector2Int(1, 1));
         transform.position = dice.groundPos;

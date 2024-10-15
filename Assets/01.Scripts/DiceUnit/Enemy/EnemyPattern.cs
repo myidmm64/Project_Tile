@@ -53,14 +53,14 @@ public abstract class EnemyPattern
         // 텔레그래프 생성
         foreach(var attackPositionKey in attackRange)
         {
-            if(_enemy.diceGrid.grid.ContainsKey(attackPositionKey))
+            if(_enemy.grid.dices.ContainsKey(attackPositionKey))
             {
                 var telegraph = PoolManager.Inst.Pop(EPoolType.DiceTelegraph) as DiceTelegraph;
-                telegraph.StartTelepgraph(_enemy.diceGrid, attackPositionKey, telegraphTime, ()=>
+                telegraph.StartTelepgraph(_enemy.grid, attackPositionKey, telegraphTime, ()=>
                 {
                     List<Vector2Int> telegraphPosKey = new List<Vector2Int>();
                     telegraphPosKey.Add(attackPositionKey);
-                    var units = _enemy.diceGrid.GetDiceUnits(telegraphPosKey);
+                    var units = _enemy.grid.GetDiceUnits(telegraphPosKey);
                     foreach (var unit in units)
                     {
                         if (unit is Player) // 플레이어

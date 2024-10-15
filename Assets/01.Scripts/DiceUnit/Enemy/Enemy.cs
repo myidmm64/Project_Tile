@@ -33,7 +33,7 @@ public abstract class Enemy : DiceUnit
 
     public Player GetPlayer()
     {
-        foreach (var diceUnit in diceGrid.diceUnitGrid.Values)
+        foreach (var diceUnit in grid.units.Values)
         {
             if (diceUnit is Player) return diceUnit as Player;
         }

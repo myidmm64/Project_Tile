@@ -23,7 +23,7 @@ public struct SSkillData
 public struct SUseSkillData
 {
     public DiceUnit owner;
-    public DiceGrid grid => owner.diceGrid;
+    public DiceGrid grid => owner.grid;
 
     public EDirection direction;
     public Vector2Int spawnPositionKey;

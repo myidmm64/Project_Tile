@@ -54,12 +54,12 @@ public class PlayerAttackModule : PlayerModule
         foreach (var attackRange in attackRanges)
         {
             Vector2Int attackPositionKey = _player.positionKey + attackRange;
-            if (_player.diceGrid.diceUnitGrid.ContainsKey(attackPositionKey))
+            if (_player.grid.units.ContainsKey(attackPositionKey))
             {
-                IDamagable damagable = _player.diceGrid.diceUnitGrid[attackPositionKey].GetComponent<IDamagable>();
+                IDamagable damagable = _player.grid.units[attackPositionKey].GetComponent<IDamagable>();
                 if (damagable != null)
                 {
-                    result.Add(_player.diceGrid.diceUnitGrid[attackPositionKey]);
+                    result.Add(_player.grid.units[attackPositionKey]);
                 }
             }
         }

@@ -22,7 +22,7 @@ public class DiceTelegraph : MonoBehaviour, IPoolable
     // 단순하게 n초 뒤 피해가 들어오도록
     public void StartTelepgraph(DiceGrid grid, Vector2Int positionKey, float waitTime, Action Callback)
     {
-        transform.position = grid.grid[positionKey].transform.position;
+        transform.position = grid.dices[positionKey].transform.position;
 
         StartCoroutine(WaitAndCallback(waitTime, Callback));
     }

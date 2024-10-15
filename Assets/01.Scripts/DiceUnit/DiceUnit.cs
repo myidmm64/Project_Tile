@@ -6,12 +6,10 @@ using UnityEngine;
 
 public abstract class DiceUnit : MonoBehaviour, IDamagable, IMovable
 {
-    public DiceGrid diceGrid { get; private set; }
+    public DiceGrid grid => DiceGrid.Inst;
 
     [SerializeField]
     private float _moveDuration = 0.12f;
-    [SerializeField]
-    private TextMeshPro _dicePipText = null; // 현재 DiceUnit의 눈금 텍스트
     [SerializeField]
     public DiceUnitData data = null;
 
@@ -28,17 +26,9 @@ public abstract class DiceUnit : MonoBehaviour, IDamagable, IMovable
     public int CurHP { get; set; }
     public int MaxHP { get; set; }
 
-    public void SetDiceGrid(DiceGrid diceGrid, Dice _dice = null)
-    {
-        this.diceGrid = diceGrid;
-        if (_dice != null) dice = _dice;
-    }
-
     public bool ChangeDice(Vector2Int targetPositionKey)
     {
-        if (diceGrid == null) return false;
-
-        if (diceGrid.grid.TryGetValue(targetPositionKey, out Dice targetDice))
+        if (grid.dices.TryGetValue(targetPositionKey, out Dice targetDice))
         {
             return ChangeDice(targetDice);
         }
@@ -49,19 +39,17 @@ public abstract class DiceUnit : MonoBehaviour, IDamagable, IMovable
     public bool ChangeDice(Dice targetDice) // targetDice로 변경하기
     {
         // grid 내 dice가 있고, unit이 들어갈 수 있어야 함.
-        bool changable = diceGrid.diceUnitGrid.ContainsKey(targetDice.positionKey) == false
-            && targetDice.UnitBindable();
+        bool changable = grid.units.ContainsKey(targetDice.positionKey) == false;
         if (changable == false) return false;
 
         // 본인 위치의 DiceUnit 지우고 이동
-        if (diceGrid.diceUnitGrid.ContainsKey(positionKey))
+        if (grid.units.ContainsKey(positionKey))
         {
-            diceGrid.diceUnitGrid.Remove(positionKey);
+            grid.units.Remove(positionKey);
         }
         dice = targetDice;
 
-        diceGrid.diceUnitGrid[positionKey] = this;
-        _dicePipText?.SetText(dice.dicePip.ToString());
+        grid.units[positionKey] = this;
         OnDiceChanged?.Invoke(dice);
         return true;
     }
@@ -85,6 +73,7 @@ public abstract class DiceUnit : MonoBehaviour, IDamagable, IMovable
         }
         return false;
     }
+
     public virtual bool Knockback(EDirection dir, int amount)
     {
         Vector2Int target = positionKey + (Utility.EDirectionToVector(dir) * amount);

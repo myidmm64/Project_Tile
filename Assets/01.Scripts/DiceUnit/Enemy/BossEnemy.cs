@@ -19,7 +19,6 @@ public abstract class BossEnemy : Enemy
     {
         // 추후 그리드 선택 부분과 Change Dice 부분 다른 곳에서 하기
         var grid = GameObject.FindAnyObjectByType<DiceGrid>();
-        SetDiceGrid(grid);
         base.Start();
         MainUI.Inst.GetUIElement<EnemyUI>().nameText.SetText(data.unitName);
         MainUI.Inst.GetUIElement<EnemyUI>().hpSlider.Initialize(MaxHP);

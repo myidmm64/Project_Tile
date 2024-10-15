@@ -1347,17 +1347,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4615024983712663487, guid: 6bd9065b38b23f14f84437e5e285e480, type: 3}
   m_PrefabInstance: {fileID: 1053037261}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1053037263 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8014452593043235364, guid: 6bd9065b38b23f14f84437e5e285e480, type: 3}
-  m_PrefabInstance: {fileID: 1053037261}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1053037264 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7895033306362457727, guid: 6bd9065b38b23f14f84437e5e285e480, type: 3}
@@ -1381,7 +1370,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveDuration: 0.12
-  _dicePipText: {fileID: 1053037263}
   data: {fileID: 11400000, guid: 645973717e96e744eb6bb28b810e41b4, type: 2}
   _hpAniDuration: 0.2
 --- !u!95 &1053037267
@@ -2117,7 +2105,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveDuration: 0.1125
-  _dicePipText: {fileID: 1920342618}
   data: {fileID: 11400000, guid: c487ad13ef0b24642a82f0c4fd0c7b23, type: 2}
   _isDungeon: 1
 --- !u!1 &1707061638
@@ -2767,14 +2754,14 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 619394802}
-  - {fileID: 901142392}
   - {fileID: 1650557166}
   - {fileID: 1321826388}
-  - {fileID: 1707061639}
-  - {fileID: 1787517933}
   - {fileID: 1728678038}
   - {fileID: 459924830}
   - {fileID: 7010602097094653055}
   - {fileID: 1053037261}
   - {fileID: 1020326320}
   - {fileID: 2059841090}
+  - {fileID: 1707061639}
+  - {fileID: 1787517933}
+  - {fileID: 901142392}

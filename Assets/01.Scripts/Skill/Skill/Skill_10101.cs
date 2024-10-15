@@ -9,16 +9,16 @@ public class Skill_10101 : Skill
         SetPosition(data.grid, positionKey, Vector2.up * 0.43f);
         _spriteRenderer.flipX = data.direction == EDirection.Left;
 
-        if(data.grid.diceUnitGrid.ContainsKey(positionKey))
+        if(data.grid.units.ContainsKey(positionKey))
         {
-            IDamagable damagable = data.grid.diceUnitGrid[positionKey].GetComponent<IDamagable>();
+            IDamagable damagable = data.grid.units[positionKey].GetComponent<IDamagable>();
             if(damagable == null)
             {
                 Destroy(gameObject);
             }
             else
             {
-                StartCoroutine(Test(damagable, data.grid.grid[positionKey].dicePip));
+                StartCoroutine(Test(damagable, data.grid.dices[positionKey].dicePip));
             }
         }
         else

@@ -6,8 +6,8 @@ using UnityEngine.Tilemaps;
 
 public class DiceGrid : MonoSingleTon<DiceGrid>
 {
-    public Dictionary<Vector2Int, Dice> grid { get; private set; }
-    public Dictionary<Vector2Int, DiceUnit> diceUnitGrid { get; private set; }
+    public Dictionary<Vector2Int, Dice> dices { get; private set; }
+    public Dictionary<Vector2Int, DiceUnit> units { get; private set; }
     // 위험지역 그리드도 만들기
 
     [SerializeField]
@@ -17,8 +17,8 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
     private void Awake()
     {
         _player = FindFirstObjectByType<Player>();
-        grid = new Dictionary<Vector2Int, Dice>();
-        diceUnitGrid = new Dictionary<Vector2Int, DiceUnit>();
+        dices = new Dictionary<Vector2Int, Dice>();
+        units = new Dictionary<Vector2Int, DiceUnit>();
 
         GenerateMap(_testGenerateData);
     }
@@ -52,7 +52,7 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
                 dice.SetSpriteOrder();
                 dice.transform.SetParent(transform, false);
 
-                grid.Add(positionKey, dice);
+                dices.Add(positionKey, dice);
             }
         }
 
@@ -81,7 +81,7 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
             Vector2Int current = queue.Dequeue();
 
             // 적이 있는 타일을 찾으면 반환
-            if (current != start && grid.ContainsKey(current))
+            if (current != start && dices.ContainsKey(current))
             {
                 return current;
             }
@@ -123,9 +123,9 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
             Vector2Int current = queue.Dequeue();
 
             // 적이 있는 타일을 찾으면 반환
-            if (current != start && diceUnitGrid.ContainsKey(current))
+            if (current != start && units.ContainsKey(current))
             {
-                if (diceUnitGrid[current].data.eTeam == team)
+                if (units[current].data.eTeam == team)
                 {
                     return current;
                 }
@@ -168,9 +168,9 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
             Vector2Int current = queue.Dequeue();
 
             // 적이 있는 타일을 찾으면 반환
-            if (current != start && diceUnitGrid.ContainsKey(current))
+            if (current != start && units.ContainsKey(current))
             {
-                if (diceUnitGrid[current] is T)
+                if (units[current] is T)
                 {
                     return current;
                 }
@@ -196,7 +196,7 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
         List<Dice> result = new List<Dice>();
         foreach (var positionKey in positionKeies)
         {
-            if (grid.ContainsKey(positionKey)) result.Add(grid[positionKey]);
+            if (dices.ContainsKey(positionKey)) result.Add(dices[positionKey]);
         }
         return result;
     }
@@ -211,11 +211,11 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
         List<DiceUnit> result = new List<DiceUnit>();
         foreach (var positionKey in positionKeies)
         {
-            if (diceUnitGrid.ContainsKey(positionKey))
+            if (units.ContainsKey(positionKey))
             {
-                if (diceUnitGrid[positionKey] is T)
+                if (units[positionKey] is T)
                 {
-                    result.Add(diceUnitGrid[positionKey]);
+                    result.Add(units[positionKey]);
                 }
             }
         }
@@ -224,7 +224,7 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
 
     public IEnumerable<Dice> GetSamePipDices(int dicePip)
     {
-        var query = from dice in grid.Values
+        var query = from dice in dices.Values
                     where dice.dicePip == dicePip
                     select dice;
         return query;
@@ -232,7 +232,7 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
 
     public IEnumerable<Dice> GetDiceRow(int rowNum)
     {
-        var query = from diceKeyValue in grid
+        var query = from diceKeyValue in dices
                     where diceKeyValue.Key.y == rowNum
                     select diceKeyValue.Value;
         return query;
@@ -240,7 +240,7 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
 
     public IEnumerable<Dice> GetDiceColumn(int columnNum)
     {
-        var query = from diceKeyValue in grid
+        var query = from diceKeyValue in dices
                     where diceKeyValue.Key.x == columnNum
                     select diceKeyValue.Value;
         return query;
