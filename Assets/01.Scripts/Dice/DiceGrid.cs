@@ -27,8 +27,8 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
     {
         // 초기화 함수 추가
 
-        float totalWidth = data.padding.x * data.mapSize.x;
-        float totalHeight = data.padding.y * data.mapSize.y;
+        float totalWidth = data.padding.x * (data.mapSize.x - 1); // 간격의 수(격자 크기의 -1)만큼 곱해 전체 크기를 구함
+        float totalHeight = data.padding.y * (data.mapSize.y - 1);
 
         Vector2 startPos = new Vector2(
             data.centerPos.x - (totalWidth / 2),

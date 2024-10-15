@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e3040c31f79bce4b8b52e498ec81038, type: 3}
   m_Name: DiceGenerateDataSO
   m_EditorClassIdentifier: 
-  mapSize: {x: 4, y: 4}
-  subPositions: []
-  centerPos: {x: 0, y: 0}
-  padding: {x: 1, y: 1}
+  mapSize: {x: 5, y: 5}
+  subPositions:
+  - {x: 3, y: 3}
+  centerPos: {x: 0, y: -0.5}
+  padding: {x: 1.5, y: 1.1}
   playerPos: {x: 0, y: 0}
   spawnDatas: []
