@@ -11,7 +11,6 @@ public class PlayerWeaponAnimEvent : MonoBehaviour
 
     public void Spawn()
     {
-        _weapon.SpawnAttackObj();
+        // _weapon.SpawnAttackObj();
     }
-
 }

@@ -14,7 +14,7 @@ public class PlayerMoveModule : PlayerModule
         _player.OnMoveStarted += (currentPos, targetPos) =>
         {
             Vector2Int inputDir = targetPos - currentPos;
-            _player.animator.SetFloat("Horizontal", _player.GetDirection() == EDirection.Left ? inputDir.x * -1f : inputDir.x);
+            _player.animator.SetFloat("Horizontal", _player.direction == EDirection.Left ? inputDir.x * -1f : inputDir.x);
             _player.animator.SetFloat("Vertical", inputDir.y);
             _player.animator.Play("Move");
         };

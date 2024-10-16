@@ -4,6 +4,19 @@ using UnityEngine;
 
 public static class Utility
 {
+    private static Player _player = null;
+    public static Player player // 임시로 사용할 녀석.?
+    {
+        get
+        {
+            if(_player = null)
+            {
+                _player = GameObject.FindFirstObjectByType<Player>();
+            }
+            return _player;
+        }
+    }
+
     public static Vector2Int EDirectionToVector(EDirection direction) => direction switch
     {
         EDirection.None => Vector2Int.zero,

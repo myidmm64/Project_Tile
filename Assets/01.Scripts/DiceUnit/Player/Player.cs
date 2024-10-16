@@ -27,11 +27,15 @@ public class Player : DiceUnit
 
     private void Start()
     {
-        TestInit();
+        transform.position = dice.groundPos;
+        MaxHP = data.maxHP;
+        CurHP = data.maxHP;
+        MainUI.Inst.GetUIElement<CharacterUI>().hpSlider.Initialize(data.maxHP);
     }
 
     private void Update()
     {
+        LookAt(grid.FindClosestUnit<DiceUnit>(positionKey), spriteRenderer); // 나중에 누굴 쫒아갈지 만들어두기
         GetModule<PlayerMoveModule>().Move();
     }
 
@@ -42,24 +46,6 @@ public class Player : DiceUnit
             if(module is T) return (T)module;
         }
         return null;
-    }
-
-    private void TestInit()
-    {
-        var grid = GameObject.FindAnyObjectByType<DiceGrid>();
-
-        ChangeDice(new Vector2Int(1, 1));
-        transform.position = dice.groundPos;
-
-        MaxHP = data.maxHP;
-        CurHP = data.maxHP;
-        MainUI.Inst.GetUIElement<CharacterUI>().hpSlider.Initialize(data.maxHP);
-    }
-
-    public EDirection GetDirection()
-    {
-        return EDirection.Left;
-        // return spriteRenderer.flipX ? EDirection.Left : EDirection.Right;
     }
 
     public override void Damage(int damage)

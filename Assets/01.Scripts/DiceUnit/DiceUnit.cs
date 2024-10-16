@@ -26,6 +26,8 @@ public abstract class DiceUnit : MonoBehaviour, IDamagable, IMovable
     public int CurHP { get; set; }
     public int MaxHP { get; set; }
 
+    public EDirection direction { get; private set; }
+
     public bool ChangeDice(Vector2Int targetPositionKey)
     {
         if (grid.dices.TryGetValue(targetPositionKey, out Dice targetDice))
@@ -78,5 +80,27 @@ public abstract class DiceUnit : MonoBehaviour, IDamagable, IMovable
     {
         Vector2Int target = positionKey + (Utility.EDirectionToVector(dir) * amount);
         return ChangeDice(target);
-    }   
+    }
+
+    public void LookAt(Vector2Int targetPositionKey, SpriteRenderer renderer)
+    {
+        LookAt(positionKey, targetPositionKey, renderer);
+    }
+
+    public void LookAt(Vector2 startPos, Vector2 targetPos, SpriteRenderer renderer)
+    {
+        float xCross = Vector3.Cross(Vector3.down, targetPos - startPos).z;
+        if (xCross > 0)
+        {
+            if (renderer != null) renderer.flipX = false;
+
+            direction = EDirection.Right;
+        }
+        else if(xCross < 0)
+        {
+            if (renderer != null) renderer.flipX = true;
+
+            direction = EDirection.Left;
+        }
+    }
 }

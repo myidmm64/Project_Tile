@@ -1575,7 +1575,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1321826388}
-  - component: {fileID: 1321826389}
   m_Layer: 0
   m_Name: PlayerSword
   m_TagString: Untagged
@@ -1599,25 +1598,6 @@ Transform:
   - {fileID: 541313933}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1321826389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1321826387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06f2cf82f3214994e9ff8d8d2c34f1a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _addPos: {x: -0.38, y: 0.61}
-  _skillAddPos:
-  - {x: -0.1, y: 0.4}
-  - {x: -0.5, y: 0.4}
-  - {x: 0.05, y: 0.2}
-  _skillAddRot: e6000000e600000000000000
-  _attackSkillID: 10100
 --- !u!1 &1337743121
 GameObject:
   m_ObjectHideFlags: 0
@@ -2060,7 +2040,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1bcdeb4671f304e98ba88e285b6e4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weapon: {fileID: 1321826389}
+  _weapon: {fileID: 0}
   _attackDelay: 0.4
 --- !u!114 &1650557171
 MonoBehaviour:
@@ -2106,6 +2086,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveDuration: 0.1125
   data: {fileID: 11400000, guid: c487ad13ef0b24642a82f0c4fd0c7b23, type: 2}
+  Teststst: {fileID: 1053037266}
   _isDungeon: 1
 --- !u!1 &1707061638
 GameObject:

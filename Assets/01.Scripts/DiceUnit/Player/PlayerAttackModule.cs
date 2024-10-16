@@ -30,15 +30,13 @@ public class PlayerAttackModule : PlayerModule
 
     public void Attack()
     {
-        // if (_player.moveModule.isMoving) return;
-        if (_attackTimer >= _attackDelay)
+        if (_player.isMoving || _weapon == null) return;
+        if (_attackTimer >= _attackDelay && _weapon.IsAttackable())
         {
-            if(_weapon.Attack(_player, _player.positionKey + Utility.EDirectionToVector(_player.GetDirection()), _player.GetDirection()))
-            {
-                _player.animator.Play($"Attack{_idx}");
-                _idx = (_idx + 1) % 3;
-                _attackTimer = 0f;
-            }
+            _weapon.Attack();
+            _player.animator.Play($"Attack{_idx}");
+            _idx = (_idx + 1) % 3;
+            _attackTimer = 0f;
         }
     }
 
