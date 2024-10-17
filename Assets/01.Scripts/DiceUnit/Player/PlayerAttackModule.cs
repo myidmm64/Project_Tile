@@ -6,18 +6,27 @@ using UnityEngine.InputSystem;
 public class PlayerAttackModule : PlayerModule
 {
     [SerializeField]
-    private PlayerWeapon _weapon = null;
-
+    private int _weaponID = 0;
+    private PlayerWeaponDataSO _curWeaponData = null;
+    private PlayerWeapon _curWeapon = null;
+    
     [SerializeField]
     private float _attackDelay = 0.5f;
     private float _attackTimer = 0f;
 
     private bool _attackKeyPress = false;
 
+    private int _idx = 0;
+
     protected override void Awake()
     {
         base.Awake();
         _player = GetComponent<Player>();
+    }
+
+    private void Start()
+    {
+        ChangeWeapon(_weaponID);
     }
 
     private void Update()
@@ -26,21 +35,25 @@ public class PlayerAttackModule : PlayerModule
         if (_attackKeyPress) Attack();
     }
 
-    private int _idx = 0;
+    public void ChangeWeapon(int weaponID)
+    {
+        _curWeaponData = Utility.GetPlayerWeaponDataSO(weaponID);
+        _curWeapon = _curWeaponData.GetWeapon();
+    }
 
     public void Attack()
     {
-        if (_player.isMoving || _weapon == null) return;
-        if (_attackTimer >= _attackDelay && _weapon.IsAttackable())
+        if (_player.isMoving || _curWeapon == null) return;
+        if (_attackTimer >= _attackDelay && _curWeapon.IsAttackable())
         {
-            _weapon.Attack();
-            _player.animator.Play($"Attack{_idx}");
+            _curWeapon.Attack();
+            _player.sprite.animator.Play($"Attack{_idx}");
             _idx = (_idx + 1) % 3;
             _attackTimer = 0f;
         }
     }
 
-    public List<DiceUnit> GetAttackTargets()
+    public List<DiceUnit> GetAttackTargets() // 이거 삭제하셈
     {
         List<Vector2Int> attackRanges = new List<Vector2Int>()
             {

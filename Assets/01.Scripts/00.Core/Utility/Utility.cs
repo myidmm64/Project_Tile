@@ -4,6 +4,9 @@ using UnityEngine;
 
 public static class Utility
 {
+    private static readonly string _skillDataPath = "SkillDataSO";
+    private static readonly string _playerWeaponPath = "PlayerWeaponDataSO";
+
     private static Player _player = null;
     public static Player player // 임시로 사용할 녀석.?
     {
@@ -93,13 +96,24 @@ public static class Utility
         return new Vector2Int(newX, newY);
     }
 
+    public static PlayerWeaponDataSO GetPlayerWeaponDataSO(int weaponID)
+    {
+        string resourcePath = $"{_playerWeaponPath}/{weaponID}";
+        return LoadResource<PlayerWeaponDataSO>(resourcePath);
+    }
+
     public static SkillDataSO GetSkillDataSO(int skillID)
     {
-        string resourcePath = $"SkillDataSO/SkillData_{skillID.ToString()}";
-        SkillDataSO data = Resources.Load<SkillDataSO>(resourcePath);
-        if(data == null)
+        string resourcePath = $"{_skillDataPath}/{skillID}";
+        return LoadResource<SkillDataSO>(resourcePath);
+    }
+
+    private static T LoadResource<T>(string path) where T : Object
+    {
+        T data = Resources.Load<T>(path);
+        if (data == null)
         {
-            Debug.LogError($"리소스를 찾지 못함. resourcePath : {resourcePath}");
+            Debug.LogError($"리소스를 찾지 못함. path : {path}");
             return null;
         }
         return data;

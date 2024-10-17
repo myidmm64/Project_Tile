@@ -73,7 +73,7 @@ public class PlayerSkillModule : PlayerModule
         MainUI.Inst.GetUIElement<CharacterUI>().dpSlider.SetValueWithAnimation(0, _dpSliderAnimationDuration);
         SUseSkillData useSkillData = new SUseSkillData();
         useSkillData.owner = _player;
-        useSkillData.direction = _player.direction;
+        useSkillData.direction = _player.sprite.direction;
         data.GetSkill().UseSkill(useSkillData);
     }
 

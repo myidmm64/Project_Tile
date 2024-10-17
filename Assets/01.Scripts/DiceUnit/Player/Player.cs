@@ -10,14 +10,8 @@ public class Player : DiceUnit
     private HashSet<PlayerModule> _playerModules = new HashSet<PlayerModule>();
     public bool _isDungeon = true; // 현재 던전에 들어와있는지 체크
 
-    public SpriteRenderer spriteRenderer { get; private set; }
-    public Animator animator { get; private set; }
-
     private void Awake()
     {
-        spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
-        animator = spriteRenderer.GetComponent<Animator>();
-
         var modules = GetComponents<PlayerModule>();
         foreach (var module in modules)
         {
@@ -35,7 +29,7 @@ public class Player : DiceUnit
 
     private void Update()
     {
-        LookAt(grid.FindClosestUnit<DiceUnit>(positionKey), spriteRenderer); // 나중에 누굴 쫒아갈지 만들어두기
+        sprite.LookAt(grid.FindClosestUnit<DiceUnit>(positionKey)); // 나중에 누굴 쫒아갈지 만들어두기
         GetModule<PlayerMoveModule>().Move();
     }
 
