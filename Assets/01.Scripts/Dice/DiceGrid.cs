@@ -10,8 +10,6 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
     public Dictionary<Vector2Int, DiceUnit> units { get; private set; }
     // 위험지역 그리드도 만들기
 
-    [SerializeField]
-    private DiceGenerateDataSO _testGenerateData = null;
     private Player _player = null;
 
     private void Awake()
@@ -19,8 +17,6 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
         _player = FindFirstObjectByType<Player>();
         dices = new Dictionary<Vector2Int, Dice>();
         units = new Dictionary<Vector2Int, DiceUnit>();
-
-        GenerateMap(_testGenerateData);
     }
 
     public void GenerateMap(DiceGenerateDataSO data)
