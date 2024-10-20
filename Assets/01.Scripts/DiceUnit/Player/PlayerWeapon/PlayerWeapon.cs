@@ -6,7 +6,7 @@ public abstract class PlayerWeapon : MonoBehaviour
 {
     protected Player _player = null;
     [SerializeField]
-    private PlayerWeaponDataSO _data = null;
+    protected PlayerWeaponDataSO _data = null;
     public PlayerWeaponDataSO Data => _data;
     
     protected SkillDataSO _skillData = null;
