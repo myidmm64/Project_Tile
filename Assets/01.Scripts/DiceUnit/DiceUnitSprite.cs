@@ -4,13 +4,13 @@ using UnityEngine;
 public class DiceUnitSprite : MonoBehaviour
 {
     [SerializeField]
-    private DiceUnit _owner = null;
+    protected DiceUnit _owner = null;
     public EDirection direction { get; private set; }
 
     public SpriteRenderer spriteRenderer { get; private set; }
     public Animator animator { get; private set; }
 
-    private AllIn1Shader _shader = null;
+    protected AllIn1Shader _shader = null;
 
     private void Awake()
     {

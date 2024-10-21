@@ -14,13 +14,11 @@ public class PlayerMoveModule : PlayerModule
         _player.OnMoveStarted += (currentPos, targetPos) =>
         {
             Vector2Int inputDir = targetPos - currentPos;
-            _player.sprite.animator.SetFloat("Horizontal", _player.sprite.direction == EDirection.Left ? inputDir.x * -1f : inputDir.x);
-            _player.sprite.animator.SetFloat("Vertical", inputDir.y);
-            _player.sprite.animator.Play("Move");
+            _player.playerSprite.MoveAnimation(inputDir.x, inputDir.y);
         };
         _player.OnMoveEnded += (targetPos) =>
         {
-            _player.sprite.animator.Play("Idle");
+            _player.playerSprite.IdleAnimation();
         };
     }
 

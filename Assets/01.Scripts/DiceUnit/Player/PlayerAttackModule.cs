@@ -16,8 +16,6 @@ public class PlayerAttackModule : PlayerModule
 
     private bool _attackKeyPress = false;
 
-    private int _idx = 0;
-
     protected override void Awake()
     {
         base.Awake();
@@ -39,6 +37,7 @@ public class PlayerAttackModule : PlayerModule
     {
         _curWeaponData = Utility.GetPlayerWeaponDataSO(weaponID);
         _curWeapon = _curWeaponData.GetWeapon();
+        _curWeapon.BindWeapon(_player);
     }
 
     public void Attack()
@@ -47,8 +46,6 @@ public class PlayerAttackModule : PlayerModule
         if (_attackTimer >= _attackDelay && _curWeapon.IsAttackable())
         {
             _curWeapon.Attack();
-            _player.sprite.animator.Play($"Attack{_idx}");
-            _idx = (_idx + 1) % 3;
             _attackTimer = 0f;
         }
     }

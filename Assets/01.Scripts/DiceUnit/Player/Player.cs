@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 public class Player : DiceUnit
 {
     private HashSet<PlayerModule> _playerModules = new HashSet<PlayerModule>();
+    public PlayerSprite playerSprite => base.sprite as PlayerSprite;
     public bool _isDungeon = true; // 현재 던전에 들어와있는지 체크
 
     private void Awake()
