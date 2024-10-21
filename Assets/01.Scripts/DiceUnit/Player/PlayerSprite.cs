@@ -28,7 +28,7 @@ public class PlayerSprite : DiceUnitSprite
     {
         if (_aniSeq != null && _aniSeq.active)
         {
-            transform.position = Vector3.zero;
+            transform.localPosition = Vector3.zero;
             _aniSeq.Kill();
         }
 
