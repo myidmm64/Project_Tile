@@ -4,6 +4,12 @@ using UnityEngine;
 public class PlayerSprite : DiceUnitSprite
 {
     private Sequence _aniSeq = null;
+    private Vector2 _originPos = Vector2.zero;
+
+    private void Start()
+    {
+        _originPos = transform.localPosition;
+    }
 
     public void AttackAnimation(int idx)
     {
@@ -28,20 +34,12 @@ public class PlayerSprite : DiceUnitSprite
     {
         if (_aniSeq != null && _aniSeq.active)
         {
-            transform.localPosition = Vector3.zero;
+            transform.localPosition = _originPos;
             _aniSeq.Kill();
         }
 
         _aniSeq = DOTween.Sequence();
-        _aniSeq.Append(transform.DOLocalMove(targetPos, duration));
-        _aniSeq.Append(transform.DOLocalMove(Vector3.zero, duration));
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            AdvanceMove(Vector2.right, 0.2f);
-        }
+        _aniSeq.Append(transform.DOLocalMove(_originPos + targetPos, duration)).SetEase(Ease.OutExpo);
+        _aniSeq.Append(transform.DOLocalMove(_originPos, duration)).SetEase(Ease.Linear);
     }
 }

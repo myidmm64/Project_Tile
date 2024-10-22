@@ -12,12 +12,12 @@ public abstract class PlayerWeapon : MonoBehaviour
     protected SkillDataSO _skillData = null;
     protected List<DiceUnit> _attackTargets = new List<DiceUnit>();
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _skillData = Utility.GetSkillDataSO(_data.skillID); // 현재 무기에 연결된 스킬 가져오기
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         _attackTargets.Clear();
         UpdateAttackTargets();
