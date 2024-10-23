@@ -50,31 +50,6 @@ public class PlayerAttackModule : PlayerModule
         }
     }
 
-    public List<DiceUnit> GetAttackTargets() // 이거 삭제하셈
-    {
-        List<Vector2Int> attackRanges = new List<Vector2Int>()
-            {
-                Vector2Int.left,
-                Vector2Int.right
-            };
-
-        List<DiceUnit> result = new List<DiceUnit>();
-        foreach (var attackRange in attackRanges)
-        {
-            Vector2Int attackPositionKey = _player.positionKey + attackRange;
-            if (_player.grid.units.ContainsKey(attackPositionKey))
-            {
-                IDamagable damagable = _player.grid.units[attackPositionKey].GetComponent<IDamagable>();
-                if (damagable != null)
-                {
-                    result.Add(_player.grid.units[attackPositionKey]);
-                }
-            }
-        }
-
-        return result;
-    }
-
     public void AttackInput(InputAction.CallbackContext context)
     {
         if (context.started)

@@ -1,4 +1,5 @@
 using AllIn1SpriteShader;
+using System;
 using UnityEngine;
 
 public class DiceUnitSprite : MonoBehaviour
@@ -9,6 +10,7 @@ public class DiceUnitSprite : MonoBehaviour
 
     public SpriteRenderer spriteRenderer { get; private set; }
     public Animator animator { get; private set; }
+    public bool lockFlip = false;
 
     protected AllIn1Shader _shader = null;
 
@@ -20,6 +22,11 @@ public class DiceUnitSprite : MonoBehaviour
         _shader = GetComponent<AllIn1Shader>();
     }
 
+    public void SetLockFlip(int value)
+    {
+        lockFlip = Convert.ToBoolean(value);
+    }
+
     public void LookAt(Vector2Int targetPositionKey)
     {
         LookAt(_owner.positionKey, targetPositionKey);
@@ -27,16 +34,27 @@ public class DiceUnitSprite : MonoBehaviour
 
     public void LookAt(Vector2 startPos, Vector2 targetPos)
     {
+        if (lockFlip) return;
         float xCross = Vector3.Cross(Vector3.down, targetPos - startPos).z;
         if (xCross > 0)
         {
-            if (spriteRenderer != null) spriteRenderer.flipX = false;
+            if (spriteRenderer != null)
+            {
+                Vector3 localScale = transform.localScale;
+                localScale.x = Mathf.Abs(localScale.x);
+                transform.localScale = localScale;
+            }// spriteRenderer.flipX = false;
 
             direction = EDirection.Right;
         }
         else if (xCross < 0)
         {
-            if (spriteRenderer != null) spriteRenderer.flipX = true;
+            if (spriteRenderer != null)
+            {
+                Vector3 localScale = transform.localScale;
+                localScale.x = Mathf.Abs(localScale.x) * -1f;
+                transform.localScale = localScale;
+            }//spriteRenderer.flipX = true;
 
             direction = EDirection.Left;
         }

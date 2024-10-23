@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public abstract class PlayerWeapon : MonoBehaviour
@@ -21,6 +22,19 @@ public abstract class PlayerWeapon : MonoBehaviour
     {
         _attackTargets.Clear();
         UpdateAttackTargets();
+        LookTarget();
+    }
+
+    private void LookTarget()
+    {
+        if (_attackTargets.Count > 0)
+        {
+            _player.sprite.LookAt(_attackTargets[0].positionKey);
+        }
+        else
+        {
+            _player.sprite.LookAt(_player.grid.FindClosestUnit<DiceUnit>(_player.positionKey));
+        }
     }
 
     public void BindWeapon(Player player)

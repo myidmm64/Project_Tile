@@ -14,16 +14,28 @@ public class WeaponSword : PlayerWeapon
         _animator = _renderer.GetComponent<Animator>();
     }
 
+    private void Start()
+    {
+        _renderer.enabled = false;
+    }
+
     public override void Attack()
     {
+        _renderer.enabled = true;
+        gameObject.SetActive(true);
+
         DiceUnit target = _attackTargets[0];
         Vector2 dir = target.positionKey - _player.positionKey;
+
+        transform.position = _player.transform.position + (Vector3)(dir * 0.5f);
+        transform.localScale = _player.sprite.transform.localScale; // flip
+
         _player.playerSprite.AdvanceMove(dir * 0.35f, 0.1f);
         target.Damage(1);
 
         _player.playerSprite.AttackAnimation(_atkIdx);
         AttackAnimation(_atkIdx);
-        _atkIdx = (_atkIdx + 1) % 3;
+        _atkIdx = (_atkIdx + 1) % 2;
     }
 
     protected override void UpdateAttackTargets()

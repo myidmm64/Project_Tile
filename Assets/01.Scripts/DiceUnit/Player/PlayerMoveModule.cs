@@ -13,11 +13,13 @@ public class PlayerMoveModule : PlayerModule
     {
         _player.OnMoveStarted += (currentPos, targetPos) =>
         {
+            _player.sprite.lockFlip = true;
             Vector2Int inputDir = targetPos - currentPos;
             _player.playerSprite.MoveAnimation(inputDir.x, inputDir.y);
         };
         _player.OnMoveEnded += (targetPos) =>
         {
+            _player.sprite.lockFlip = false;
             _player.playerSprite.IdleAnimation();
         };
     }

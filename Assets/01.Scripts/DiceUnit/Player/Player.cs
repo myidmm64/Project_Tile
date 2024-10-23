@@ -30,7 +30,6 @@ public class Player : DiceUnit
 
     private void Update()
     {
-        sprite.LookAt(grid.FindClosestUnit<DiceUnit>(positionKey)); // 나중에 누굴 쫒아갈지 만들어두기
         GetModule<PlayerMoveModule>().Move();
     }
 

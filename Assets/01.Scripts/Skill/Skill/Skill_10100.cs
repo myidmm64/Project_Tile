@@ -16,6 +16,7 @@ public class Skill_10100 : Skill
         Player player = data.owner as Player;
         if (player != null)
         {
+            /*
             foreach (var attackTarget in player.GetModule<PlayerAttackModule>().GetAttackTargets())
             {
                 IDamagable damagable = attackTarget.GetComponent<IDamagable>();
@@ -26,6 +27,7 @@ public class Skill_10100 : Skill
 
                 return; // 현재 리스트 0번째만 때리고 중단함, 나중에 타겟 설정 함수 나오면 교체 
             }
+            */
         }
     }
 

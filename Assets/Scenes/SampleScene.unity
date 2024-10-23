@@ -1113,6 +1113,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _owner: {fileID: 1650557173}
+  _interval: 0.05
+  _am: 0.1
+  _dur1: 0.1
+  _dur2: 0.15
 --- !u!1 &901142391
 GameObject:
   m_ObjectHideFlags: 0
@@ -2149,8 +2153,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96b58fe975c96264998509a11bcc151e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _renderer: {fileID: 0}
-  _animator: {fileID: 0}
 --- !u!1 &1787517930
 GameObject:
   m_ObjectHideFlags: 0
