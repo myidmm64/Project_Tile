@@ -3,6 +3,7 @@ using UnityEngine;
 public class WeaponSword : PlayerWeapon
 {
     private int _atkIdx = 0;
+    private int _playerAimIdx = 0;
 
     private SpriteRenderer _renderer = null;
     private Animator _animator;
@@ -27,15 +28,16 @@ public class WeaponSword : PlayerWeapon
         DiceUnit target = _attackTargets[0];
         Vector2 dir = target.positionKey - _player.positionKey;
 
-        transform.position = _player.transform.position + (Vector3)(dir * 0.5f);
+        transform.position = _player.transform.position + (Vector3)(dir * 1f) + Vector3.up * 0.6f;
         transform.localScale = _player.sprite.transform.localScale; // flip
 
         _player.playerSprite.AdvanceMove(dir * 0.35f, 0.1f);
         target.Damage(1);
 
-        _player.playerSprite.AttackAnimation(_atkIdx);
+        _player.playerSprite.AttackAnimation(_playerAimIdx);
         AttackAnimation(_atkIdx);
-        _atkIdx = (_atkIdx + 1) % 2;
+        _playerAimIdx = (_playerAimIdx + 1) % 2;
+        _atkIdx = (_atkIdx + 1) % 3;
     }
 
     protected override void UpdateAttackTargets()
