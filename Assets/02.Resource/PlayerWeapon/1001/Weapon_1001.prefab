@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 7085436969445162037}
   - component: {fileID: 3074020994944880104}
   - component: {fileID: 2117165047046154921}
-  - component: {fileID: 4803673993705207483}
+  - component: {fileID: 3625380140903086115}
+  - component: {fileID: 1392941121234869019}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -57,7 +58,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: a7a7cab6b6153f84caa071f73b575446, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -111,7 +112,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4803673993705207483
+--- !u!114 &3625380140903086115
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,9 +121,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 1108430053181056294}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca8a186cc63fa904fb4e6401ce206cc2, type: 3}
+  m_Script: {fileID: 11500000, guid: d41579e297c69bd408d12072bf6011ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _weapon: {fileID: 0}
+  _fadeMax: 0.46
+  _fadeinDuration: 0
+  _fadeoutDuration: 1
+--- !u!114 &1392941121234869019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108430053181056294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shaderTypes: 0
+  normalStrength: 5
+  normalSmoothing: 1
+  computingNormal: 0
 --- !u!1 &5455541954603255422
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,3 +190,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: ea7d512a77cccb64291c9e989981f7ba, type: 2}
+  _weaponSprite: {fileID: 0}

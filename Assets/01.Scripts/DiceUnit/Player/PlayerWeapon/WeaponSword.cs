@@ -5,25 +5,25 @@ public class WeaponSword : PlayerWeapon
     private int _atkIdx = 0;
     private int _playerAimIdx = 0;
 
-    private SpriteRenderer _renderer = null;
-    private Animator _animator;
+    [SerializeField]
+    private WeaponSprite _weaponSprite = null;
 
     protected override void Awake()
     {
         base.Awake();
-        _renderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
-        _animator = _renderer.GetComponent<Animator>();
+        if(_weaponSprite == null) _weaponSprite = transform.Find("Sprite").GetComponent<WeaponSprite>();
     }
 
     private void Start()
     {
-        _renderer.enabled = false;
+        _weaponSprite.spriteRenderer.enabled = false;
     }
 
     public override void Attack()
     {
-        _renderer.enabled = true;
+        _weaponSprite.spriteRenderer.enabled = true;
         gameObject.SetActive(true);
+        _weaponSprite.FadeIn();
 
         DiceUnit target = _attackTargets[0];
         Vector2 dir = target.positionKey - _player.positionKey;
@@ -53,7 +53,7 @@ public class WeaponSword : PlayerWeapon
 
     private void AttackAnimation(int idx)
     {
-        _animator.Play($"Attack{idx}");
-        _animator.Update(0);
+        _weaponSprite.animator.Play($"Attack{idx}");
+        _weaponSprite.animator.Update(0);
     }
 }
