@@ -39,15 +39,15 @@ public class PlayerSkillModule : PlayerModule
             case "Main":
                 characterUI.dpSlider.Initialize(data.data.maxDP);
                 characterUI.dpSlider.SetValueImmediate(curDP);
-                characterUI.mainSkillImage.sprite = data.data.SkillImage;
+                characterUI.mainSkillImage.sprite = data.data.skillImage;
                 break;
 
             case "Special":
-                characterUI.specialSkillImage.sprite = data.data.SkillImage;
+                characterUI.specialSkillImage.sprite = data.data.skillImage;
                 break;
 
             case "Counter":
-                characterUI.counterSkillImage.sprite = data.data.SkillImage;
+                characterUI.counterSkillImage.sprite = data.data.skillImage;
                 break;
         }
 

@@ -7,6 +7,8 @@ public class WeaponSword : PlayerWeapon
 
     [SerializeField]
     private WeaponSprite _weaponSprite = null;
+    [SerializeField]
+    private SwordEffect _swordEffect = null;
 
     protected override void Awake()
     {
@@ -31,11 +33,14 @@ public class WeaponSword : PlayerWeapon
         transform.position = _player.transform.position + (Vector3)(dir * 1f) + Vector3.up * 0.6f;
         transform.localScale = _player.sprite.transform.localScale; // flip
 
-        _player.playerSprite.AdvanceMove(dir * 0.35f, 0.1f);
-        target.Damage(1);
+        var effect = Instantiate(_swordEffect);
+        effect.PlayEffect(target.dice.groundPos, _atkIdx);
+        target.Damage(_player.dice.dicePip);
 
+        _player.playerSprite.AdvanceMove(dir * 0.35f, 0.1f);
         _player.playerSprite.AttackAnimation(_playerAimIdx);
         AttackAnimation(_atkIdx);
+
         _playerAimIdx = (_playerAimIdx + 1) % 2;
         _atkIdx = (_atkIdx + 1) % 3;
     }

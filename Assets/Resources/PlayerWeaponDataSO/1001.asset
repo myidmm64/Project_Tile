@@ -15,5 +15,5 @@ MonoBehaviour:
   _weaponPrefab: {fileID: 5455541954603255422, guid: 28781be0c2c29d44da52dd7b53d16d3f, type: 3}
   weaponType: 1
   atkRange: 101
-  attackID: 10100
-  skillID: 10101
+  attackID: 0
+  skillID: 10102

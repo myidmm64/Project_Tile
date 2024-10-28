@@ -3,9 +3,16 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "SO/SkillData")]
 public class SkillDataSO : ScriptableObject
 {
-    public SSkillData data;
+    [SerializeField]
+    private SSkillExplainData _data;
+    public SSkillExplainData data => _data;
     [SerializeField]
     private GameObject _skillPrefab;
+
+    public T GetSkill<T>() where T : Skill
+    {
+        return GetSkill() as T;
+    }
 
     public Skill GetSkill()
     {

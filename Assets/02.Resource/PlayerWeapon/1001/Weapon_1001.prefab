@@ -190,4 +190,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: ea7d512a77cccb64291c9e989981f7ba, type: 2}
-  _weaponSprite: {fileID: 0}
+  _weaponSprite: {fileID: 3625380140903086115}
+  _swordEffect: {fileID: -9119260870770708525, guid: a42897114aa37f2439d67799e1497e88, type: 3}
