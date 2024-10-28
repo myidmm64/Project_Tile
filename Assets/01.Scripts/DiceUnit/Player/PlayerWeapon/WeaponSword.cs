@@ -30,11 +30,14 @@ public class WeaponSword : PlayerWeapon
         DiceUnit target = _attackTargets[0];
         Vector2 dir = target.positionKey - _player.positionKey;
 
+        _player.sprite.LookAt(target.positionKey, force:true); // ¿œ¥‹ ∫¡
         transform.position = _player.transform.position + (Vector3)(dir * 1f) + Vector3.up * 0.6f;
         transform.localScale = _player.sprite.transform.localScale; // flip
 
         var effect = Instantiate(_swordEffect);
-        effect.PlayEffect(target.dice.groundPos, _atkIdx);
+        effect.transform.position = target.dice.groundPos;
+        effect.transform.localScale = transform.localScale;
+        effect.PlayEffect(_atkIdx);
         target.Damage(_player.dice.dicePip);
 
         _player.playerSprite.AdvanceMove(dir * 0.35f, 0.1f);

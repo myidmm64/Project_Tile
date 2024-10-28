@@ -27,14 +27,14 @@ public class DiceUnitSprite : MonoBehaviour
         lockFlip = Convert.ToBoolean(value);
     }
 
-    public void LookAt(Vector2Int targetPositionKey)
+    public void LookAt(Vector2Int targetPositionKey, bool force = false)
     {
-        LookAt(_owner.positionKey, targetPositionKey);
+        LookAt(_owner.positionKey, targetPositionKey, force);
     }
 
-    public void LookAt(Vector2 startPos, Vector2 targetPos)
+    public void LookAt(Vector2 startPos, Vector2 targetPos, bool force = false)
     {
-        if (lockFlip) return;
+        if (force == false && lockFlip) return;
         float xCross = Vector3.Cross(Vector3.down, targetPos - startPos).z;
         if (xCross > 0)
         {
