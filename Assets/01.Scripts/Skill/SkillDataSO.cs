@@ -1,13 +1,10 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SO/SkillData")]
+[CreateAssetMenu(menuName = "SO/SkillData/SkillData")]
 public class SkillDataSO : ScriptableObject
 {
     [SerializeField]
-    private SSkillExplainData _data;
-    public SSkillExplainData data => _data;
-    [SerializeField]
-    private GameObject _skillPrefab;
+    private Skill _skill;
 
     public T GetSkill<T>() where T : Skill
     {
@@ -16,13 +13,7 @@ public class SkillDataSO : ScriptableObject
 
     public Skill GetSkill()
     {
-        GameObject obj = Instantiate(_skillPrefab);
-        if(obj == null)
-        {
-            Debug.LogError("_skillPrefab 가져오지 못했음");
-            return null;
-        }
-        Skill skillCompo = obj.GetComponent<Skill>();
+        Skill skillCompo = Instantiate(_skill);
         if (skillCompo == null)
         {
             Debug.LogError("skillCompo 가져오지 못했음");

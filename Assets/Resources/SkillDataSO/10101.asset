@@ -9,15 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 890f0723f743aed4bb4b5b0a5bba150e, type: 3}
-  m_Name: 1001
+  m_Script: {fileID: 11500000, guid: 30fc8c6247ed3294ab9e762a09c63ddc, type: 3}
+  m_Name: 10101
   m_EditorClassIdentifier: 
-  weaponName: 
+  _skill: {fileID: 0}
+  skillName: 
   explainText: 
-  weaponType: 1
-  skillID: 10101
-  atkRange: 101
-  atk: 1
-  atkDelay: 0.4
-  dpUp: 20
-  _weapon: {fileID: 4742052805452816184, guid: 28781be0c2c29d44da52dd7b53d16d3f, type: 3}
+  skillImage: {fileID: 0}
+  maxDP: 0
+  cooltime: 0
