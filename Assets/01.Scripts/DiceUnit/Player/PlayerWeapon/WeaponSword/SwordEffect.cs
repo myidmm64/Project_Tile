@@ -4,23 +4,20 @@ using UnityEngine;
 
 public class SwordEffect : MonoBehaviour
 {
+    [SerializeField]
     private Animator _animator;
-
-    private void Awake()
-    {
-        _animator = transform.Find("Sprite").GetComponent<Animator>();
-    }
 
     public void PlayEffect(int idx)
     {
+        _animator.gameObject.SetActive(true);
         _animator.Play($"Effect{idx}");
         _animator.Update(0);
-        StartCoroutine(AnimEndDestroy());
+        StartCoroutine(AnimEndDeactive());
     }
 
-    private IEnumerator AnimEndDestroy()
+    private IEnumerator AnimEndDeactive()
     {
         yield return new WaitUntil(() => _animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.99f);
-        Destroy(gameObject);
+        _animator.gameObject.SetActive(false);
     }
 }

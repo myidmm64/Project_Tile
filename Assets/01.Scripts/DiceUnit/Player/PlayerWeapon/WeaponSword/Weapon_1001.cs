@@ -1,12 +1,5 @@
 using UnityEngine;
 
-public class Weapon_1001 : PlayerWeapon
+public class Weapon_1001 : WeaponSword
 {
-    public override void Attack()
-    {
-    }
-
-    protected override void UpdateAttackTargets()
-    {
-    }
 }

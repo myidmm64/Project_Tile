@@ -10,6 +10,9 @@ public class WeaponSword : PlayerWeapon
     [SerializeField]
     private SwordEffect _swordEffect = null;
 
+    [SerializeField]
+    private float[] _percentDamages = new float[3] { 100f, 100f, 100f };
+
     protected override void Awake()
     {
         base.Awake();
@@ -31,13 +34,12 @@ public class WeaponSword : PlayerWeapon
         Vector2 dir = target.positionKey - _player.positionKey;
 
         _player.sprite.LookAt(target.positionKey, force:true); // ¿œ¥‹ ∫¡
-        transform.position = _player.transform.position + (Vector3)(dir * 1f) + Vector3.up * 0.6f;
+        transform.position = target.dice.groundPos + 
+            new Vector3(-0.5f * (_player.sprite.direction == EDirection.Left ? -1f : 1f), 0.6f);// _player.transform.position + (Vector3)(dir * 1f) + Vector3.up * 0.6f;
         transform.localScale = _player.sprite.transform.localScale; // flip
 
-        var effect = Instantiate(_swordEffect);
-        effect.transform.position = target.dice.groundPos;
-        effect.transform.localScale = transform.localScale;
-        effect.PlayEffect(_atkIdx);
+        _swordEffect.transform.position = target.dice.groundPos;
+        _swordEffect.PlayEffect(_atkIdx);
         target.Damage(_player.dice.dicePip);
 
         _player.playerSprite.AdvanceMove(dir * 0.35f, 0.1f);
