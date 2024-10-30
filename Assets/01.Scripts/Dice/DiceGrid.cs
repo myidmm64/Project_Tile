@@ -249,4 +249,80 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
                     select diceKeyValue.Value;
         return query;
     }
+
+    public List<DiceUnit> GetIncludedDiceUnits(RangeDataSO rangeData, DiceUnit owner) // skillRangeDataSO 내 정보를 통해 스킬 타겟 구하기
+    {
+        Vector2Int centerPos = GetCenterPos(rangeData, owner);
+        List<Vector2Int> rangePosKeys = new List<Vector2Int>();
+        foreach (var rangeOption in rangeData.GetRangeOptions())
+        {
+            rangePosKeys.AddRange(rangeOption.GetPosKeys(centerPos));
+        }
+        rangePosKeys.ExcludeReduplication();
+
+        List<DiceUnit> targets = new List<DiceUnit>();
+        foreach (var rangePosKey in rangePosKeys)
+        {
+            if (units.ContainsKey(rangePosKey))
+            {
+                DiceUnit target = units[rangePosKey];
+                // 설정한 팀이거나, 본인 추가 설정을 했을 때
+                if (rangeData.targetType == target.data.eTeam || rangeData.includeOwner && target.Equals(owner))
+                {
+                    targets.Add(target);
+                }
+            }
+        }
+        targets = GetSearchedTargets(rangeData, targets, centerPos);
+
+        return targets;
+    }
+
+    private List<DiceUnit> GetSearchedTargets(RangeDataSO rangeData, List<DiceUnit> targets, Vector2Int centerPos)
+    {
+        switch (rangeData.searchType)
+        {
+            case ESearchType.None:
+                return null;
+            case ESearchType.Nearest:
+                if (targets.Count == 0) return targets;
+                DiceUnit nearestTarget = targets[0];
+                foreach (var target in targets)
+                {
+                    float curNearestDist = (centerPos - nearestTarget.positionKey).sqrMagnitude;
+                    float targetDist = (centerPos - target.positionKey).sqrMagnitude;
+
+                    if (targetDist < curNearestDist)
+                        nearestTarget = target;
+                }
+                targets.Clear();
+                targets.Add(nearestTarget);
+                return targets;
+            case ESearchType.All:
+                return targets;
+            default:
+                break;
+        }
+        return null;
+    }
+
+    private Vector2Int GetCenterPos(RangeDataSO rangeData, DiceUnit owner)
+    {
+        switch (rangeData.centerType)
+        {
+            case ECenterType.None:
+                break;
+            case ECenterType.Owner:
+                return owner.positionKey;
+            case ECenterType.Player:
+                return player.positionKey;
+            case ECenterType.MapCenter:
+                return MapManager.Inst.GetCurrentMapData().mapData.mapSize / 2;
+            case ECenterType.PosKey:
+                return rangeData.centerPosKey;
+            default:
+                break;
+        }
+        return Vector2Int.zero;
+    }
 }
