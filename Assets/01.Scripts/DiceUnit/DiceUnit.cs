@@ -13,6 +13,7 @@ public abstract class DiceUnit : MonoBehaviour, IDamagable, IMovable
     [SerializeField]
     private DiceUnitData _data = null;
     public DiceUnitData data => _data;
+    public StatData stat;
     [SerializeField]
     private DiceUnitSprite _sprite = null;
     public DiceUnitSprite sprite => _sprite;
@@ -29,6 +30,12 @@ public abstract class DiceUnit : MonoBehaviour, IDamagable, IMovable
 
     public int CurHP { get; set; }
     public int MaxHP { get; set; }
+
+    protected virtual void Awake()
+    {
+        stat = new StatData();
+        stat = data.baseStat + stat; // √ ±‚ Ω∫≈»
+    }
 
     public bool ChangeDice(Vector2Int targetPositionKey)
     {

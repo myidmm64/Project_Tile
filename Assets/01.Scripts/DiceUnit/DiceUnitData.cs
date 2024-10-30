@@ -5,5 +5,5 @@ public class DiceUnitData : ScriptableObject
 {
     public ETeam eTeam;
     public string unitName;
-    public int maxHP = 100;
+    public StatData baseStat;
 }

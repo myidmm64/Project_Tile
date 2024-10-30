@@ -11,10 +11,18 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
     // 위험지역 그리드도 만들기
 
     private Player _player = null;
+    public Player player
+    {
+        get
+        {
+            if(_player == null)
+                _player = FindFirstObjectByType<Player>();
+            return _player;
+        }
+    }
 
     private void Awake()
     {
-        _player = FindFirstObjectByType<Player>();
         dices = new Dictionary<Vector2Int, Dice>();
         units = new Dictionary<Vector2Int, DiceUnit>();
     }
@@ -52,7 +60,7 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
             }
         }
 
-        _player.ChangeDice(data.playerPos);
+        player.ChangeDice(data.playerPos);
     }
 
     // 가장 가까운 빈 Dice의 PositionKey 추출

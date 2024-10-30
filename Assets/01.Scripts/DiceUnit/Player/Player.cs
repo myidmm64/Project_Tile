@@ -11,8 +11,9 @@ public class Player : DiceUnit
     public PlayerSprite playerSprite => base.sprite as PlayerSprite;
     public bool _isDungeon = true; // 현재 던전에 들어와있는지 체크
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         var modules = GetComponents<PlayerModule>();
         foreach (var module in modules)
         {
@@ -23,9 +24,9 @@ public class Player : DiceUnit
     private void Start()
     {
         transform.position = dice.groundPos;
-        MaxHP = data.maxHP;
-        CurHP = data.maxHP;
-        MainUI.Inst.GetUIElement<CharacterUI>().hpSlider.Initialize(data.maxHP);
+        MaxHP = data.baseStat.hp;
+        CurHP = MaxHP;
+        MainUI.Inst.GetUIElement<CharacterUI>().hpSlider.Initialize(MaxHP);
     }
 
     private void Update()

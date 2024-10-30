@@ -13,6 +13,11 @@ public class MapManager : MonoSingleTon<MapManager>
         StartNextMap();
     }
 
+    public MapData GetCurrentMapData()
+    {
+        return _stageDataSO.stages[_stageIndex].mapDatas[_mapIndex];
+    }
+
     public void StartNextMap()
     {
         // 맵 초기화 함수

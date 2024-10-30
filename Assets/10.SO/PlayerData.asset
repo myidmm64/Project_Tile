@@ -13,5 +13,16 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   eTeam: 1
-  unitName: 
-  maxHP: 100
+  unitName: "\uD50C\uB808\uC774\uC5B4"
+  baseStat:
+    hp: 100
+    strength: 0
+    takeDamageMultiflier: 100
+    physicalDamage: 1
+    magicalDamage: 1
+    criticalChance: 0
+    criticalDamage: 0
+    attackSpeedMultiflier: 100
+    decreaseDP: 0
+    drainDP: 0
+    decreaseCooltime: 0

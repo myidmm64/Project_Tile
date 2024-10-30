@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30fc8c6247ed3294ab9e762a09c63ddc, type: 3}
   m_Name: 10101
   m_EditorClassIdentifier: 
-  _skill: {fileID: 0}
-  skillName: 
-  explainText: 
-  skillImage: {fileID: 0}
-  maxDP: 0
+  _skill: {fileID: 5127708284750716884, guid: d32d7ba50eb5da042ba240660015983a, type: 3}
+  skillType: 1
+  skillName: "\uD14C\uC2A4\uD2B8\uC2A4\uD0AC1"
+  explainText: "\uC7AC\uBE44\uC7AC\uBE44\uC7AC\uBE44"
+  skillImage: {fileID: 4820443832167995502, guid: 4288af7d1ed42dd49a40268304cd3809, type: 3}
+  maxDP: 100
   cooltime: 0

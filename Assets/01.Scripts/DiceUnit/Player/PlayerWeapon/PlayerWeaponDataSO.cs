@@ -10,7 +10,8 @@ public class PlayerWeaponDataSO : ScriptableObject
 
     [TextArea]
     public string atkRange = string.Empty;
-    public int atk = 1;
+    public int physicalDamage; // 물공뎀
+    public int magicalDamage; // 마공뎀
     public float atkDelay = 0.4f;
     public int dpUp = 20;
 

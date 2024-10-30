@@ -7,13 +7,9 @@ public class PlayerAttackModule : PlayerModule
 {
     [SerializeField]
     private int _weaponID = 0;
-    private PlayerWeaponDataSO _curWeaponData = null;
     private PlayerWeapon _curWeapon = null;
     
-    [SerializeField]
-    private float _attackDelay = 0.5f;
     private float _attackTimer = 0f;
-
     private bool _attackKeyPress = false;
 
     protected override void Awake()
@@ -35,15 +31,15 @@ public class PlayerAttackModule : PlayerModule
 
     public void ChangeWeapon(int weaponID)
     {
-        _curWeaponData = Utility.GetPlayerWeaponDataSO(weaponID);
-        _curWeapon = _curWeaponData.GetWeapon();
+        _curWeapon = Utility.GetPlayerWeaponDataSO(weaponID).GetWeapon();
         _curWeapon.BindWeapon(_player);
     }
 
     public void Attack()
     {
         if (_player.isMoving || _curWeapon == null) return;
-        if (_attackTimer >= _attackDelay && _curWeapon.IsAttackable())
+        float calculatedDelay = _curWeapon.Data.atkDelay * (100f / _player.data.baseStat.attackSpeedMultiflier);
+        if (_attackTimer >= calculatedDelay && _curWeapon.IsAttackable())
         {
             _curWeapon.Attack();
             _attackTimer = 0f;
