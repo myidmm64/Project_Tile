@@ -38,7 +38,7 @@ public class PlayerAttackModule : PlayerModule
     public void Attack()
     {
         if (_player.isMoving || _curWeapon == null) return;
-        float calculatedDelay = _curWeapon.Data.atkDelay * (100f / _player.data.baseStat.attackSpeedMultiflier);
+        float calculatedDelay = _curWeapon.Data.atkDelay * (100f / _player.data.baseStat.attackSpeed);
         if (_attackTimer >= calculatedDelay && _curWeapon.IsAttackable())
         {
             _curWeapon.Attack();

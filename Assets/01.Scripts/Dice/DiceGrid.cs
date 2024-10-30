@@ -256,7 +256,10 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
         List<Vector2Int> rangePosKeys = new List<Vector2Int>();
         foreach (var rangeOption in rangeData.GetRangeOptions())
         {
-            rangePosKeys.AddRange(rangeOption.GetPosKeys(centerPos));
+            if(rangeOption.isSub)
+                rangePosKeys.SubKeys(rangeOption.GetPosKeys(centerPos).ToArray());
+            else
+                rangePosKeys.AddRange(rangeOption.GetPosKeys(centerPos));
         }
         rangePosKeys.ExcludeReduplication();
 

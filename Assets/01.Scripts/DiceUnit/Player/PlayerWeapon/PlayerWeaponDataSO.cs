@@ -8,8 +8,10 @@ public class PlayerWeaponDataSO : ScriptableObject
     public EWeaponType weaponType = EWeaponType.None;
     public int skillID = 0;
 
-    [TextArea]
-    public string atkRange = string.Empty;
+    [SerializeField]
+    private RangeDataSO _attackRange;
+    public RangeDataSO attackRange => _attackRange;
+    
     public int physicalDamage; // 물공뎀
     public int magicalDamage; // 마공뎀
     public float atkDelay = 0.4f;

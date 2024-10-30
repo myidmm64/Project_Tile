@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class Skill : MonoBehaviour
 {
-    //[SerializeField]
-    //protected RangeDataSO _rangeData;
+    [SerializeField]
+    protected RangeDataSO _rangeData;
 
     public bool IsUsable(DiceUnit owner)
     {

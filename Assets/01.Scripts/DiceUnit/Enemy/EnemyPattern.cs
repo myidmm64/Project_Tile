@@ -66,7 +66,7 @@ public abstract class EnemyPattern
                         if (unit is Player) // 플레이어
                         {
                             Player player = unit as Player;
-                            player.Damage(damage);
+                            // player.Damage(damage);
                         }
                     }
                     Callback?.Invoke();

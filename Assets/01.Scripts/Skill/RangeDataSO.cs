@@ -38,7 +38,7 @@ public class RangeDataSO : ScriptableObject
 [System.Serializable]
 public abstract class RangeOption
 {
-    public EAddType addType = EAddType.Add;
+    public bool isSub = false;
     public abstract IEnumerable<Vector2Int> GetPosKeys(Vector2Int centerPos);
 
     protected int GetMaxCount(EDirection direction)
@@ -126,13 +126,6 @@ public class StrRange : RangeOption
     {
         return PosKeyUtil.StrPattern(centerPos, strPattern);
     }
-}
-
-public enum EAddType
-{
-    None,
-    Add,
-    Sub
 }
 
 public enum ECenterType

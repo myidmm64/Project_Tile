@@ -33,8 +33,9 @@ public abstract class DiceUnit : MonoBehaviour, IDamagable, IMovable
 
     protected virtual void Awake()
     {
-        stat = new StatData();
-        stat = data.baseStat + stat; // 초기 스탯
+        stat = new StatData(data.baseStat); // 초기 스탯
+        MaxHP = data.baseStat.hp;
+        CurHP = MaxHP;
     }
 
     public bool ChangeDice(Vector2Int targetPositionKey)
@@ -70,7 +71,6 @@ public abstract class DiceUnit : MonoBehaviour, IDamagable, IMovable
         renderer.sortingOrder = 0 - positionKey.y;
     }
 
-    public abstract void Damage(int damage);
     public virtual bool Move(Vector2Int target)
     {
         Vector2Int currentPos = positionKey;
@@ -90,4 +90,77 @@ public abstract class DiceUnit : MonoBehaviour, IDamagable, IMovable
         Vector2Int target = positionKey + (Utility.EDirectionToVector(dir) * amount);
         return ChangeDice(target);
     }
+
+    public virtual int CalculateAttackDamage(EAttackType attackType, float percentDamage, out bool isCritical)
+    {
+        isCritical = UnityEngine.Random.Range(0, 100) < stat.criticalChance;
+        Debug.Log($"sdfgsgsdg{stat.criticalDamage}");
+        Debug.Log($"CRI{(isCritical ? stat.criticalDamage / 100f : 1f)}");
+
+        int baseDamage = 0;
+        switch (attackType)
+        {
+            case EAttackType.None:
+                break;
+            case EAttackType.Physical:
+                baseDamage = stat.physicalDamage;
+                break;
+            case EAttackType.Magical:
+                baseDamage = stat.magicalDamage;
+                break;
+            default:
+                break;
+        }
+        float damage = baseDamage 
+            * (percentDamage / 100f)
+            * (isCritical ? stat.criticalDamage / 100f : 1f)
+            * (GetDamageMultiplierByDicePip() / 100f);
+        return (int)damage;
+    }
+
+    public virtual int CalculateTakeDamage(int damage, EAttackType attackType, bool isCritical, bool isTrueDamage = false)
+    {
+        if (isTrueDamage) return damage;
+
+        float calculatedDamage = (damage * (stat.takeDamage / 100)) - stat.strength;
+        return (int)calculatedDamage;
+    }
+
+    public virtual void Damage(int damage, EAttackType attackType, bool isCritical, bool isTrueDamage = false)
+    {
+        int calculatedDamage = CalculateTakeDamage(damage, attackType, isCritical, isTrueDamage);
+        Debug.Log($"DAMAGE{damage}CAL{calculatedDamage}");
+        CurHP -= calculatedDamage;
+        CurHP = Mathf.Clamp(CurHP, 0, MaxHP);
+
+        PopupText popup = PoolManager.Inst.Pop(EPoolType.PopupText) as PopupText;
+        popup.Popup(calculatedDamage.ToString(), transform.position + Vector3.up * 0.3f); 
+        // 위 팝업에 attackType, damageType 넣어서 이쁘게 해보기
+    }
+
+    public float GetDamageMultiplierByDicePip() // 주사위 값에 따른 최종 데미지 배율 계산
+    {
+        if (dice == null) return 100; // 없다면 그냥 100% 데미지
+        switch(dice.dicePip)
+        {
+            case -1: return -30;
+            case 0: return 0;
+            case 1: return 30;
+            case 2: return 45;
+            case 3: return 65;
+            case 4: return 90;
+            case 5: return 120;
+            case 6: return 150;
+            case > 6: return 150 + ((dice.dicePip - 6) * 10);
+                
+            default: return 100;
+        }
+    }
+}
+
+public enum EAttackType
+{
+    None,
+    Physical,
+    Magical
 }

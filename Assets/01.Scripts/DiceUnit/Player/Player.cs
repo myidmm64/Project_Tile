@@ -24,8 +24,6 @@ public class Player : DiceUnit
     private void Start()
     {
         transform.position = dice.groundPos;
-        MaxHP = data.baseStat.hp;
-        CurHP = MaxHP;
         MainUI.Inst.GetUIElement<CharacterUI>().hpSlider.Initialize(MaxHP);
     }
 
@@ -43,14 +41,9 @@ public class Player : DiceUnit
         return null;
     }
 
-    public override void Damage(int damage)
+    public override void Damage(int damage, EAttackType attackType, bool isCritical, bool isTrueDamage = false)
     {
-        CurHP -= damage;
-        CurHP = Mathf.Clamp(CurHP, 0, MaxHP);
-
-        PopupText popup = PoolManager.Inst.Pop(EPoolType.PopupText) as PopupText;
-        popup.Popup(damage.ToString(), transform.position + Vector3.up * 0.3f);
-
+        base.Damage(damage, attackType, isCritical, isTrueDamage);
         MainUI.Inst.GetUIElement<CharacterUI>().hpSlider.SetValueWithAnimation(CurHP, 0.2f);
     }
 }

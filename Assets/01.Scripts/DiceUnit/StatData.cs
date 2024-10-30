@@ -6,33 +6,33 @@ public class StatData
 {
     public int hp; // 체력
 
-    public int strength; // 고정 피해 감소
-    public float takeDamageMultiflier; // 받는 데미지 추가
     public int physicalDamage; // 물공뎀
     public int magicalDamage; // 마공뎀
-    public float criticalChance; // 크확
-    public float criticalDamage; // 크뎀
 
-    public float attackSpeedMultiflier; // 공격속도 배율
+    public int strength; // 고정 피해 감소
+    public float takeDamage = 100; // 받는 데미지 추가
+    public float criticalChance = 0; // 크확
+    public float criticalDamage = 120; // 크뎀
 
-    public float decreaseDP; // DP 감소
-    public float drainDP; // DP 회수율
-    public float decreaseCooltime; // 특수, 카운터 스킬 쿨감율
+    public float attackSpeed = 100; // 공격속도 배율
+    public float decreaseDP = 100; // DP 감소
+    public float drainDP = 100; // DP 회수율
+    public float decreaseCooltime = 100; // 특수, 카운터 스킬 쿨감율
 
-    public static StatData operator +(StatData a, StatData b)
+    public StatData() { }
+
+    public StatData(StatData copy)
     {
-        StatData result = new StatData();
-        result.hp = a.hp + b.hp;
-        result.strength = a.strength + b.strength;
-        result.takeDamageMultiflier = a.takeDamageMultiflier + b.takeDamageMultiflier;
-        result.physicalDamage = a.physicalDamage + b.physicalDamage;
-        result.magicalDamage = a.magicalDamage + b.magicalDamage;
-        result.criticalChance = a.criticalChance + b.criticalChance;
-        result.criticalDamage = a.criticalDamage + b.criticalDamage;
-        result.attackSpeedMultiflier = a.attackSpeedMultiflier + b.attackSpeedMultiflier;
-        result.decreaseDP = a.decreaseDP + b.decreaseDP;
-        result.drainDP = a.drainDP + b.drainDP;
-        result.decreaseCooltime = a.decreaseCooltime - b.decreaseCooltime;
-        return result;
+        this.hp = copy.hp;
+        this.physicalDamage = copy.physicalDamage;
+        this.magicalDamage = copy.magicalDamage;
+        this.strength = copy.strength;
+        this.takeDamage = copy.takeDamage;
+        this.criticalChance = copy.criticalChance;
+        this.criticalDamage = copy.criticalDamage;
+        this.attackSpeed = copy.attackSpeed;
+        this.decreaseDP = copy.decreaseDP;
+        this.drainDP = copy.drainDP;
+        this.decreaseCooltime = copy.decreaseCooltime;
     }
 }

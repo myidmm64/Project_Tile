@@ -17,8 +17,6 @@ public abstract class Enemy : DiceUnit
     protected override void Awake()
     {
         base.Awake();
-        MaxHP = data.baseStat.hp;
-        CurHP = MaxHP;
         BindPattern();
     }
 

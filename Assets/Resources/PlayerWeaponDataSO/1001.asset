@@ -16,8 +16,9 @@ MonoBehaviour:
   explainText: 
   weaponType: 1
   skillID: 10101
-  atkRange: 101
-  atk: 1
+  _attackRange: {fileID: 11400000, guid: cb08ae4714a90104180218abeb025548, type: 2}
+  physicalDamage: 0
+  magicalDamage: 0
   atkDelay: 0.4
   dpUp: 20
   _weapon: {fileID: 4742052805452816184, guid: 28781be0c2c29d44da52dd7b53d16d3f, type: 3}

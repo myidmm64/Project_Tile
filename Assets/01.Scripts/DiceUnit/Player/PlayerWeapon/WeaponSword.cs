@@ -40,9 +40,9 @@ public class WeaponSword : PlayerWeapon
 
         _swordEffect.transform.position = target.dice.groundPos;
         _swordEffect.PlayEffect(_atkIdx);
-        target.Damage(_player.dice.dicePip);
+        target.Damage(_player.CalculateAttackDamage(EAttackType.Physical, 100, out bool critical), EAttackType.Physical, critical);
 
-        _player.playerSprite.AdvanceMove(dir * 0.35f, 0.1f);
+        _player.playerSprite.AdvanceMove(dir.normalized * 0.35f, 0.1f);
         _player.playerSprite.AttackAnimation(_playerAimIdx);
         AttackAnimation(_atkIdx);
 
@@ -52,6 +52,8 @@ public class WeaponSword : PlayerWeapon
 
     protected override void UpdateAttackTargets()
     {
+        _attackTargets = DiceGrid.Inst.GetIncludedDiceUnits(_data.attackRange, _player);
+        /*
         foreach(var posKey in PosKeyUtil.StrPattern(_player.positionKey, _data.atkRange))
         {
             if(DiceGrid.Inst.units.TryGetValue(posKey, out var unit))
@@ -59,6 +61,7 @@ public class WeaponSword : PlayerWeapon
                 _attackTargets.Add(unit);
             }
         }
+        */
     }
 
     private void AttackAnimation(int idx)
