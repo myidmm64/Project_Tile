@@ -40,6 +40,7 @@ public abstract class PlayerWeapon : MonoBehaviour
     public void BindWeapon(Player player)
     {
         _player = player;
+        _player.GetModule<PlayerSkillModule>().SetSkill(_data.skillID);
     }
 
     protected abstract void UpdateAttackTargets();

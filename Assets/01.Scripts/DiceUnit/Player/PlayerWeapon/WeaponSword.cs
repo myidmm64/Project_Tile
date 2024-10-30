@@ -40,7 +40,7 @@ public class WeaponSword : PlayerWeapon
 
         _swordEffect.transform.position = target.dice.groundPos;
         _swordEffect.PlayEffect(_atkIdx);
-        target.Damage(_player.CalculateAttackDamage(EAttackType.Physical, 100, out bool critical), EAttackType.Physical, critical);
+        _player.Attack(target, EAttackType.Physical, 100, out var cri);
 
         _player.playerSprite.AdvanceMove(dir.normalized * 0.35f, 0.1f);
         _player.playerSprite.AttackAnimation(_playerAimIdx);
@@ -48,6 +48,8 @@ public class WeaponSword : PlayerWeapon
 
         _playerAimIdx = (_playerAimIdx + 1) % 2;
         _atkIdx = (_atkIdx + 1) % 3;
+
+        _player.GetModule<PlayerSkillModule>().IncreaseDP(20);
     }
 
     protected override void UpdateAttackTargets()

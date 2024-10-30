@@ -91,11 +91,9 @@ public abstract class DiceUnit : MonoBehaviour, IDamagable, IMovable
         return ChangeDice(target);
     }
 
-    public virtual int CalculateAttackDamage(EAttackType attackType, float percentDamage, out bool isCritical)
+    protected virtual int CalculateAttackDamage(EAttackType attackType, float percentDamage, out bool isCritical)
     {
         isCritical = UnityEngine.Random.Range(0, 100) < stat.criticalChance;
-        Debug.Log($"sdfgsgsdg{stat.criticalDamage}");
-        Debug.Log($"CRI{(isCritical ? stat.criticalDamage / 100f : 1f)}");
 
         int baseDamage = 0;
         switch (attackType)
@@ -118,7 +116,7 @@ public abstract class DiceUnit : MonoBehaviour, IDamagable, IMovable
         return (int)damage;
     }
 
-    public virtual int CalculateTakeDamage(int damage, EAttackType attackType, bool isCritical, bool isTrueDamage = false)
+    protected virtual int CalculateTakeDamage(int damage, EAttackType attackType, bool isCritical, bool isTrueDamage = false)
     {
         if (isTrueDamage) return damage;
 
@@ -129,13 +127,17 @@ public abstract class DiceUnit : MonoBehaviour, IDamagable, IMovable
     public virtual void Damage(int damage, EAttackType attackType, bool isCritical, bool isTrueDamage = false)
     {
         int calculatedDamage = CalculateTakeDamage(damage, attackType, isCritical, isTrueDamage);
-        Debug.Log($"DAMAGE{damage}CAL{calculatedDamage}");
         CurHP -= calculatedDamage;
         CurHP = Mathf.Clamp(CurHP, 0, MaxHP);
 
         PopupText popup = PoolManager.Inst.Pop(EPoolType.PopupText) as PopupText;
         popup.Popup(calculatedDamage.ToString(), transform.position + Vector3.up * 0.3f); 
         // 위 팝업에 attackType, damageType 넣어서 이쁘게 해보기
+    }
+
+    public virtual void Attack(DiceUnit target, EAttackType attackType, float percentDamage, out bool isCritical, bool isTrueDamage = false)
+    {
+        target.Damage(CalculateAttackDamage(attackType, percentDamage, out isCritical), attackType, isCritical, isTrueDamage);
     }
 
     public float GetDamageMultiplierByDicePip() // 주사위 값에 따른 최종 데미지 배율 계산

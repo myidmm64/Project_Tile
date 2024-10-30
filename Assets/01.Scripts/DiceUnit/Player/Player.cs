@@ -9,7 +9,8 @@ public class Player : DiceUnit
 {
     private HashSet<PlayerModule> _playerModules = new HashSet<PlayerModule>();
     public PlayerSprite playerSprite => base.sprite as PlayerSprite;
-    public bool _isDungeon = true; // 현재 던전에 들어와있는지 체크
+    [SerializeField]
+    private float _hpAniDuration = 0.2f;
 
     protected override void Awake()
     {
@@ -44,6 +45,6 @@ public class Player : DiceUnit
     public override void Damage(int damage, EAttackType attackType, bool isCritical, bool isTrueDamage = false)
     {
         base.Damage(damage, attackType, isCritical, isTrueDamage);
-        MainUI.Inst.GetUIElement<CharacterUI>().hpSlider.SetValueWithAnimation(CurHP, 0.2f);
+        MainUI.Inst.GetUIElement<CharacterUI>().hpSlider.SetValueWithAnimation(CurHP, _hpAniDuration);
     }
 }

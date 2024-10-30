@@ -270,7 +270,9 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
             {
                 DiceUnit target = units[rangePosKey];
                 // 설정한 팀이거나, 본인 추가 설정을 했을 때
-                if (rangeData.targetType == target.data.eTeam || rangeData.includeOwner && target.Equals(owner))
+                if (rangeData.targetType == ETeam.None 
+                    || rangeData.targetType == target.data.eTeam 
+                    || rangeData.includeOwner && target.Equals(owner))
                 {
                     targets.Add(target);
                 }

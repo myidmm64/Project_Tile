@@ -6,77 +6,61 @@ using UnityEngine.UI;
 public class PlayerSkillModule : PlayerModule
 {
     [SerializeField]
-    private float _dpSliderAnimationDuration = 0.2f;
+    private float _dpAniDuration = 0.2f;
 
     public List<int> skillIDs = new List<int>();
-    private Dictionary<int, PlayerSkillDataSO> _skillDatas = new Dictionary<int, PlayerSkillDataSO>();
+    private Dictionary<EPlayerSkillType, PlayerSkillDataSO> _skillDatas = new();
 
     public int curDP = 0;
 
-    private void Start()
+    public void SetSkill(int skillID)
     {
-        foreach(var skillID in skillIDs)
-        {
-            var skillData = Utility.GetSkillDataSO(skillID);
-            _skillDatas.Add(skillID, skillData as PlayerSkillDataSO);
-        }
-        SetMainSkill(skillIDs[0]);
-        SetSpecialSkill(skillIDs[1]);
-        SetCounterSkill(skillIDs[2]);
-    }
-
-    public void SetMainSkill(int skillID) => SetSkill(skillID, "Main");
-    public void SetSpecialSkill(int skillID) => SetSkill(skillID, "Special");
-    public void SetCounterSkill(int skillID) => SetSkill(skillID, "Counter");
-
-    public void SetSkill(int skillID, string skillType)
-    {
-        var data = _skillDatas[skillID];
+        PlayerSkillDataSO skillData = Utility.GetSkillDataSO(skillID) as PlayerSkillDataSO;
         var characterUI = MainUI.Inst.GetUIElement<CharacterUI>();
 
-        switch (skillType)
+        switch (skillData.skillType)
         {
-            case "Main":
-                characterUI.dpSlider.Initialize(data.maxDP);
+            case EPlayerSkillType.None:
+                break;
+            case EPlayerSkillType.Main:
+                curDP = 0;
+                characterUI.dpSlider.Initialize(skillData.maxDP);
                 characterUI.dpSlider.SetValueImmediate(curDP);
-                characterUI.mainSkillImage.sprite = data.skillImage;
+                characterUI.mainSkillImage.sprite = skillData.skillImage;
                 break;
-
-            case "Special":
-                characterUI.specialSkillImage.sprite = data.skillImage;
+            case EPlayerSkillType.Special:
+                characterUI.specialSkillImage.sprite = skillData.skillImage;
                 break;
-
-            case "Counter":
-                characterUI.counterSkillImage.sprite = data.skillImage;
+            case EPlayerSkillType.Counter:
+                characterUI.counterSkillImage.sprite = skillData.skillImage;
+                break;
+            default:
                 break;
         }
 
-        Debug.Log($"Set {skillType} Skill / Skill Name : {data.skillName}, Skill ID : {skillID}");
+        _skillDatas[skillData.skillType] = skillData;
+        Debug.Log($"SET SKILL {skillData.skillType}, {skillID}");
     }
 
     public void IncreaseDP(int amount)
     {
-        var data = _skillDatas[skillIDs[0]];
+        var data = _skillDatas[EPlayerSkillType.Main];
 
         curDP += amount;
         curDP = Mathf.Clamp(curDP, 0, data.maxDP);
-        MainUI.Inst.GetUIElement<CharacterUI>().dpSlider.SetValueWithAnimation(curDP, _dpSliderAnimationDuration);
+        MainUI.Inst.GetUIElement<CharacterUI>().dpSlider.SetValueWithAnimation(curDP, _dpAniDuration);
     }
 
     public void UseMainSkill()
     {
-        var data = _skillDatas[skillIDs[0]];
-
+        var data = _skillDatas[EPlayerSkillType.Main];
         if (curDP < data.maxDP) return;
+        Skill skill = data.GetSkill();
+        if (skill.IsUsable(_player) == false) return;
+        skill.UseSkill(_player);
 
         curDP = 0;
-        MainUI.Inst.GetUIElement<CharacterUI>().dpSlider.SetValueWithAnimation(0, _dpSliderAnimationDuration);
-        
-        /*SUseSkillData useSkillData = new SUseSkillData();
-        useSkillData.owner = _player;
-        useSkillData.direction = _player.sprite.direction;
-        data.GetSkill().UseSkill(useSkillData);*/
-
+        MainUI.Inst.GetUIElement<CharacterUI>().dpSlider.SetValueWithAnimation(curDP, _dpAniDuration);
     }
 
     public void SkillInput(InputAction.CallbackContext context)
