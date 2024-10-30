@@ -2,14 +2,15 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SO/SkillRange")]
-public class SkillRangeDataSO : ScriptableObject
+[CreateAssetMenu(menuName = "SO/RangeData")]
+public class RangeDataSO : ScriptableObject
 {
     public ECenterType centerType; // 범위를 인식할 중앙 정하기
     public Vector2Int centerPosKey; // centerType이 PosKey일 때 사용할 center
     public ETeam targetType; // 누구한테 쓸 건데??
     public ESearchType searchType; // 어떻게 검색할 거임??
-
+    public bool includeOwner; // 쓰는 놈 포함?
+     
     [Header("범위 관련")]
     [SerializeField]
     private List<LineRange> lineRanges = new List<LineRange>();
@@ -22,9 +23,9 @@ public class SkillRangeDataSO : ScriptableObject
     [SerializeField]
     private List<StrRange> strRanges = new List<StrRange>();
 
-    public List<RangeData> GetRangeDatas() // 추가되면 여기도 추가
+    public List<RangeOption> GetRangeOptions() // 추가되면 여기도 추가
     {
-        List<RangeData> result = new List<RangeData>();
+        List<RangeOption> result = new List<RangeOption>();
         result.AddRange(lineRanges);
         result.AddRange(crossRanges);
         result.AddRange(squareRanges);
@@ -35,7 +36,7 @@ public class SkillRangeDataSO : ScriptableObject
 }
 
 [System.Serializable]
-public abstract class RangeData
+public abstract class RangeOption
 {
     public EAddType addType = EAddType.Add;
     public abstract IEnumerable<Vector2Int> GetPosKeys(Vector2Int centerPos);
@@ -54,7 +55,7 @@ public abstract class RangeData
 }
 
 [System.Serializable]
-public class LineRange : RangeData
+public class LineRange : RangeOption
 {
     public EDirection direction = EDirection.None;
     public bool isMaxCount = false;
@@ -69,7 +70,7 @@ public class LineRange : RangeData
 }
 
 [System.Serializable]
-public class CrossRange : RangeData
+public class CrossRange : RangeOption
 {
     public bool isMaxCount = false;
     public int count;
@@ -84,7 +85,7 @@ public class CrossRange : RangeData
 }
 
 [System.Serializable]
-public class SquareRange : RangeData
+public class SquareRange : RangeOption
 {
     public bool isMaxCount = false;
     public int size;
@@ -100,7 +101,7 @@ public class SquareRange : RangeData
 }
 
 [System.Serializable]
-public class RactangleRange : RangeData
+public class RactangleRange : RangeOption
 {
     public bool isMaxCount = false;
     public int width;
@@ -117,7 +118,7 @@ public class RactangleRange : RangeData
 }
 
 [System.Serializable]
-public class StrRange : RangeData
+public class StrRange : RangeOption
 {
     [TextArea]
     public string strPattern;

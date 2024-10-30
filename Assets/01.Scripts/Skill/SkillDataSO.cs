@@ -6,8 +6,8 @@ public class SkillDataSO : ScriptableObject
     [SerializeField]
     private Skill _skill;
     [SerializeField]
-    private SkillRangeDataSO _rangeData;
-    public SkillRangeDataSO rangeData => _rangeData;
+    private RangeDataSO _rangeData;
+    public RangeDataSO rangeData => _rangeData;
 
     public T GetSkill<T>() where T : Skill
     {
