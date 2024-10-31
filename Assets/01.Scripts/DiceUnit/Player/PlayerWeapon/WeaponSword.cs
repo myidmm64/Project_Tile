@@ -11,7 +11,9 @@ public class WeaponSword : PlayerWeapon
     private SwordEffect _swordEffect = null;
 
     [SerializeField]
-    private float[] _percentDamages = new float[3] { 100f, 100f, 100f };
+    private int _maxAttackCount = 3;
+    [SerializeField]
+    private float[] _attackPercentDamages = new float[3] { 100f, 100f, 100f };
 
     protected override void Awake()
     {
@@ -40,16 +42,23 @@ public class WeaponSword : PlayerWeapon
 
         _swordEffect.transform.position = target.dice.groundPos;
         _swordEffect.PlayEffect(_atkIdx);
-        _player.Attack(target, EAttackType.Physical, 100, out var cri);
+        _player.Attack(target, EAttackType.Physical, _attackPercentDamages[_atkIdx], out var cri);
 
         _player.playerSprite.AdvanceMove(dir.normalized * 0.35f, 0.1f);
         _player.playerSprite.AttackAnimation(_playerAimIdx);
         AttackAnimation(_atkIdx);
 
         _playerAimIdx = (_playerAimIdx + 1) % 2;
-        _atkIdx = (_atkIdx + 1) % 3;
+        _atkIdx = (_atkIdx + 1) % _maxAttackCount;
 
         _player.GetModule<PlayerSkillModule>().IncreaseDP(20);
+    }
+
+    public override void UseSkill()
+    {
+        _weaponSprite.spriteRenderer.enabled = true;
+        gameObject.SetActive(true);
+        _weaponSprite.FadeIn();
     }
 
     protected override void UpdateAttackTargets()
@@ -68,7 +77,7 @@ public class WeaponSword : PlayerWeapon
 
     private void AttackAnimation(int idx)
     {
-        _weaponSprite.animator.Play($"Attack{idx}");
-        _weaponSprite.animator.Update(0);
+        _weaponSprite.animator.Play($"Attack{idx}", -1, 0f); // 똑같은 애니메이션이 또 실행됐을 때 문제가 있으므로 무조건 처음부터 시작하도록
     }
+
 }

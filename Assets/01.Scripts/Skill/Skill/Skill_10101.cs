@@ -5,22 +5,21 @@ using UnityEngine;
 public class Skill_10101 : Skill
 {
     private List<DiceUnit> _targets = new List<DiceUnit>();
+    [SerializeField]
+    private float _percentDamage = 120f;
+    private Animator _animator = null;
+
+    private void Awake()
+    {
+        _animator = transform.Find("Sprite").GetComponent<Animator>();
+    }
 
     public override void UseSkill(DiceUnit owner)
     {
         if (_targets.Count == 0) return;
         DiceUnit target = _targets[0];
-        StartCoroutine(DamageCoroutine(target, owner));
-    }
-
-    private IEnumerator DamageCoroutine(DiceUnit target, DiceUnit owner)
-    {
-        for(int i = 0; i < 10; i++)
-        {
-            owner.Attack(target, EAttackType.Physical, 120, out var cri);
-            yield return new WaitForSeconds(0.2f);
-        }
-        Destroy(gameObject);
+        owner.Attack(target, EAttackType.Physical, _percentDamage, out var cri);
+        PlayAndAction(_animator, "Attack", () => Destroy(gameObject));
     }
 
     protected override bool ChildIsUsable(DiceUnit owner)

@@ -49,4 +49,5 @@ public abstract class PlayerWeapon : MonoBehaviour
         return _attackTargets.Count > 0;
     }
     public abstract void Attack();
+    public abstract void UseSkill();
 }
