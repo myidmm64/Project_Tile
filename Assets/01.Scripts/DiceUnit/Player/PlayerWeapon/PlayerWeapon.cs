@@ -12,6 +12,7 @@ public abstract class PlayerWeapon : MonoBehaviour
     
     protected SkillDataSO _skillData = null;
     protected List<DiceUnit> _attackTargets = new List<DiceUnit>();
+    public List<DiceUnit> attackTargets => _attackTargets;
 
     protected virtual void Awake()
     {
@@ -22,32 +23,20 @@ public abstract class PlayerWeapon : MonoBehaviour
     {
         _attackTargets.Clear();
         UpdateAttackTargets();
-        LookTarget();
     }
 
-    private void LookTarget()
-    {
-        if (_attackTargets.Count > 0)
-        {
-            _player.sprite.LookAt(_attackTargets[0].positionKey);
-        }
-        else
-        {
-            _player.sprite.LookAt(_player.grid.FindClosestUnit<DiceUnit>(_player.positionKey));
-        }
-    }
-
-    public void BindWeapon(Player player)
+    public virtual void BindWeapon(Player player)
     {
         _player = player;
         _player.GetModule<PlayerSkillModule>().SetSkill(_data.skillID);
     }
 
-    protected abstract void UpdateAttackTargets();
     public virtual bool IsAttackable()
     {
         return _attackTargets.Count > 0;
     }
-    public abstract void Attack();
-    public abstract void UseSkill();
+
+    protected abstract void UpdateAttackTargets();
+    public abstract void Attack(); // 기본 공격 로직
+    public abstract void UseSkill(Skill skill);
 }

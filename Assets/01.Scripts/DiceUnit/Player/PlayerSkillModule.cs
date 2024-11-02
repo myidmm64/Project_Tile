@@ -56,11 +56,12 @@ public class PlayerSkillModule : PlayerModule
         var data = _skillDatas[EPlayerSkillType.Main];
         if (curDP < data.maxDP) return;
         Skill skill = data.GetSkill();
-        if (skill.IsUsable(_player) == false) return;
-        skill.UseSkill(_player);
-
-        curDP = 0;
-        MainUI.Inst.GetUIElement<CharacterUI>().dpSlider.SetValueWithAnimation(curDP, _dpAniDuration);
+        if(skill.UseSkill(_player))
+        {
+            _player.GetModule<PlayerAttackModule>().CurWeapon.UseSkill(skill);
+            curDP = 0;
+            MainUI.Inst.GetUIElement<CharacterUI>().dpSlider.SetValueWithAnimation(curDP, _dpAniDuration);
+        }
     }
 
     public void SkillInput(InputAction.CallbackContext context)

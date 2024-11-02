@@ -11,9 +11,33 @@ public class PlayerSprite : DiceUnitSprite
         _originPos = transform.localPosition;
     }
 
+    private void Update()
+    {
+        LookAttackTarget();
+    }
+
+    private void LookAttackTarget()
+    {
+        Player player = _owner as Player;
+        var attackTargets = player.GetModule<PlayerAttackModule>().CurWeapon.attackTargets;
+        if (attackTargets.Count > 0)
+        {
+            LookAt(attackTargets[0].positionKey);
+        }
+        else
+        {
+            LookAt(player.grid.FindClosestUnit<DiceUnit>(player.positionKey));
+        }
+    }
+
     public void AttackAnimation(int idx)
     {
         animator.Play($"Attack{idx}");
+    }
+
+    public void SkillAnimation(int idx)
+    {
+        animator.Play($"Skill{idx}");
     }
 
     public void MoveAnimation(float horizontal, float vertical)

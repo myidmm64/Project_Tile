@@ -8,6 +8,7 @@ public class PlayerAttackModule : PlayerModule
     [SerializeField]
     private int _weaponID = 0;
     private PlayerWeapon _curWeapon = null;
+    public PlayerWeapon CurWeapon => _curWeapon;
     
     private float _attackTimer = 0f;
     private bool _attackKeyPress = false;

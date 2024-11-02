@@ -7,15 +7,26 @@ public abstract class Skill : MonoBehaviour
 {
     [SerializeField]
     protected RangeDataSO _rangeData;
+    protected List<DiceUnit> _targets = new List<DiceUnit>();
+    public List<DiceUnit> targets => _targets;
 
-    public bool IsUsable(DiceUnit owner)
+    public bool UseSkill(DiceUnit owner)
     {
-        bool result = ChildIsUsable(owner);
-        if (result == false) Destroy(gameObject);
-        return result;
+        if (IsUsable(owner))
+        {
+            SkillLogic(owner);
+            return true;
+        }
+        return false;
     }
-    protected abstract bool ChildIsUsable(DiceUnit owner);
-    public abstract void UseSkill(DiceUnit owner);
+
+    protected virtual bool IsUsable(DiceUnit owner)
+    {
+        _targets = DiceGrid.Inst.GetIncludedDiceUnits(_rangeData, owner);
+        return _targets.Count > 0;
+    }
+
+    protected abstract void SkillLogic(DiceUnit owner);
 
     protected void PlayAndAction(Animator animator, string animationName, Action Callback)
     {
