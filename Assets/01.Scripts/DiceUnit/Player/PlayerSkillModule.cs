@@ -7,8 +7,6 @@ public class PlayerSkillModule : PlayerModule
 {
     [SerializeField]
     private float _dpAniDuration = 0.2f;
-
-    public List<int> skillIDs = new List<int>();
     private Dictionary<EPlayerSkillType, PlayerSkillDataSO> _skillDatas = new();
 
     public int curDP = 0;

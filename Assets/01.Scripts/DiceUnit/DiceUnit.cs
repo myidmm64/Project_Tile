@@ -13,6 +13,7 @@ public abstract class DiceUnit : MonoBehaviour, IDamagable, IMovable
     [SerializeField]
     private DiceUnitData _data = null;
     public DiceUnitData data => _data;
+    [HideInInspector]
     public StatData stat;
     [SerializeField]
     private DiceUnitSprite _sprite = null;
