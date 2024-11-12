@@ -43,6 +43,7 @@ public abstract class Enemy : DiceUnit
             if (_currentPattern != null)
             {
                 Debug.Log($"Pattern Enter : {_currentPattern.GetType()}");
+                _currentPattern.isEnded = false;
                 _currentPattern.Enter();
             }
         }
@@ -64,8 +65,10 @@ public abstract class Enemy : DiceUnit
 
             if (nextPattern != null)
             {
+                // nextPattern이 있다면 강제 시작
                 Debug.Log($"Next Pattern Enter : {_currentPattern.GetType()}");
                 _currentPattern = nextPattern;
+                _currentPattern.isEnded = false;
                 _currentPattern.Enter();
             }
         }

@@ -20,7 +20,7 @@ public abstract class Skill : MonoBehaviour
         return false;
     }
 
-    protected virtual bool IsUsable(DiceUnit owner)
+    public virtual bool IsUsable(DiceUnit owner)
     {
         _targets = DiceGrid.Inst.GetIncludedDiceUnits(_rangeData, owner);
         return _targets.Count > 0;

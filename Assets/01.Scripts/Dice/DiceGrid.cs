@@ -16,7 +16,7 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
     {
         get
         {
-            if(_player == null)
+            if (_player == null)
                 _player = FindFirstObjectByType<Player>();
             return _player;
         }
@@ -30,7 +30,7 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
 
     public bool IsClearedMap()
     {
-        foreach(var enemy in _enemys)
+        foreach (var enemy in _enemys)
         {
             if (enemy.CurHP > 0) return false;
         }
@@ -85,7 +85,7 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
             }
             unit.transform.position = unit.dice.groundPos;
             spawnedUnits.Add(unit);
-            if(unit is Enemy)
+            if (unit is Enemy)
             {
                 _enemys.Add(unit as Enemy);
             }
@@ -279,18 +279,24 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
         return query;
     }
 
-    public List<DiceUnit> GetIncludedDiceUnits(RangeDataSO rangeData, DiceUnit owner) // skillRangeDataSO 내 정보를 통해 스킬 타겟 구하기
+    public List<Vector2Int> GetRangePosKeys(Vector2Int centerPos, RangeDataSO rangeData)
     {
-        Vector2Int centerPos = GetCenterPos(rangeData, owner);
         List<Vector2Int> rangePosKeys = new List<Vector2Int>();
         foreach (var rangeOption in rangeData.GetRangeOptions())
         {
-            if(rangeOption.isSub)
+            if (rangeOption.isSub)
                 rangePosKeys.SubKeys(rangeOption.GetPosKeys(centerPos).ToArray());
             else
                 rangePosKeys.AddRange(rangeOption.GetPosKeys(centerPos));
         }
         rangePosKeys.ExcludeReduplication();
+        return rangePosKeys;
+    }
+
+    public List<DiceUnit> GetIncludedDiceUnits(RangeDataSO rangeData, DiceUnit owner) // skillRangeDataSO 내 정보를 통해 스킬 타겟 구하기
+    {
+        Vector2Int centerPos = GetCenterPos(rangeData, owner);
+        List<Vector2Int> rangePosKeys = GetRangePosKeys(centerPos, rangeData);
 
         List<DiceUnit> targets = new List<DiceUnit>();
         foreach (var rangePosKey in rangePosKeys)
@@ -299,8 +305,8 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
             {
                 DiceUnit target = units[rangePosKey];
                 // 설정한 팀이거나, 본인 추가 설정을 했을 때
-                if (rangeData.targetType == ETeam.None 
-                    || rangeData.targetType == target.data.eTeam 
+                if (rangeData.targetType == ETeam.None
+                    || rangeData.targetType == target.data.eTeam
                     || rangeData.includeOwner && target.Equals(owner))
                 {
                     targets.Add(target);

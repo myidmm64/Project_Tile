@@ -6,9 +6,9 @@ using UnityEngine;
 
 public abstract class EnemyPattern : MonoBehaviour
 {
-    public EnemyPatternDataSO data = null;
+    public PatternDataSO data = null;
     protected Enemy _enemy = null;
-    public bool isEnded { get; protected set; }
+    public bool isEnded = false;
     [SerializeField]
     private EnemyPattern _nextPattern = null;
     public EnemyPattern nextPattern => _nextPattern;
