@@ -1,42 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public abstract class Enemy : DiceUnit
 {
+    public bool isboss = false;
+
+    [SerializeField]
+    private TextMeshPro _hpText = null; // 보스 아니라면 체력 여기에
     [SerializeField]
     protected float _hpAniDuration = 0.2f;
 
-    protected List<EnemyPattern> _patterns = new List<EnemyPattern>();
+    private List<EnemyPattern> _patterns = new List<EnemyPattern>();
     private HashSet<EnemyPattern> _cooldownPatterns = new HashSet<EnemyPattern>();
     protected EnemyPattern _currentPattern = null;
 
-    protected abstract void BindPattern();
+    protected abstract void BindPattern(List<EnemyPattern> patterns);
 
     protected override void Awake()
     {
         base.Awake();
-        BindPattern();
-    }
-
-    protected virtual void Start()
-    {
-
+        BindPattern(_patterns);
     }
 
     protected virtual void Update()
     {
         PatternCycle();
-    }
-
-    public Player GetPlayer()
-    {
-        foreach (var diceUnit in grid.units.Values)
-        {
-            if (diceUnit is Player) return diceUnit as Player;
-        }
-        return null;
     }
 
     private void PatternCycle()

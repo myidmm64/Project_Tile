@@ -8,6 +8,7 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
 {
     public Dictionary<Vector2Int, Dice> dices { get; private set; }
     public Dictionary<Vector2Int, DiceUnit> units { get; private set; }
+    private List<Enemy> _enemys = new List<Enemy>(); // 현재 맵에서 에너미 전부 죽었는지 확인 위함
     // 위험지역 그리드도 만들기
 
     private Player _player = null;
@@ -25,6 +26,15 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
     {
         dices = new Dictionary<Vector2Int, Dice>();
         units = new Dictionary<Vector2Int, DiceUnit>();
+    }
+
+    public bool IsClearedMap()
+    {
+        foreach(var enemy in _enemys)
+        {
+            if (enemy.CurHP > 0) return false;
+        }
+        return true;
     }
 
     public void GenerateMap(DiceGenerateDataSO data, out List<DiceUnit> spawnedUnits)
@@ -75,6 +85,10 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
             }
             unit.transform.position = unit.dice.groundPos;
             spawnedUnits.Add(unit);
+            if(unit is Enemy)
+            {
+                _enemys.Add(unit as Enemy);
+            }
         }
     }
 
