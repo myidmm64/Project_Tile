@@ -83,6 +83,8 @@ public abstract class Enemy : DiceUnit
 
     private EnemyPattern GetNextPattern()
     {
+        if (isMoving) return null; // 현재 움직이고 있다면 아무것도 안 하도록
+
         List<EnemyPattern> canStartPatterns = null;
         foreach (var pattern in _patterns)
         {

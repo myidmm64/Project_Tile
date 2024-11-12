@@ -23,3 +23,12 @@ public class AttackPatternDataSO : PatternDataSO
     public float attackTerm = 0f;
     public float patternDuration = 0f;
 }
+
+[CreateAssetMenu(menuName = "SO/PatternData/MovePatternData")]
+public class MovePatternDataSO : PatternDataSO
+{
+
+    public Vector2Int poskey = Vector2Int.zero;
+
+
+}

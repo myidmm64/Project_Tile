@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -92,95 +93,67 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
         }
     }
 
+    public delegate bool BFSSearchEvent(Vector2Int posKey); // 찾는 거 성공하면 true 반환해주기
+
     // 가장 가까운 빈 Dice의 PositionKey 추출
     public Vector2Int FindClosestDice(Vector2Int start, EDirection firstSearchDir = EDirection.Right)
     {
-        Queue<Vector2Int> queue = new Queue<Vector2Int>();
-        HashSet<Vector2Int> visited = new HashSet<Vector2Int>();
-
-        queue.Enqueue(start);
-        visited.Add(start);
-
-        Vector2Int[] directions = new Vector2Int[]
+        Vector2Int result = new Vector2Int(-1, -1);
+        BFSSearchEvent closestSearch = (posKey) =>
         {
-            Utility.GetRotatedVector(new Vector2Int(1, 0), firstSearchDir),
-            Utility.GetRotatedVector(new Vector2Int(0, -1), firstSearchDir),
-            Utility.GetRotatedVector(new Vector2Int(-1, 0), firstSearchDir),
-            Utility.GetRotatedVector(new Vector2Int(0, 1), firstSearchDir),
+            if (dices.ContainsKey(posKey))
+            {
+                result = posKey;
+                return true;
+            }
+            return false;
         };
-
-        while (queue.Count > 0)
-        {
-            Vector2Int current = queue.Dequeue();
-
-            // 적이 있는 타일을 찾으면 반환
-            if (current != start && dices.ContainsKey(current))
-            {
-                return current;
-            }
-
-            foreach (Vector2Int dir in directions)
-            {
-                Vector2Int next = current + dir;
-
-                if (!visited.Contains(next))
-                {
-                    queue.Enqueue(next);
-                    visited.Add(next);
-                }
-            }
-        }
-
-        return new Vector2Int(-1, -1);
+        SearchWithBFS(start, closestSearch, firstSearchDir);
+        return result;
     }
 
     // 가장 가까운 Team의 PositionKey 추출
     public Vector2Int FindClosestTeam(Vector2Int start, ETeam team, EDirection firstSearchDir = EDirection.Right)
     {
-        Queue<Vector2Int> queue = new Queue<Vector2Int>();
-        HashSet<Vector2Int> visited = new HashSet<Vector2Int>();
-
-        queue.Enqueue(start);
-        visited.Add(start);
-
-        Vector2Int[] directions = new Vector2Int[]
+        Vector2Int result = new Vector2Int(-1, -1);
+        BFSSearchEvent closestSearch = (posKey) =>
         {
-            Utility.GetRotatedVector(new Vector2Int(1, 0), firstSearchDir),
-            Utility.GetRotatedVector(new Vector2Int(0, -1), firstSearchDir),
-            Utility.GetRotatedVector(new Vector2Int(-1, 0), firstSearchDir),
-            Utility.GetRotatedVector(new Vector2Int(0, 1), firstSearchDir),
+            if (units.ContainsKey(posKey))
+            {
+                if (units[posKey].data.eTeam == team)
+                {
+                    result = posKey;
+                    return true;
+                }
+            }
+            return false;
         };
-
-        while (queue.Count > 0)
-        {
-            Vector2Int current = queue.Dequeue();
-
-            // 적이 있는 타일을 찾으면 반환
-            if (current != start && units.ContainsKey(current))
-            {
-                if (units[current].data.eTeam == team)
-                {
-                    return current;
-                }
-            }
-
-            foreach (Vector2Int dir in directions)
-            {
-                Vector2Int next = current + dir;
-
-                if (!visited.Contains(next))
-                {
-                    queue.Enqueue(next);
-                    visited.Add(next);
-                }
-            }
-        }
-
-        return new Vector2Int(-1, -1);
+        SearchWithBFS(start, closestSearch, firstSearchDir);
+        return result;
     }
 
     // 가장 가까운 DiceUnit의 PositionKey 추출
     public Vector2Int FindClosestUnit<T>(Vector2Int start, EDirection firstSearchDir = EDirection.Right) where T : DiceUnit
+    {
+        Vector2Int result = new Vector2Int(-1, -1);
+        BFSSearchEvent closestSearch = (posKey) =>
+        {
+            if (units.ContainsKey(posKey))
+            {
+                if (units[posKey] is T)
+                {
+                    result = posKey;
+                    return true;
+                }
+            }
+            return false;
+        };
+        SearchWithBFS(start, closestSearch, firstSearchDir);
+        return result;
+    }
+
+
+    public void SearchWithBFS(Vector2Int start, BFSSearchEvent action, EDirection firstSearchDir = EDirection.Right)
     {
         Queue<Vector2Int> queue = new Queue<Vector2Int>();
         HashSet<Vector2Int> visited = new HashSet<Vector2Int>();
@@ -201,11 +174,11 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
             Vector2Int current = queue.Dequeue();
 
             // 적이 있는 타일을 찾으면 반환
-            if (current != start && units.ContainsKey(current))
+            if (current != start)
             {
-                if (units[current] is T)
+                if(action.Invoke(current))
                 {
-                    return current;
+                    return;
                 }
             }
 
@@ -220,8 +193,6 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
                 }
             }
         }
-
-        return new Vector2Int(-1, -1);
     }
 
     public List<Dice> GetDices(List<Vector2Int> positionKeies)
