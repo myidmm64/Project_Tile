@@ -32,9 +32,15 @@ public abstract class DiceUnit : MonoBehaviour, IDamagable, IMovable
     public int CurHP { get; set; }
     public int MaxHP { get; set; }
 
-    protected virtual void Awake()
+    private void Awake()
     {
         stat = new StatData(data.baseStat); // √ ±‚ Ω∫≈»
+        Initialize();
+    }
+
+    public virtual void Initialize()
+    {
+
     }
 
     public virtual void StartStage(FloorData floorData, StageData stageData)

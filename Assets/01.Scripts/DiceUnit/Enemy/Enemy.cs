@@ -17,16 +17,21 @@ public abstract class Enemy : DiceUnit
     private HashSet<EnemyPattern> _cooldownPatterns = new HashSet<EnemyPattern>();
     protected EnemyPattern _currentPattern = null;
 
-    protected abstract void BindPattern(List<EnemyPattern> patterns);
-
-    protected override void Awake()
+    public override void Initialize()
     {
-        base.Awake();
-        BindPattern(_patterns);
+        base.Initialize();
+        _patterns.AddRange(transform.Find("Patterns").GetComponents<EnemyPattern>());
+        _patterns.AddRange(transform.Find("Patterns").GetComponentsInChildren<EnemyPattern>());
+        foreach(var pattern in _patterns)
+        {
+            pattern.BindEnemy(this);
+            pattern.Initialize();
+        }
     }
 
     protected virtual void Update()
     {
+        if (_patterns.Count == 0) return;
         PatternCycle();
     }
 
@@ -37,7 +42,7 @@ public abstract class Enemy : DiceUnit
             _currentPattern = GetNextPattern();
             if (_currentPattern != null)
             {
-                // Debug.Log($"Pattern Enter : {_currentPattern.GetType()}");
+                Debug.Log($"Pattern Enter : {_currentPattern.GetType()}");
                 _currentPattern.Enter();
             }
         }
@@ -47,20 +52,29 @@ public abstract class Enemy : DiceUnit
             return;
         }
 
-        _currentPattern.Update();
+        _currentPattern.PatternUpdate();
         if (_currentPattern.isEnded)
         {
-            // Debug.Log($"Pattern Exit : {_currentPattern.GetType()}");
+            Debug.Log($"Pattern Exit : {_currentPattern.GetType()}");
+            EnemyPattern nextPattern = _currentPattern.nextPattern; // currentPattern 지우기 전 저장
+
             _currentPattern.Exit();
             StartCoroutine(PatternCooldownCoroutine(_currentPattern));
             _currentPattern = null;
+
+            if (nextPattern != null)
+            {
+                Debug.Log($"Next Pattern Enter : {_currentPattern.GetType()}");
+                _currentPattern = nextPattern;
+                _currentPattern.Enter();
+            }
         }
     }
 
     private IEnumerator PatternCooldownCoroutine(EnemyPattern pattern)
     {
         _cooldownPatterns.Add(pattern);
-        yield return new WaitForSeconds(pattern.GetCooltime());
+        yield return new WaitForSeconds(pattern.data.cooltime);
         _cooldownPatterns.Remove(pattern);
     }
 
@@ -70,7 +84,7 @@ public abstract class Enemy : DiceUnit
         foreach (var pattern in _patterns)
         {
             // 쿨다운중이지 않고, 스타트할 수 있다면
-            if (_cooldownPatterns.Contains(pattern) == false && pattern.CanStartPattern())
+            if (_cooldownPatterns.Contains(pattern) == false && pattern.Startable())
             {
                 if (canStartPatterns == null) canStartPatterns = new List<EnemyPattern>();
                 canStartPatterns.Add(pattern);
@@ -80,10 +94,10 @@ public abstract class Enemy : DiceUnit
         // 가장 우선순위가 높은 것
         if (canStartPatterns != null && canStartPatterns.Count > 0)
         {
-            int highestPriority = canStartPatterns.Max(p => p.GetPatternPriority());
+            int highestPriority = canStartPatterns.Max(p => p.data.priority);
 
             var highestPriorityPatterns = canStartPatterns
-            .Where(p => p.GetPatternPriority() == highestPriority)
+            .Where(p => p.data.priority == highestPriority)
             .ToList();
 
             int randomIndex = Random.Range(0, highestPriorityPatterns.Count);

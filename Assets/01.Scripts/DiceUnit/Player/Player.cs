@@ -12,9 +12,9 @@ public class Player : DiceUnit
     [SerializeField]
     private float _hpAniDuration = 0.2f;
 
-    protected override void Awake()
+    public override void Initialize()
     {
-        base.Awake();
+        base.Initialize();
         var modules = GetComponents<PlayerModule>();
         foreach (var module in modules)
         {
