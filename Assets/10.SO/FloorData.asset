@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe8075dcf9bfc274a8cd1b81f3bdd9b6, type: 3}
-  m_Name: MainStageData
+  m_Name: FloorData
   m_EditorClassIdentifier: 
   stages:
   - stageName: "\uC2A4\uD14C\uC774\uC9C0 0"

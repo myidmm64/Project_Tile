@@ -16,6 +16,6 @@ public class DiceGenerateDataSO : ScriptableObject
 [System.Serializable]
 public struct SpawnData
 {
-    public GameObject obj;
+    public DiceUnit unit;
     public Vector2Int pos;
 }

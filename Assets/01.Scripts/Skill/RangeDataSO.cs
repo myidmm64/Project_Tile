@@ -50,7 +50,7 @@ public abstract class RangeOption
 
     protected Vector2Int GetMapSize()
     {
-        return MapManager.Inst.GetCurrentMapData().mapData.mapSize;
+        return StageManager.Inst.GetCurrentStageData().stageGenData.mapSize;
     }
 }
 

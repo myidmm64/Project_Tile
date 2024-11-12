@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 6364668}
   - component: {fileID: 6364669}
   m_Layer: 0
-  m_Name: MapManager
+  m_Name: StageManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b7cd86ac6a591044bd41aaba7584475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stageDataSO: {fileID: 11400000, guid: e26983a9dd47ef34799db9b63dd75b64, type: 2}
+  _FloorDataSO: {fileID: 11400000, guid: e26983a9dd47ef34799db9b63dd75b64, type: 2}
 --- !u!1 &250052672
 GameObject:
   m_ObjectHideFlags: 0
@@ -2118,7 +2118,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dpAniDuration: 0.2
-  skillIDs: 752700007627000077270000
   curDP: 0
 --- !u!114 &1650557172
 MonoBehaviour:

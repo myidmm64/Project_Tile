@@ -22,9 +22,9 @@ public class Player : DiceUnit
         }
     }
 
-    private void Start()
+    public override void StartStage(FloorData floorData, StageData stageData)
     {
-        transform.position = dice.groundPos;
+        base.StartStage(floorData, stageData);
         MainUI.Inst.GetUIElement<CharacterUI>().hpSlider.Initialize(MaxHP);
     }
 

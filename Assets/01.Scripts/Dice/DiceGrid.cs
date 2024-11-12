@@ -27,7 +27,7 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
         units = new Dictionary<Vector2Int, DiceUnit>();
     }
 
-    public void GenerateMap(DiceGenerateDataSO data)
+    public void GenerateMap(DiceGenerateDataSO data, out List<DiceUnit> spawnedUnits)
     {
         // 초기화 함수 추가
 
@@ -52,7 +52,7 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
                 dice.transform.position = dicePosition;
                 dice.positionKey = positionKey;
                 dice.gameObject.name = $"dice : {positionKey.ToString()}";
-                dice.Roll();
+                dice.Roll(); // 추후 숫자 통일 가능
                 dice.SetSpriteOrder();
                 dice.transform.SetParent(transform, false);
 
@@ -60,7 +60,22 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
             }
         }
 
+        spawnedUnits = new List<DiceUnit>();
+
         player.ChangeDice(data.playerPos);
+        player.transform.position = player.dice.groundPos;
+        spawnedUnits.Add(player);
+
+        foreach (var spawnData in data.spawnDatas)
+        {
+            DiceUnit unit = Instantiate(spawnData.unit);
+            if (unit.ChangeDice(spawnData.pos) == false)
+            {
+                Debug.LogError("?? 이상한 위치에 생성한 것 같아요");
+            }
+            unit.transform.position = unit.dice.groundPos;
+            spawnedUnits.Add(unit);
+        }
     }
 
     // 가장 가까운 빈 Dice의 PositionKey 추출
@@ -322,7 +337,7 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
             case ECenterType.Player:
                 return player.positionKey;
             case ECenterType.MapCenter:
-                return MapManager.Inst.GetCurrentMapData().mapData.mapSize / 2;
+                return StageManager.Inst.GetCurrentStageData().stageGenData.mapSize / 2;
             case ECenterType.PosKey:
                 return rangeData.centerPosKey;
             default:
