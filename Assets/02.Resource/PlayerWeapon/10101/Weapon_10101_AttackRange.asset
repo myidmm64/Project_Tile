@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64ee6e4e2f1d83f4b9ccba236bbe6b77, type: 3}
-  m_Name: Weapon_101101_AttackRange
+  m_Name: Weapon_10101_AttackRange
   m_EditorClassIdentifier: 
   centerType: 2
   centerPosKey: {x: 0, y: 0}
