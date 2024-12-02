@@ -22,9 +22,8 @@ public class Player : DiceUnit
         }
     }
 
-    public override void StartStage(FloorData floorData, StageData stageData)
+    public override void StartStage()
     {
-        base.StartStage(floorData, stageData);
         MainUI.Inst.GetUIElement<CharacterUI>().hpSlider.Initialize(MaxHP);
     }
 

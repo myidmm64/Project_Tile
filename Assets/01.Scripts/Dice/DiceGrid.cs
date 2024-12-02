@@ -9,88 +9,14 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
 {
     public Dictionary<Vector2Int, Dice> dices { get; private set; }
     public Dictionary<Vector2Int, DiceUnit> units { get; private set; }
-    private List<Enemy> _enemys = new List<Enemy>(); // 현재 맵에서 에너미 전부 죽었는지 확인 위함
-    // 위험지역 그리드도 만들기
 
-    private Player _player = null;
-    public Player player
+    public void SetGrid(Dictionary<Vector2Int, Dice> diceGrid, Dictionary<Vector2Int, DiceUnit> unitGrid)
     {
-        get
-        {
-            if (_player == null)
-                _player = FindFirstObjectByType<Player>();
-            return _player;
-        }
-    }
+        dices.Clear();
+        units.Clear();
 
-    private void Awake()
-    {
-        dices = new Dictionary<Vector2Int, Dice>();
-        units = new Dictionary<Vector2Int, DiceUnit>();
-    }
-
-    public bool IsClearedMap()
-    {
-        foreach (var enemy in _enemys)
-        {
-            if (enemy.CurHP > 0) return false;
-        }
-        return true;
-    }
-
-    public void GenerateMap(DiceGenerateDataSO data, out List<DiceUnit> spawnedUnits)
-    {
-        // 초기화 함수 추가
-
-        float totalWidth = data.padding.x * (data.mapSize.x - 1); // 간격의 수(격자 크기의 -1)만큼 곱해 전체 크기를 구함
-        float totalHeight = data.padding.y * (data.mapSize.y - 1);
-
-        Vector2 startPos = new Vector2(
-            data.centerPos.x - (totalWidth / 2),
-            data.centerPos.y - (totalHeight / 2));
-
-        for (int y = 0; y < data.mapSize.y; y++)
-        {
-            for (int x = 0; x < data.mapSize.x; x++)
-            {
-                if (data.subPositions.Contains(new Vector2Int(x, y))) continue;
-                Dice dice = PoolManager.Inst.Pop(EPoolType.Dice) as Dice; // PopDice((EDiceType)number);
-                if (dice == null) continue;
-
-                Vector2 dicePosition = startPos + new Vector2(x * data.padding.x, y * data.padding.y);
-                Vector2Int positionKey = new Vector2Int(x, y);
-
-                dice.transform.position = dicePosition;
-                dice.positionKey = positionKey;
-                dice.gameObject.name = $"dice : {positionKey.ToString()}";
-                dice.Roll(); // 추후 숫자 통일 가능
-                dice.SetSpriteOrder();
-                dice.transform.SetParent(transform, false);
-
-                dices.Add(positionKey, dice);
-            }
-        }
-
-        spawnedUnits = new List<DiceUnit>();
-
-        player.ChangeDice(data.playerPos);
-        player.transform.position = player.dice.groundPos;
-        spawnedUnits.Add(player);
-
-        foreach (var spawnData in data.spawnDatas)
-        {
-            DiceUnit unit = Instantiate(spawnData.unit);
-            if (unit.ChangeDice(spawnData.pos) == false)
-            {
-                Debug.LogError("?? 이상한 위치에 생성한 것 같아요");
-            }
-            unit.transform.position = unit.dice.groundPos;
-            spawnedUnits.Add(unit);
-            if (unit is Enemy)
-            {
-                _enemys.Add(unit as Enemy);
-            }
-        }
+        dices = diceGrid;
+        units = unitGrid;
     }
 
     public delegate bool BFSSearchEvent(Vector2Int posKey); // 찾는 거 성공하면 true 반환해주기
@@ -326,9 +252,9 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
             case ECenterType.Owner:
                 return owner.positionKey;
             case ECenterType.Player:
-                return player.positionKey;
+                return Utility.player.positionKey;
             case ECenterType.MapCenter:
-                return StageManager.Inst.GetCurrentStageData().stageGenData.mapSize / 2;
+                return StageManager.Inst.currentStage.genData.mapSize / 2;
             case ECenterType.PosKey:
                 return rangeData.centerPosKey;
             default:

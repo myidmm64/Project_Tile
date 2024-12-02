@@ -18,5 +18,5 @@ public struct FloorData
 public struct StageData
 {
     public string stageName;
-    public DiceGenerateDataSO stageGenData;
+    public Stage stagePrefab;
 }

@@ -4,19 +4,14 @@ using UnityEngine;
 public class StageManager : MonoSingleTon<StageManager>
 {
     [SerializeField]
+    private Stage _lobbyStage = null;
+    [SerializeField]
     private FloorDataSO _FloorDataSO = null;
+
+    public Stage currentStage { get; private set; }
+
     private int _floorIndex = 0;
     private int _stageIndex = -1;
-
-    private void Start()
-    {
-        StartNextStage();
-    }
-
-    public StageData GetCurrentStageData()
-    {
-        return _FloorDataSO.floors[_floorIndex].stageDatas[_stageIndex];
-    }
 
     public void StartNextStage()
     {
@@ -34,12 +29,24 @@ public class StageManager : MonoSingleTon<StageManager>
             _stageIndex = 0;
         }
 
-        List<DiceUnit> spawnedUnits;
-        DiceGrid.Inst.GenerateMap(_FloorDataSO.floors[_floorIndex].stageDatas[_stageIndex].stageGenData
-            , out spawnedUnits);
-        foreach(var unit in  spawnedUnits)
+        Stage newStage = Instantiate(_FloorDataSO.floors[_floorIndex].stageDatas[_stageIndex].stagePrefab);
+        ChangeStage(newStage);
+    }
+
+    public void GoLobby()
+    {
+        ChangeStage(_lobbyStage);
+    }
+
+    private void ChangeStage(Stage stage)
+    {
+        if (currentStage != null)
         {
-            unit.StartStage(_FloorDataSO.floors[_floorIndex], _FloorDataSO.floors[_floorIndex].stageDatas[_stageIndex]);
+            currentStage.EndStage();
+            Destroy(currentStage);
         }
+
+        currentStage = stage;
+        currentStage.StartStage();
     }
 }

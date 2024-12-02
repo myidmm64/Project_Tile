@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7823322253528554181}
-  - component: {fileID: -4116366123843204173}
+  - component: {fileID: 7711990932037861838}
   m_Layer: 0
   m_Name: LobbyStage
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-4116366123843204173
+--- !u!114 &7711990932037861838
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -51,9 +51,3 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _playerPos: {x: 0, y: 0}
-  _dices:
-    m_keys: []
-    m_values: []
-  _units:
-    m_keys: []
-    m_values: []

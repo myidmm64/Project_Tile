@@ -34,7 +34,6 @@ public abstract class DiceUnit : MonoBehaviour, IDamagable, IMovable
 
     private void Awake()
     {
-        stat = new StatData(data.baseStat); // √ ±‚ Ω∫≈»
         Initialize();
     }
 
@@ -43,10 +42,11 @@ public abstract class DiceUnit : MonoBehaviour, IDamagable, IMovable
 
     }
 
-    public virtual void StartStage(FloorData floorData, StageData stageData)
+    public virtual void StartStage()
     {
         MaxHP = data.baseStat.hp;
         CurHP = MaxHP;
+        stat = new StatData(data.baseStat); // √ ±‚ Ω∫≈»
     }
 
     public bool ChangeDice(Vector2Int targetPositionKey)
