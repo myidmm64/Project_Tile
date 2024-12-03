@@ -21,12 +21,20 @@ public class Dice : MonoBehaviour, IPoolable
     private SpriteRenderer _pipSpriteRenderer = null;
     private List<SpriteRenderer> _sprites = new List<SpriteRenderer>(); // Order 세팅용
     private Animator _animator = null;
+    private bool _isInitialized = false;
 
     public int dicePip { get; private set; } // 1 ~ 6
 
+    private void Awake() // Pool에서 나오는 것과, 스테이지에 미리 생성되어있는 것의 차별
+    {
+        Initailize();
+    }
+
     public void Initailize()
     {
+        if (_isInitialized) return;
         _sprites.AddRange(transform.Find("Sprites").GetComponentsInChildren<SpriteRenderer>());
+        _isInitialized = true;
     }
 
     public void PopObject()

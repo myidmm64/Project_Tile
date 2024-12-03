@@ -17,6 +17,5 @@ public struct FloorData
 [System.Serializable]
 public struct StageData
 {
-    public string stageName;
     public Stage stagePrefab;
 }

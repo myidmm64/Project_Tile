@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,37 +7,38 @@ public class PoolDataSO : ScriptableObject
 {
     public int GENERATE_COUNT = 10;
     public List<PoolData> poolDatas = new List<PoolData>();
+    [SerializeField]
+    private string syncPath = "Poolable/";
+    private HashSet<int> _hashcodes = new(); 
 
     [ContextMenu("PoolData 싱크")]
     public void SyncPoolData()
     {
-        var objs = Resources.LoadAll<GameObject>("Poolable");
+        var objs = Resources.LoadAll<GameObject>(syncPath);
         foreach (var obj in objs)
         {
-            IPoolable tempPoolable = obj.GetComponent<IPoolable>();
-            if (tempPoolable == null)
+            if (obj.GetComponent<IPoolable>() == null)
             {
                 Debug.LogError($"Poolable 스크립트가 존재하지 않음.");
                 continue;
             }
-            int hashCode = tempPoolable.GetHashCode();
 
-            PoolData poolData = poolDatas.Find(x => x.hashCode == hashCode);
-            if(poolData != null)
+            int hashCode = obj.GetHashCode();
+            if (_hashcodes.Contains(hashCode) == false) // 존재하지 않을 때만 추가
             {
-                Debug.Log($"이미 존재하는 poolData입니다. name : {poolData.name}, poolType : {poolData.ePoolType}");
-                continue;
-            }
-            else
-            {
-                poolData = new PoolData(EPoolType.None, obj, GENERATE_COUNT);
+                PoolData poolData = new PoolData(EPoolType.None, obj, GENERATE_COUNT);
                 poolData.name = obj.name;
-                poolData.hashCode = hashCode;
-
-                Debug.Log($"새로 poolData를 생성합니다. name : {poolData.name}");
+                _hashcodes.Add(hashCode);
                 poolDatas.Add(poolData);
             }
         }
+    }
+
+    [ContextMenu("해시셋 초기화")]
+    public void ResetHashSet()
+    {
+        _hashcodes.Clear();
+        poolDatas.Clear();
     }
 }
 
@@ -45,8 +47,6 @@ public class PoolData
 {
     [HideInInspector]
     public string name = "";
-    [HideInInspector]
-    public int hashCode = 0;
 
     public EPoolType ePoolType = EPoolType.None;
     public GameObject obj = null;

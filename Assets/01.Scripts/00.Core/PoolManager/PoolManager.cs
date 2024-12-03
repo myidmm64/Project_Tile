@@ -5,13 +5,14 @@ public class PoolManager : MonoSingleTon<PoolManager>
 {
     private Dictionary<EPoolType, Queue<IPoolable>> _pool = new();
     private Dictionary<EPoolType, GameObject> _poolableResorcesTable = new();
+    public PoolDataSO poolData { get; private set;}
 
     private void Awake()
     {
         InitPool();
     }
 
-    private void GeneratePoolObj(GameObject obj, EPoolType pooltype)
+    public void GeneratePoolObj(GameObject obj, EPoolType pooltype)
     {
         GameObject gameObj = Instantiate(obj);
         IPoolable poolable = gameObj.GetComponent<IPoolable>();
@@ -31,15 +32,14 @@ public class PoolManager : MonoSingleTon<PoolManager>
 
     private void InitPool()
     {
-        var poolDataSOResources = Resources.LoadAll<PoolDataSO>("Poolable");
-        if (poolDataSOResources.Length == 0)
+        poolData = Resources.Load<PoolDataSO>("Poolable/Normal/PoolDataSO");
+        if (poolData == null)
         {
-            Debug.LogError("poolDataSO가 Resources/Poolable 에 존재하지 않습니다.");
+            Debug.LogError("poolData 존재하지 않음.");
             return;
         }
-        var poolDataSO = poolDataSOResources[0];
 
-        foreach (var poolData in poolDataSO.poolDatas)
+        foreach (var poolData in poolData.poolDatas)
         {
             _poolableResorcesTable.Add(poolData.ePoolType, poolData.obj);
 
@@ -85,5 +85,17 @@ public class PoolManager : MonoSingleTon<PoolManager>
         poolable.POOLABLE_GAMEOBJECT.SetActive(false);
         poolable.POOLABLE_GAMEOBJECT.transform.SetParent(gameObject.transform);
         _pool[poolable.PoolType].Enqueue(poolable);
+    }
+
+    public void Dispose(EPoolType poolType)
+    {
+        if(_pool.ContainsKey(poolType))
+        {
+            foreach(var pool in _pool[poolType])
+            {
+                Destroy(pool.POOLABLE_GAMEOBJECT);
+            }
+            _pool.Remove(poolType);
+        }
     }
 }

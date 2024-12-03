@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public static class Utility
 {
@@ -128,5 +131,13 @@ public static class Utility
     public static float DirectionToXMiltiflier(EDirection direction)
     {
         return direction == EDirection.Right ? 1f : -1f;
+    }
+
+    public static List<T> GetEnumValuesInRange<T>(int min, int max) where T : Enum
+    {
+        return Enum.GetValues(typeof(T))
+                   .Cast<T>()
+                   .Where(e => Convert.ToInt32(e) >= min && Convert.ToInt32(e) <= max)
+                   .ToList();
     }
 }

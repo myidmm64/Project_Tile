@@ -11,6 +11,7 @@ public class UnitsDictionary : SerializableDictionary<Vector2Int, DiceUnit> { }
 
 public class Stage : MonoBehaviour
 {
+    public string stageName;
     [SerializeField]
     protected UnityEvent OnStartStage = null;
     [SerializeField]

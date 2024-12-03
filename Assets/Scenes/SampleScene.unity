@@ -163,6 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b7cd86ac6a591044bd41aaba7584475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _lobbyStage: {fileID: 0}
   _FloorDataSO: {fileID: 11400000, guid: e26983a9dd47ef34799db9b63dd75b64, type: 2}
 --- !u!1 &250052672
 GameObject:
