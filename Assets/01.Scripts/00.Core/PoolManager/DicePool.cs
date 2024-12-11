@@ -29,7 +29,7 @@ public class DicePool : MonoSingleTon<DicePool>
             PoolManager.Inst.Dispose(poolType);
         }
 
-        int min = 100 + floor * 100; // 0층 Dice가 100부터 시작하므로
+        int min = 100 + floor * 10; // 0층 Dice가 100부터 시작하므로
         int max = 100 + min + 99;
         var poolTypes = Utility.GetEnumValuesInRange<EPoolType>(min, max);
 
