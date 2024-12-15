@@ -44,10 +44,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f57cb73a22907744b6d45e2e126120e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stageName: "\uB85C\uBE44"
+  _playerPos: {x: 1, y: 1}
   OnStartStage:
     m_PersistentCalls:
       m_Calls: []
   OnEndStage:
     m_PersistentCalls:
       m_Calls: []
-  _playerPos: {x: 0, y: 0}
+  genData: {fileID: 11400000, guid: 89419f962dfd5324bb98cde8aaa5b73e, type: 2}
+  _editorDices:
+    m_keys: []
+    m_values: []
+  _editorUnits:
+    m_keys: []
+    m_values: []

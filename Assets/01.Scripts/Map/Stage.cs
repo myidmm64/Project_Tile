@@ -4,70 +4,71 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
-[Serializable]
-public class DiceDictionary : SerializableDictionary<Vector2Int, Dice> { }
-[Serializable]
-public class UnitsDictionary : SerializableDictionary<Vector2Int, DiceUnit> { }
-
 public class Stage : MonoBehaviour
 {
+    public DiceGenerateDataSO data = null; // 생성 데이터
     public string stageName;
+
     [SerializeField]
     protected UnityEvent OnStartStage = null;
     [SerializeField]
     protected UnityEvent OnEndStage = null;
-    public DiceGenerateDataSO genData = null;
+    private Transform _gridTrm = null;
 
-    [SerializeField]
-    private Vector2Int _playerPos = Vector2Int.zero;
-    public Vector2Int playerPos => _playerPos;
-
-    // 커스텀 에디터로 이거 만들기
-    [SerializeField]
-    private DiceDictionary _editorDices = new();
-    private Dictionary<Vector2Int, Dice> _dices;
-
-    [SerializeField]
-    private UnitsDictionary _editorUnits = new();
-    private Dictionary<Vector2Int, DiceUnit> _units;
-
-    public void StartStage()
+    public virtual void Awake()
     {
-        // 에디터 상황은 좀 위험하니 인게임에서 할당해주기
-        _dices = new Dictionary<Vector2Int, Dice>();
-        foreach (var editorDice in _editorDices)
+        _gridTrm = transform.Find("Grid");
+        if(_gridTrm == null)
         {
-            _dices.Add(editorDice.Key, editorDice.Value);
+            Debug.Log("GridTrm 생성");
+            _gridTrm = new GameObject("Grid").transform;
+            _gridTrm.SetParent(transform);
+            _gridTrm.localPosition = Vector3.zero;
         }
-        _units = new Dictionary<Vector2Int, DiceUnit>();
-        foreach (var editorUnit in _editorUnits)
-        {
-            _units.Add(editorUnit.Key, editorUnit.Value);
-        }
-        DiceGrid.Inst.SetGrid(_dices, _units);
+    }
 
+    public virtual void StartStage()
+    {
+        GenerateMap();
         OnStartStage?.Invoke();
     }
 
-    public void EndStage()
+    public virtual void EndStage()
     {
         OnEndStage?.Invoke();
     }
 
     public virtual bool IsStageEnded()
     {
-        foreach(var unit in _units.Values)
+        foreach(var unit in DiceGrid.Inst.units.Values)
         {
-            if (unit.CurHP > 0) return true;
+            if (unit.CurHP > 0) return false;
         }
-        return false;
+        return true;
     }
 
-    /*
-    public void GenerateMap(DiceGenerateDataSO data, out List<DiceUnit> spawnedUnits)
+    protected virtual void ResetPreview()
     {
-        // 초기화 함수 추가
+        Transform previewTrm = transform.Find("Preview");
+        if (previewTrm != null)
+        {
+            Destroy(previewTrm);
+        }
+        previewTrm = new GameObject("Preview").transform;
+        previewTrm.SetParent(transform);
+        previewTrm.localPosition = Vector3.zero;
+    }
 
+    [ContextMenu("미리보기 생성")]
+    public virtual void SetPreview()
+    {
+        ResetPreview();
+        Transform previewTrm = transform.Find("Preview");
+        Debug.Log("제작중");
+    }
+
+    public void GenerateMap()
+    {
         float totalWidth = data.padding.x * (data.mapSize.x - 1); // 간격의 수(격자 크기의 -1)만큼 곱해 전체 크기를 구함
         float totalHeight = data.padding.y * (data.mapSize.y - 1);
 
@@ -89,11 +90,10 @@ public class Stage : MonoBehaviour
                 dice.transform.position = dicePosition;
                 dice.positionKey = positionKey;
                 dice.gameObject.name = $"dice : {positionKey.ToString()}";
-                dice.Roll(); // 추후 숫자 통일 가능
                 dice.SetSpriteOrder();
                 dice.transform.SetParent(transform, false);
 
-                dices.Add(positionKey, dice);
+                _editorDices.Add(positionKey, dice);
             }
         }
 
@@ -117,6 +117,7 @@ public class Stage : MonoBehaviour
                 _enemys.Add(unit as Enemy);
             }
         }
+
+        DiceGrid.Inst.SetGrid(_dices, _units);
     }
-     */
 }
