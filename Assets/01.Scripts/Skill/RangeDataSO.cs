@@ -50,7 +50,7 @@ public abstract class RangeOption
 
     protected Vector2Int GetMapSize()
     {
-        return StageManager.Inst.currentStage.genData.mapSize;
+        return Vector2Int.zero; //StageManager.Inst.currentStage.genData.mapSize;
     }
 }
 

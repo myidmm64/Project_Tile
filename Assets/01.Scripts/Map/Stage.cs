@@ -69,55 +69,57 @@ public class Stage : MonoBehaviour
 
     public void GenerateMap()
     {
-        float totalWidth = data.padding.x * (data.mapSize.x - 1); // 간격의 수(격자 크기의 -1)만큼 곱해 전체 크기를 구함
-        float totalHeight = data.padding.y * (data.mapSize.y - 1);
+        /*
+            float totalWidth = data.padding.x * (data.mapSize.x - 1); // 간격의 수(격자 크기의 -1)만큼 곱해 전체 크기를 구함
+            float totalHeight = data.padding.y * (data.mapSize.y - 1);
 
-        Vector2 startPos = new Vector2(
-            data.centerPos.x - (totalWidth / 2),
-            data.centerPos.y - (totalHeight / 2));
+            Vector2 startPos = new Vector2(
+                data.centerPos.x - (totalWidth / 2),
+                data.centerPos.y - (totalHeight / 2));
 
-        for (int y = 0; y < data.mapSize.y; y++)
-        {
-            for (int x = 0; x < data.mapSize.x; x++)
+            for (int y = 0; y < data.mapSize.y; y++)
             {
-                if (data.subPositions.Contains(new Vector2Int(x, y))) continue;
-                Dice dice = PoolManager.Inst.Pop(EPoolType.Dice) as Dice; // PopDice((EDiceType)number);
-                if (dice == null) continue;
+                for (int x = 0; x < data.mapSize.x; x++)
+                {
+                    if (data.subPositions.Contains(new Vector2Int(x, y))) continue;
+                    Dice dice = PoolManager.Inst.Pop(EPoolType.Dice) as Dice; // PopDice((EDiceType)number);
+                    if (dice == null) continue;
 
-                Vector2 dicePosition = startPos + new Vector2(x * data.padding.x, y * data.padding.y);
-                Vector2Int positionKey = new Vector2Int(x, y);
+                    Vector2 dicePosition = startPos + new Vector2(x * data.padding.x, y * data.padding.y);
+                    Vector2Int positionKey = new Vector2Int(x, y);
 
-                dice.transform.position = dicePosition;
-                dice.positionKey = positionKey;
-                dice.gameObject.name = $"dice : {positionKey.ToString()}";
-                dice.SetSpriteOrder();
-                dice.transform.SetParent(transform, false);
+                    dice.transform.position = dicePosition;
+                    dice.positionKey = positionKey;
+                    dice.gameObject.name = $"dice : {positionKey.ToString()}";
+                    dice.SetSpriteOrder();
+                    dice.transform.SetParent(transform, false);
 
-                _editorDices.Add(positionKey, dice);
+                    _editorDices.Add(positionKey, dice);
+                }
             }
-        }
 
-        spawnedUnits = new List<DiceUnit>();
+            spawnedUnits = new List<DiceUnit>();
 
-        player.ChangeDice(data.playerPos);
-        player.transform.position = player.dice.groundPos;
-        spawnedUnits.Add(player);
+            player.ChangeDice(data.playerPos);
+            player.transform.position = player.dice.groundPos;
+            spawnedUnits.Add(player);
 
-        foreach (var spawnData in data.spawnDatas)
-        {
-            DiceUnit unit = Instantiate(spawnData.unit);
-            if (unit.ChangeDice(spawnData.pos) == false)
+            foreach (var spawnData in data.spawnDatas)
             {
-                Debug.LogError("?? 이상한 위치에 생성한 것 같아요");
+                DiceUnit unit = Instantiate(spawnData.unit);
+                if (unit.ChangeDice(spawnData.pos) == false)
+                {
+                    Debug.LogError("?? 이상한 위치에 생성한 것 같아요");
+                }
+                unit.transform.position = unit.dice.groundPos;
+                spawnedUnits.Add(unit);
+                if (unit is Enemy)
+                {
+                    _enemys.Add(unit as Enemy);
+                }
             }
-            unit.transform.position = unit.dice.groundPos;
-            spawnedUnits.Add(unit);
-            if (unit is Enemy)
-            {
-                _enemys.Add(unit as Enemy);
-            }
-        }
 
-        DiceGrid.Inst.SetGrid(_dices, _units);
+            DiceGrid.Inst.SetGrid(_dices, _units);
+        */
     }
 }

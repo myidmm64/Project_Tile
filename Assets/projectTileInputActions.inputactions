@@ -58,15 +58,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "DiceChange",
-                    "type": "Button",
-                    "id": "4732a01c-5c95-4a95-b5ad-410276184652",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -161,7 +152,7 @@
                 {
                     "name": "",
                     "id": "79f1d119-5bad-400f-a8fa-e93454da2e3a",
-                    "path": "<Keyboard>/z",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -172,22 +163,11 @@
                 {
                     "name": "",
                     "id": "6f06d72c-3c41-4923-a9a1-845ff8b90197",
-                    "path": "<Keyboard>/x",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Skill",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "cda456bc-39c4-43b4-965d-2ac72a953c9f",
-                    "path": "<Keyboard>/c",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DiceChange",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

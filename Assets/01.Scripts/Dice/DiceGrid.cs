@@ -254,7 +254,7 @@ public class DiceGrid : MonoSingleTon<DiceGrid>
             case ECenterType.Player:
                 return Utility.player.positionKey;
             case ECenterType.MapCenter:
-                return StageManager.Inst.currentStage.genData.mapSize / 2;
+                return Vector2Int.zero; //StageManager.Inst.currentStage.genData.mapSize / 2;
             case ECenterType.PosKey:
                 return rangeData.centerPosKey;
             default:

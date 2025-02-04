@@ -5,8 +5,6 @@ using UnityEditor;
 using System.Reflection;
 using System;
 
-[CustomPropertyDrawer(typeof(DiceDictionary))]
-[CustomPropertyDrawer(typeof(UnitsDictionary))]
 public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 {
 	const string KeysFieldName = "m_keys";
